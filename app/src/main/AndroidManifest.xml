@@ -3,13 +3,18 @@
     package="com.somasoma.speakworld">
 
     <application
-        android:allowBackup="true"
+        android:name=".SpeakWorldApplication"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SpeakWorld">
-        <activity android:name=".MainActivity">
+        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".SetLanguageActivity" />
+        <activity android:name=".SetNameActivity" />
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".SignInAndSignUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

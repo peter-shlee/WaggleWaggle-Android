@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "736537997052",
+    "project_id": "speak-world",
+    "storage_bucket": "speak-world.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736537997052:android:694208cd559cada069f179",
+        "android_client_info": {
+          "package_name": "com.somasoma.speakworld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "736537997052-bh556vobe7l1pp70udadbmcaoi3nfjfr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.somasoma.speakworld",
+            "certificate_hash": "d734b08221d2b3f84e4c3684279b94188d5f88c7"
+          }
+        },
+        {
+          "client_id": "736537997052-kv7gt64c6nlninmg0spo64a46dv3qb0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAedWeIWIv6wXTa6VVPHqAZbxLiavuATbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "736537997052-kv7gt64c6nlninmg0spo64a46dv3qb0n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
