@@ -10,9 +10,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SpeakWorld">
-        <activity android:name=".SettingActivity"></activity>
-        <activity android:name=".SetLanguageActivity" />
-        <activity android:name=".SetNameActivity" />
+        <activity
+            android:name=".SettingChangeLanguageActivity"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".SettingChangeNameActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".SettingActivity" />
+        <activity
+            android:name=".SignUpSetLanguageActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".SignUpSetNameActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".SignInAndSignUpActivity">
             <intent-filter>

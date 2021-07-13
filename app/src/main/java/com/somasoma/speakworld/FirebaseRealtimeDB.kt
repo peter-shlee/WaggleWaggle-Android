@@ -14,7 +14,6 @@ object FirebaseRealtimeDB : RemoteDataSource {
     private var database = FirebaseDatabase.getInstance(FIREBASE_URL).reference
 
     override fun writeNewUser(userId: String, name: String, language: String) {
-        Timber.d(userId)
         val user = User(name, language)
 
         database.child("users").child(userId).setValue(user)
@@ -34,5 +33,13 @@ object FirebaseRealtimeDB : RemoteDataSource {
             }
         }
         database.child("users").child(userId).addListenerForSingleValueEvent(userListener)
+    }
+
+    override fun setUserName(userId: String, newName: String) {
+        database.child("users").child(userId).child("name").setValue(newName)
+    }
+
+    override fun setUserLanguage(userId: String, newLanguage: String) {
+        database.child("users").child(userId).child("language").setValue(newLanguage)
     }
 }

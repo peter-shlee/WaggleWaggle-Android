@@ -16,8 +16,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:text="Sign in with Google"
-            android:onClick="onClick"/>
+            android:text="Sign in"
+            android:onClick="onClickSignInButton"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
