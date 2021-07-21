@@ -32,7 +32,22 @@ object FirebaseRealtimeDB : RemoteDataSource {
                 Timber.d(error.toString())
             }
         }
-        database.child("users").child(userId).addListenerForSingleValueEvent(userListener)
+        database.child("users").child(userId).addValueEventListener(userListener)
+    }
+
+    override fun getCharacters(callback: (Characters) -> Unit) {
+        val userListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Timber.d(snapshot.value.toString())
+                val characters: Characters? = snapshot.getValue(Characters::class.java)
+                characters?.let(callback)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Timber.d(error.toString())
+            }
+        }
+        database.child("characters").addListenerForSingleValueEvent(userListener)
     }
 
     override fun setUserName(userId: String, newName: String) {

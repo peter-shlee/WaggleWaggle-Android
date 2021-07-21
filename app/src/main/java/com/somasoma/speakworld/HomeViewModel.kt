@@ -13,9 +13,20 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
     val firebaseUser = FirebaseAuth.getInstance().currentUser
     private val _user = MutableLiveData(User("-", "-"))
-    var user: LiveData<User> = _user
-
+    private val _characters = MutableLiveData(Characters(arrayListOf()))
+    val user: LiveData<User> = _user
+    val characters: LiveData<Characters> = _characters
     private val remoteDataSource: RemoteDataSource = FirebaseRealtimeDB
+    var selectedCharacter = "Basic"
+
+    init {
+        remoteDataSource.getCharacters { characters ->
+            _characters.value = characters
+            for (character in characters.list) {
+                Timber.d(character)
+            }
+        }
+    }
 
     fun getUserInfo() {
         Timber.d(firebaseUser.toString())
