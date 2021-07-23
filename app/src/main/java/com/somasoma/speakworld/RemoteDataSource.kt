@@ -5,6 +5,8 @@ interface RemoteDataSource {
 
     fun getUser(userId: String, callback: (User) -> Unit)
 
+    fun deleteUser(userId: String, onSuccessCallback: () -> Unit, onFailureCallback: () -> Unit)
+
     fun getCharacters(callback: (Characters) -> Unit)
 
     fun setUserName(userId: String, newName: String)

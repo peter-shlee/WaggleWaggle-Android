@@ -3,7 +3,7 @@ package com.somasoma.speakworld
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-:import android.widget.Toast
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
@@ -44,17 +44,23 @@ class SettingActivity : AppCompatActivity() {
     }
 
     fun onClickDeleteAccountButton(view: View) {
-        // 유저 정보 실시간 db에서 삭제해야 함
-        AuthUI.getInstance()
-            .delete(this)
-            .addOnCompleteListener {
-                val intent = Intent(this, SignInAndSignUpActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-            }.addOnCanceledListener {
-                Toast.makeText(this, "delete account failed.", Toast.LENGTH_SHORT).show()
-            }
+        viewModel.firebaseUser?.let { firebaseUser ->
+            AuthUI.getInstance()
+                .delete(this)
+                .addOnCompleteListener { // 유저 계정 삭제 성공 시
+                    viewModel.remoteDataSource.deleteUser(firebaseUser.uid, onSuccessCallback = { // DB에서 유저 정보 삭제
+                        val intent = Intent(this, SignInAndSignUpActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                    }, onFailureCallback = {
+                        Toast.makeText(this, "failed to delete user info.", Toast.LENGTH_SHORT)
+                            .show()
+                    })
+                }.addOnCanceledListener {
+                    Toast.makeText(this, "delete account failed.", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
 }

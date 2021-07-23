@@ -35,6 +35,14 @@ object FirebaseRealtimeDB : RemoteDataSource {
         database.child("users").child(userId).addValueEventListener(userListener)
     }
 
+    override fun deleteUser(userId: String, onSuccessCallback: () -> Unit, onFailureCallback: () -> Unit) {
+        database.child("users").child(userId).removeValue().addOnSuccessListener {
+            onSuccessCallback()
+        }.addOnFailureListener {
+            onFailureCallback()
+        }
+    }
+
     override fun getCharacters(callback: (Characters) -> Unit) {
         val userListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
