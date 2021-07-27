@@ -11,20 +11,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
-    val firebaseUser = FirebaseAuth.getInstance().currentUser
-    private val _user = MutableLiveData(User("-", "-"))
-    private val _characters = MutableLiveData(Characters(arrayListOf()))
-    val user: LiveData<User> = _user
-    val characters: LiveData<Characters> = _characters
+    private val firebaseUser = FirebaseAuth.getInstance().currentUser
     private val remoteDataSource: RemoteDataSource = FirebaseRealtimeDB
-    var selectedCharacter = "Basic"
+    var selectedAvatar: String? = null
+
+    private val _user = MutableLiveData(User())
+    private val _avatars = MutableLiveData(Avatars(arrayListOf()))
+    private val _canPressStartButton = MutableLiveData(false)
+    val user: LiveData<User> = _user
+    val avatars: LiveData<Avatars> = _avatars
+    val canPressStartButton: LiveData<Boolean> = _canPressStartButton
 
     init {
-        remoteDataSource.getCharacters { characters ->
-            _characters.value = characters
-            for (character in characters.list) {
-                Timber.d(character)
-            }
+        remoteDataSource.getAvatars { characters ->
+            _avatars.value = characters
         }
     }
 
@@ -33,5 +33,48 @@ class HomeViewModel @Inject constructor(application: Application) : AndroidViewM
         firebaseUser?.let {
             remoteDataSource.getUser(it.uid) { user -> _user.value = user }
         }
+    }
+
+    fun checkCanPressStartButton(): Boolean {
+        if (firebaseUser == null) {
+            _canPressStartButton.value = false
+            return false
+        }
+
+        if (!isUserLoaded()) {
+            _canPressStartButton.value = false
+            return false
+        }
+
+        if (!isAvatarSelected()) {
+            _canPressStartButton.value = false
+            return false
+        }
+
+        _canPressStartButton.value = true
+        return true
+    }
+
+    fun onClickStartButton() {
+        if (!checkCanPressStartButton()) return
+        setUserForActivity()
+    }
+
+    private fun setUserForActivity() {
+        val userForUnity = UserForUnity
+
+        userForUnity.id = firebaseUser?.uid
+        userForUnity.name = user.value?.name
+        userForUnity.country = user.value?.country
+        userForUnity.avatar = selectedAvatar
+    }
+
+    private fun isUserLoaded(): Boolean {
+        // TODO: 국가 선택 기능 추가하면 아래 주석 해제하여 국가 정보 있는지도 체크
+        return !(user.value?.name.isNullOrBlank()/* || user.value?.country.isNullOrBlank()*/)
+    }
+
+    private fun isAvatarSelected(): Boolean {
+        return !selectedAvatar.isNullOrBlank()
     }
 }

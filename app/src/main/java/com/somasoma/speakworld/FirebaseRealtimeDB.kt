@@ -43,19 +43,19 @@ object FirebaseRealtimeDB : RemoteDataSource {
         }
     }
 
-    override fun getCharacters(callback: (Characters) -> Unit) {
+    override fun getAvatars(callback: (Avatars) -> Unit) {
         val userListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 Timber.d(snapshot.value.toString())
-                val characters: Characters? = snapshot.getValue(Characters::class.java)
-                characters?.let(callback)
+                val avatars: Avatars? = snapshot.getValue(Avatars::class.java)
+                avatars?.let(callback)
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Timber.d(error.toString())
             }
         }
-        database.child("characters").addListenerForSingleValueEvent(userListener)
+        database.child("avatars").addListenerForSingleValueEvent(userListener)
     }
 
     override fun setUserName(userId: String, newName: String) {
@@ -64,5 +64,9 @@ object FirebaseRealtimeDB : RemoteDataSource {
 
     override fun setUserLanguage(userId: String, newLanguage: String) {
         database.child("users").child(userId).child("language").setValue(newLanguage)
+    }
+
+    override fun setUserCountry(userId: String, newLanguage: String) {
+        database.child("users").child(userId).child("country").setValue(newLanguage)
     }
 }

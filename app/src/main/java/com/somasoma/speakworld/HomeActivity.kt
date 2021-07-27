@@ -11,18 +11,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.somasoma.speakworld.databinding.ActivityHomeBinding
-import com.somasoma.speakworld.databinding.CharacterPagerItemBinding
+import com.somasoma.speakworld.databinding.AvatarPagerItemBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private val viewModel: HomeViewModel by viewModels()
-    lateinit var viewPagerAdapter: CharacterPagerAdapter
+    lateinit var viewPagerAdapter: AvatarPagerAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel.avatars.observe(this) { onAvatarsLoaded() }
+        viewModel.user.observe(this) { onUserChanged() }
 
         viewModel.getUserInfo()
 
@@ -31,30 +33,30 @@ class HomeActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        viewPagerAdapter = CharacterPagerAdapter(viewModel.characters.value ?: Characters())
+        viewPagerAdapter = AvatarPagerAdapter(viewModel.avatars.value ?: Avatars())
         binding.viewpagerSelectCharacter.adapter = viewPagerAdapter
-
-        binding.viewpagerSelectCharacter.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding.viewpagerSelectCharacter.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
 
-                val index = binding.viewpagerSelectCharacter.currentItem
-                viewModel.characters.value?.let {
-                    viewModel.selectedCharacter = it.list[index]
+                viewModel.avatars.value?.let {
+                    viewModel.selectedAvatar = it.list[position]
+                    viewModel.checkCanPressStartButton()
                 }
-
-                Timber.d(viewModel.selectedCharacter)
             }
         })
-
-        viewModel.characters.observe(this) { onCharactersLoaded() }
     }
 
-    private fun onCharactersLoaded() {
-        viewModel.characters.value?.let {
-            viewPagerAdapter.characters = it
+    private fun onAvatarsLoaded() {
+        viewModel.avatars.value?.let {
+            viewPagerAdapter.avatars = it
             viewPagerAdapter.notifyDataSetChanged()
         }
+    }
+
+    private fun onUserChanged() {
+        viewModel.checkCanPressStartButton()
     }
 
     fun onClickSettingButton(view: View) {
@@ -63,22 +65,23 @@ class HomeActivity : AppCompatActivity() {
     }
 }
 
-class CharacterPagerAdapter(var characters: Characters) :
-    RecyclerView.Adapter<CharacterViewHolder>() {
+class AvatarPagerAdapter(var avatars: Avatars) :
+// TODO: ListAdapter로 리팩토링
+    RecyclerView.Adapter<AvatarViewHolder>() {
     override fun getItemCount(): Int {
-        return characters.list.size
+        return avatars.list.size
     }
 
-    override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.binding.character = characters.list[position]
+    override fun onBindViewHolder(holder: AvatarViewHolder, position: Int) {
+        holder.binding.avatar = avatars.list[position]
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AvatarViewHolder {
         val itemView =
-            CharacterPagerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CharacterViewHolder(itemView)
+            AvatarPagerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return AvatarViewHolder(itemView)
     }
 }
 
-class CharacterViewHolder(val binding: CharacterPagerItemBinding) :
+class AvatarViewHolder(val binding: AvatarPagerItemBinding) :
     RecyclerView.ViewHolder(binding.root)
