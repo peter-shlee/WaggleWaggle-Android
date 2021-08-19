@@ -35,14 +35,12 @@ class SettingViewModel @Inject constructor(
 
     fun onClickSignOutButton() {
         signOutUseCase.signOut(
-            getApplication(),
             onSuccessCallback = { navigateToSignInAndSignOutEvent.call() },
             onFailureCallback = { signOutFailedEvent.call() })
     }
 
     fun onClickDeleteAccountButton() {
         deleteAccountUseCase.deleteAccount(
-            getApplication(),
             onSuccessCallback = { onDeleteAccountSuccess() },
             onFailureCallback = { deleteAccountFailedEvent.call() })
     }
