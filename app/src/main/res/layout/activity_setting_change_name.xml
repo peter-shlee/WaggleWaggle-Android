@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.somasoma.speakworld.SettingChangeNameViewModel" />
+            type="com.somasoma.speakworld.domain.setting.change_name.SettingChangeNameViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,14 +13,14 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".SettingChangeLanguageActivity">
+        tools:context=".domain.setting.change_language.SettingChangeLanguageActivity">
 
         <EditText
             android:id="@+id/edit_text_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:text="@={viewModel.newName}"
+            android:onTextChanged="@{viewModel.onNameChanged}"
             app:layout_constraintBottom_toTopOf="@id/btn_save"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -33,7 +33,7 @@
             android:id="@+id/btn_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onClickSaveNameButton"
+            android:onClick="@{() -> viewModel.onClickSaveButton()}"
             android:text="저장하기"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

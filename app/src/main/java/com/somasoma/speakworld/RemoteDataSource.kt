@@ -1,5 +1,8 @@
 package com.somasoma.speakworld
 
+import com.somasoma.speakworld.core.model.Avatars
+import com.somasoma.speakworld.core.model.User
+
 interface RemoteDataSource {
     fun writeNewUser(userId: String, name: String, language: String)
 
@@ -7,7 +10,7 @@ interface RemoteDataSource {
 
     fun deleteUser(userId: String, onSuccessCallback: () -> Unit, onFailureCallback: () -> Unit)
 
-    fun getCharacters(callback: (Characters) -> Unit)
+    fun getCharacters(callback: (Avatars) -> Unit)
 
     fun setUserName(userId: String, newName: String)
 

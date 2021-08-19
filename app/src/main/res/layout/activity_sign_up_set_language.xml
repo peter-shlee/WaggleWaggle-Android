@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.somasoma.speakworld.SignUpSetLanguageViewModel" />
+            type="com.somasoma.speakworld.domain.auth.sign_up_set_language.SignUpSetLanguageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,7 +13,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".SignUpSetLanguageActivity">
+        tools:context=".domain.auth.sign_up_set_language.SignUpSetLanguageActivity">
 
         <EditText
             android:id="@+id/edittext_name"
@@ -22,19 +22,17 @@
             android:layout_marginHorizontal="20dp"
             android:autofillHints="모국어를 입력하세요"
             android:inputType="text"
-            android:text="@={viewModel.language}"
+            android:onTextChanged="@{viewModel.onLanguageChanged}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <requestFocus />
         </EditText>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onClickLanguageButton"
+            android:onClick="@{() -> viewModel.onClickNextButton()}"
             android:text="확인"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

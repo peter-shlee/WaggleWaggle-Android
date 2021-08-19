@@ -3,7 +3,7 @@
     package="com.somasoma.speakworld">
 
     <application
-        android:name=".SpeakWorldApplication"
+        android:name=".core.SpeakWorldApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,20 +11,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SpeakWorld">
         <activity
-            android:name=".SettingChangeLanguageActivity"
+            android:name="com.somasoma.speakworld.domain.setting.change_language.SettingChangeLanguageActivity"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".SettingChangeNameActivity"
+            android:name="com.somasoma.speakworld.domain.setting.change_name.SettingChangeNameActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".SettingActivity" />
+        <activity android:name="com.somasoma.speakworld.domain.setting.SettingActivity" />
         <activity
-            android:name=".SignUpSetLanguageActivity"
+            android:name="com.somasoma.speakworld.domain.auth.sign_up_set_language.SignUpSetLanguageActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".SignUpSetNameActivity"
+            android:name="com.somasoma.speakworld.domain.auth.sign_up_set_name.SignUpSetNameActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".SignInAndSignUpActivity">
+        <activity android:name="com.somasoma.speakworld.domain.home.HomeActivity" />
+        <activity android:name="com.somasoma.speakworld.domain.auth.sign_in_and_sign_up.SignInAndSignUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

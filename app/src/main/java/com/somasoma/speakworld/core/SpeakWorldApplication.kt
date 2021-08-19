@@ -1,6 +1,7 @@
-package com.somasoma.speakworld
+package com.somasoma.speakworld.core
 
 import android.app.Application
+import com.somasoma.speakworld.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 

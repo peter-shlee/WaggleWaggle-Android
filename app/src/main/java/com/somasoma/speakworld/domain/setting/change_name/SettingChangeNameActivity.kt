@@ -1,10 +1,10 @@
-package com.somasoma.speakworld
+package com.somasoma.speakworld.domain.setting.change_name
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.somasoma.speakworld.R
 import com.somasoma.speakworld.databinding.ActivitySettingChangeNameBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,12 +16,20 @@ class SettingChangeNameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivitySettingChangeNameBinding = DataBindingUtil.setContentView(this, R.layout.activity_setting_change_name)
+        val binding: ActivitySettingChangeNameBinding = DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_setting_change_name
+        )
         binding.viewModel = viewModel
+
+        observe()
     }
 
-    fun onClickSaveNameButton(view: View) {
-        viewModel.saveNewUserName()
+    fun observe() {
+        viewModel.finishChangeNameEvent.observe(this) { finishChangeName() }
+    }
+
+    private fun finishChangeName() {
         finish()
     }
 }

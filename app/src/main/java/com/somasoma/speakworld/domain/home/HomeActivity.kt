@@ -1,17 +1,19 @@
-package com.somasoma.speakworld
+package com.somasoma.speakworld.domain.home
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.somasoma.speakworld.R
+import com.somasoma.speakworld.core.model.Avatars
 import com.somasoma.speakworld.databinding.ActivityHomeBinding
 import com.somasoma.speakworld.databinding.CharacterPagerItemBinding
+import com.somasoma.speakworld.domain.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -19,7 +21,6 @@ import timber.log.Timber
 class HomeActivity : AppCompatActivity() {
     private val viewModel: HomeViewModel by viewModels()
     lateinit var viewPagerAdapter: CharacterPagerAdapter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,46 +32,53 @@ class HomeActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        viewPagerAdapter = CharacterPagerAdapter(viewModel.characters.value ?: Characters())
+        viewPagerAdapter =
+            CharacterPagerAdapter(viewModel.avatars.value ?: Avatars(arrayListOf()))
         binding.viewpagerSelectCharacter.adapter = viewPagerAdapter
 
-        binding.viewpagerSelectCharacter.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        binding.viewpagerSelectCharacter.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
 
                 val index = binding.viewpagerSelectCharacter.currentItem
-                viewModel.characters.value?.let {
-                    viewModel.selectedCharacter = it.list[index]
+                viewModel.avatars.value?.run {
+                    viewModel.selectedCharacter = list?.get(index).toString()
                 }
 
                 Timber.d(viewModel.selectedCharacter)
             }
         })
 
-        viewModel.characters.observe(this) { onCharactersLoaded() }
+        observe()
+    }
+
+    private fun observe() {
+        viewModel.navigateToSettingActivityEvent.observe(this) { navigateToSettingActivity() }
+        viewModel.avatars.observe(this) { onCharactersLoaded() }
     }
 
     private fun onCharactersLoaded() {
-        viewModel.characters.value?.let {
-            viewPagerAdapter.characters = it
+        viewModel.avatars.value?.let {
+            viewPagerAdapter.avatars = it
             viewPagerAdapter.notifyDataSetChanged()
         }
     }
 
-    fun onClickSettingButton(view: View) {
+    private fun navigateToSettingActivity() {
         val intent = Intent(this, SettingActivity::class.java)
         startActivity(intent)
     }
 }
 
-class CharacterPagerAdapter(var characters: Characters) :
+class CharacterPagerAdapter(var avatars: Avatars) :
     RecyclerView.Adapter<CharacterViewHolder>() {
     override fun getItemCount(): Int {
-        return characters.list.size
+        return avatars.list?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
-        holder.binding.character = characters.list[position]
+        holder.binding.character = avatars.list?.get(position).toString()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {

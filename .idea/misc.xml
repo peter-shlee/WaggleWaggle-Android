@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/layout/activity_home.xml" value="0.3704710144927536" />
+        <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/layout/activity_setting.xml" value="0.3704710144927536" />
+        <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/layout/activity_setting_change_language.xml" value="0.3704710144927536" />
+        <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/layout/activity_setting_change_name.xml" value="0.3704710144927536" />
+        <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/layout/activity_sign_in_and_sign_up.xml" value="0.37228260869565216" />
+        <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/layout/activity_sign_up_set_language.xml" value="0.3704710144927536" />
+        <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/layout/activity_sign_up_set_name.xml" value="0.3704710144927536" />
+        <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/layout/character_pager_item.xml" value="0.3704710144927536" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
