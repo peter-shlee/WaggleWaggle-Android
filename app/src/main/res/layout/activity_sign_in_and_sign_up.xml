@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.somasoma.speakworld.domain.auth.sign_in_and_sign_up.SignInAndSignUpViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".SignInAndSignUpActivity">
+        tools:context=".domain.auth.sign_in_and_sign_up.SignInAndSignUpActivity">
 
         <Button
             android:id="@+id/sign_in_button"
@@ -17,7 +23,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:text="Sign in"
-            android:onClick="onClickSignInButton"/>
+            android:onClick="@{() -> viewModel.onClickSignInButton()}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

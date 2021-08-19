@@ -1,10 +1,10 @@
-package com.somasoma.speakworld
+package com.somasoma.speakworld.domain.setting.change_language
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.somasoma.speakworld.R
 import com.somasoma.speakworld.databinding.ActivitySettingChangeLanguageBinding
 
 class SettingChangeLanguageActivity : AppCompatActivity() {
@@ -14,12 +14,20 @@ class SettingChangeLanguageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding:ActivitySettingChangeLanguageBinding = DataBindingUtil.setContentView(this, R.layout.activity_setting_change_language)
+        val binding:ActivitySettingChangeLanguageBinding = DataBindingUtil.setContentView(this,
+            R.layout.activity_setting_change_language
+        )
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
+
+        observe()
     }
 
-    fun onClickSaveLanguageButton(view: View) {
-        viewModel.saveNewUserLanguage()
+    private fun observe() {
+        viewModel.finishChangeLanguageEvent.observe(this) { finishChangeLanguage() }
+    }
+
+    private fun finishChangeLanguage() {
         finish()
     }
 }

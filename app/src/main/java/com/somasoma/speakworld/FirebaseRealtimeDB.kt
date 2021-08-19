@@ -4,6 +4,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.somasoma.speakworld.core.model.Avatars
+import com.somasoma.speakworld.core.model.User
 import timber.log.Timber
 
 object FirebaseRealtimeDB : RemoteDataSource {
@@ -43,12 +45,12 @@ object FirebaseRealtimeDB : RemoteDataSource {
         }
     }
 
-    override fun getCharacters(callback: (Characters) -> Unit) {
+    override fun getCharacters(callback: (Avatars) -> Unit) {
         val userListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 Timber.d(snapshot.value.toString())
-                val characters: Characters? = snapshot.getValue(Characters::class.java)
-                characters?.let(callback)
+                val avatars: Avatars? = snapshot.getValue(Avatars::class.java)
+                avatars?.let(callback)
             }
 
             override fun onCancelled(error: DatabaseError) {
