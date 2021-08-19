@@ -48,12 +48,13 @@ class SettingViewModel @Inject constructor(
     }
 
     private fun onDeleteAccountSuccess() {
-        deleteUserUseCase.deleteUser(onSuccessCallback = {
-            navigateToSignInAndSignOutEvent.call()
-        },
-        onFailureCallback = {
-            removeUserInfoFailedEvent.call()
-            navigateToSignInAndSignOutEvent.call()
-        })
+        deleteUserUseCase.deleteUser(
+            onSuccessCallback = {
+                navigateToSignInAndSignOutEvent.call()
+            },
+            onFailureCallback = {
+                removeUserInfoFailedEvent.call()
+                navigateToSignInAndSignOutEvent.call()
+            })
     }
 }
