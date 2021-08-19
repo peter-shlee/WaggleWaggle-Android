@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.somasoma.speakworld.R
 import com.somasoma.speakworld.databinding.ActivitySettingChangeLanguageBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingChangeLanguageActivity : AppCompatActivity() {
 
     private val viewModel: SettingChangeLanguageViewModel by viewModels()
