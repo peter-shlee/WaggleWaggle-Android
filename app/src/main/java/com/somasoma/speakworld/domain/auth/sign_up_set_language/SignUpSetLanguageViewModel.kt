@@ -4,14 +4,14 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.somasoma.speakworld.core.SingleLiveEvent
 import com.somasoma.speakworld.core.model.User
-import com.somasoma.speakworld.core.usecase.WriteNewUserUserCase
+import com.somasoma.speakworld.core.usecase.WriteNewUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpSetLanguageViewModel @Inject constructor(
     application: Application,
-    private val writeNewUserUserCase: WriteNewUserUserCase
+    private val writeNewUserUserCase: WriteNewUserUseCase
 ) :
     AndroidViewModel(application) {
 
