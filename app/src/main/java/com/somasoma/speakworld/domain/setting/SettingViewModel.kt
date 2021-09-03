@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.somasoma.speakworld.core.SingleLiveEvent
 import com.somasoma.speakworld.core.usecase.DeleteAccountUseCase
-import com.somasoma.speakworld.core.usecase.DeleteUserUseCase
 import com.somasoma.speakworld.core.usecase.SignOutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -13,8 +12,7 @@ import javax.inject.Inject
 class SettingViewModel @Inject constructor(
     application: Application,
     private val signOutUseCase: SignOutUseCase,
-    private val deleteAccountUseCase: DeleteAccountUseCase,
-    private val deleteUserUseCase: DeleteUserUseCase
+    private val deleteAccountUseCase: DeleteAccountUseCase
 ) :
     AndroidViewModel(application) {
 
@@ -35,13 +33,17 @@ class SettingViewModel @Inject constructor(
 
     fun onClickSignOutButton() {
         signOutUseCase.signOut(
-            onSuccessCallback = { navigateToSignInAndSignOutEvent.call() },
+            onSuccessCallback = {
+                navigateToSignInAndSignOutEvent.call()
+            },
             onFailureCallback = { signOutFailedEvent.call() })
     }
 
     fun onClickDeleteAccountButton() {
         deleteAccountUseCase.deleteAccount(
-            onSuccessCallback = { onDeleteAccountSuccess() },
+            onSuccessCallback = {
+                onDeleteAccountSuccess()
+            },
             onFailureCallback = { deleteAccountFailedEvent.call() })
     }
 

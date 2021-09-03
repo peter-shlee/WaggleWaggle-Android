@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.somasoma.speakworld.R
 import com.somasoma.speakworld.databinding.ActivitySignUpSetLanguageBinding
-import com.somasoma.speakworld.domain.home.HomeActivity
+import com.somasoma.speakworld.domain.auth.sign_in_and_sign_up.SignInAndSignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,9 +37,8 @@ class SignUpSetLanguageActivity : AppCompatActivity() {
     }
 
     private fun navigateToNextPage(){
-        val intent = Intent(this, HomeActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val intent = Intent(this, SignInAndSignUpActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT)
         startActivity(intent)
     }
 }
