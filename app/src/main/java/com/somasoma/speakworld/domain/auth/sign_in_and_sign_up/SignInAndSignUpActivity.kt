@@ -11,14 +11,20 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.somasoma.speakworld.R
+import com.somasoma.speakworld.core.ApplicationService
+import com.somasoma.speakworld.core.usecase.UserConnectedStateUseCase
 import com.somasoma.speakworld.databinding.ActivitySignInAndSignUpBinding
 import com.somasoma.speakworld.domain.auth.sign_up_set_name.SignUpSetNameActivity
 import com.somasoma.speakworld.domain.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignInAndSignUpActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var userConnectedStateUseCase: UserConnectedStateUseCase
 
     private val viewModel: SignInAndSignUpViewModel by viewModels()
 
@@ -43,7 +49,12 @@ class SignInAndSignUpActivity : AppCompatActivity() {
         super.onStart()
 
         val user = FirebaseAuth.getInstance().currentUser
-        updateUI(user, false)
+        if (user != null) {
+            updateUI(user, false)
+        }
+
+        val intent = Intent(this, ApplicationService::class.java)
+        startService(intent)
     }
 
     private fun observe() {
@@ -80,7 +91,10 @@ class SignInAndSignUpActivity : AppCompatActivity() {
     }
 
     private fun navigateToHomeActivity() {
+        setCurrentUserOnline()
+
         val intent = Intent(this, HomeActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
@@ -101,4 +115,8 @@ class SignInAndSignUpActivity : AppCompatActivity() {
         }
     }
 
+    private fun setCurrentUserOnline() {
+        userConnectedStateUseCase.registerOnUserConnectedStateCallback {}
+        userConnectedStateUseCase.postCurrentUserOnline()
+    }
 }

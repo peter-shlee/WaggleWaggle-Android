@@ -10,21 +10,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SpeakWorld">
+        <service
+            android:name=".core.ApplicationService"
+            android:enabled="true"
+            android:exported="false"
+            android:stopWithTask="false" />
+
         <activity
-            android:name="com.somasoma.speakworld.domain.setting.change_language.SettingChangeLanguageActivity"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity
-            android:name="com.somasoma.speakworld.domain.setting.change_name.SettingChangeNameActivity"
+            android:name=".domain.setting.change_language.SettingChangeLanguageActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.somasoma.speakworld.domain.setting.SettingActivity" />
         <activity
-            android:name="com.somasoma.speakworld.domain.auth.sign_up_set_language.SignUpSetLanguageActivity"
+            android:name=".domain.setting.change_name.SettingChangeNameActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".domain.setting.SettingActivity" />
+        <activity
+            android:name=".domain.auth.sign_up_set_language.SignUpSetLanguageActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.somasoma.speakworld.domain.auth.sign_up_set_name.SignUpSetNameActivity"
+            android:name=".domain.auth.sign_up_set_name.SignUpSetNameActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.somasoma.speakworld.domain.home.HomeActivity" />
-        <activity android:name="com.somasoma.speakworld.domain.auth.sign_in_and_sign_up.SignInAndSignUpActivity">
+        <activity android:name=".domain.home.HomeActivity" />
+        <activity android:name=".domain.auth.sign_in_and_sign_up.SignInAndSignUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -19,7 +19,7 @@ class FirebaseUserRepository @Inject constructor() : UserRepository {
     private val uid = FirebaseAuth.getInstance().currentUser?.uid
     private var database = FirebaseDatabase.getInstance(FIREBASE_URL).reference
 
-    override fun writeNewUser(user: User, onSuccessCallback: () -> Unit) {
+    override fun postUser(user: User, onSuccessCallback: () -> Unit) {
         uid?.let {
             database.child("users").child(it).setValue(user).addOnSuccessListener { onSuccessCallback() }
         }
