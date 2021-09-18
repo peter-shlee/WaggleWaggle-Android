@@ -10,6 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SpeakWorld">
+        <activity
+            android:name=".domain.auth.sign_up.SignUpActivity"
+            android:exported="true" />
+
         <service
             android:name=".core.ApplicationService"
             android:enabled="true"
