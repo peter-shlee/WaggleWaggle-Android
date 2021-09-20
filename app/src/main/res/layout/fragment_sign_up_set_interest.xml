@@ -22,6 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="26dp"
+                android:textColor="@color/text_color_primary"
                 android:text="관심사"
                 android:textSize="18dp"
                 android:textStyle="bold" />
@@ -31,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="4dp"
+                android:textColor="@color/text_color_primary"
                 android:text="관심있는 키워드를 골라보세요!"
                 android:textSize="12dp" />
 
@@ -50,6 +52,7 @@
                 android:background="@drawable/round_button_background"
                 android:backgroundTint="@color/point_blue"
                 android:text="확인"
+                android:textColor="@color/white"
                 app:backgroundTint="@null" />
 
         </LinearLayout>

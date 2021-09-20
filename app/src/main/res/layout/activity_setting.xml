@@ -36,6 +36,7 @@
             android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/text_color_secondary"
             android:layout_marginStart="14dp"
             android:layout_marginLeft="14dp"
             android:layout_marginTop="25dp"
@@ -59,6 +60,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/text_color_primary"
                 android:text="프로필 수정"
                 android:textSize="16dp"
                 android:textStyle="bold" />
@@ -86,6 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="알림 On/Off"
+                android:textColor="@color/text_color_primary"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
@@ -117,6 +120,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/text_color_primary"
                 android:text="로그아웃"
                 android:textSize="16dp"
                 android:textStyle="bold" />
@@ -143,6 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="회원 탈퇴"
+                android:textColor="@color/text_color_disabled"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
