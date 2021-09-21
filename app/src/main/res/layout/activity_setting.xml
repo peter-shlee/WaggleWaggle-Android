@@ -50,9 +50,8 @@
             android:id="@+id/edit_profile"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_marginStart="30dp"
             android:layout_marginTop="40dp"
-            android:layout_marginEnd="30dp"
+            android:paddingHorizontal="30dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/txt_title">
@@ -77,8 +76,7 @@
             android:id="@+id/alarm_on_off"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
+            android:paddingHorizontal="30dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/edit_profile">
@@ -111,8 +109,7 @@
             android:id="@+id/sign_out"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
+            android:paddingHorizontal="30dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/alarm_on_off">
@@ -137,8 +134,7 @@
             android:id="@+id/withdraw"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
+            android:paddingHorizontal="30dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/sign_out">
