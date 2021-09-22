@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        tools:context=".domain.home.MapInfoFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="50dp"
+            android:background="@drawable/dialog_background"
+            android:paddingHorizontal="22dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="32dp">
+
+            <TextView
+                android:id="@+id/txt_world_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/btn_close"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="놀러오세요!" />
+
+            <ImageButton
+                android:id="@+id/btn_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/ic_cancel"
+                app:layout_constraintLeft_toRightOf="@id/txt_world_name"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="맵"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_world_name" />
+
+            <ImageView
+                android:id="@+id/img_map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_map" />
+
+            <TextView
+                android:id="@+id/txt_keyword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:text="대화 키워드"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_map" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_keyword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_keyword"
+                tools:itemCount="2" />
+
+            <TextView
+                android:id="@+id/txt_connecting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="참가 중인 사람"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/list_keyword" />
+
+            <TextView
+                android:id="@+id/txt_connecting_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:textColor="@color/point_blue"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/txt_connecting"
+                app:layout_constraintLeft_toRightOf="@id/txt_connecting"
+                app:layout_constraintTop_toTopOf="@id/txt_connecting"
+                tools:text="3" />
+
+            <TextView
+                android:id="@+id/txt_slash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:text="/"
+                android:textColor="@color/point_blue"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/txt_connecting"
+                app:layout_constraintLeft_toRightOf="@id/txt_connecting_count"
+                app:layout_constraintTop_toTopOf="@id/txt_connecting" />
+
+            <TextView
+                android:id="@+id/txt_max_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:text="20"
+                android:textColor="@color/point_blue"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/txt_connecting"
+                app:layout_constraintLeft_toRightOf="@id/txt_slash"
+                app:layout_constraintTop_toTopOf="@id/txt_connecting" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_connecting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                app:layout_constraintBottom_toTopOf="@id/space"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_connecting"
+                tools:itemCount="1" />
+
+            <Space
+                android:id="@+id/space"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:minHeight="41dp"
+                app:layout_constraintBottom_toTopOf="@id/btn_enter"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/list_connecting"
+                app:layout_constraintVertical_weight="1" />
+
+            <Button
+                android:id="@+id/btn_enter"
+                android:layout_width="0dp"
+                android:layout_height="37dp"
+                android:background="@drawable/round_button_background"
+                android:backgroundTint="@color/point_blue"
+                android:text="들어가기"
+                android:textColor="@color/white"
+                app:backgroundTint="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/space" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</layout>
