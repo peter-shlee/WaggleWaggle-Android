@@ -182,7 +182,6 @@
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="@id/txt_info"
             app:layout_constraintRight_toLeftOf="@id/btn_select_interest"
-            app:layout_constraintRight_toRightOf="@id/txt_info"
             app:layout_constraintTop_toBottomOf="@id/toggle_language" />
 
         <LinearLayout

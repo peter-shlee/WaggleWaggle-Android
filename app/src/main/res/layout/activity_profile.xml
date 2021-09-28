@@ -203,7 +203,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="회원 탈퇴"
+                android:textColor="@color/text_color_primary"
+                android:textSize="16dp"
+                tools:text="00" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="에 접속중"
                 android:textColor="@color/text_color_primary"
                 android:textSize="16dp" />
 
