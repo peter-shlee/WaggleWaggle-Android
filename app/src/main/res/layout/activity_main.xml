@@ -272,9 +272,6 @@
                     android:textSize="12dp" />
 
             </LinearLayout>
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </RelativeLayout>
 </layout>
