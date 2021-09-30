@@ -20,4 +20,8 @@
     <color name="text_color_hint">#5c5c5c</color>
     <color name="text_color_button">#5a5a5a</color>
     <color name="text_color_disabled">#bcbcbc</color>
+    <color name="text_color_navigation">#626262</color>
+    <color name="text_color_tab">#4e4e4e</color>
+    <color name="background_circle_yellow">#ffe086</color>
+    <color name="shadow_gray">#707070</color>
 </resources>

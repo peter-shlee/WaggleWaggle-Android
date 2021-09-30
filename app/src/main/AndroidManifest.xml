@@ -10,6 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SpeakWorld">
+        <activity
+            android:name=".domain.follow.FollowerActivity"
+            android:exported="true" />
+        <activity
+            android:name=".domain.home.MainActivity"
+            android:exported="true" />
         <activity android:name=".domain.home.CreateWorldActivity" />
         <activity android:name=".domain.profile.ProfileActivity" />
         <activity android:name=".domain.setting.EditProfileActivity" />
