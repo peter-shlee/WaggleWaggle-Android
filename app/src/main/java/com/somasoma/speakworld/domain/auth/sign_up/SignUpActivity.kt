@@ -30,7 +30,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun showSelectInterestsDialog() {
-        val selectInterestsDialogFragment = SelectInterestsDialogFragment.newInstance()
-        selectInterestsDialogFragment.show(supportFragmentManager, SelectInterestsDialogFragment::class.java.simpleName)
+        val signUpSelectInterestsDialogFragment = SignUpSelectInterestsDialogFragment.newInstance()
+        signUpSelectInterestsDialogFragment.show(supportFragmentManager, SelectInterestsDialogFragment::class.java.simpleName)
     }
 }

@@ -9,6 +9,10 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpViewModel @Inject constructor(application: Application): SelectInterestsViewModel(application) {
 
+    init {
+        resetSelectedInterests(setOf("스포츠", "BTS", "엔터"))
+    }
+
     val showSelectInterestsDialogEvent = SingleLiveEvent<Unit>()
 
     fun onClickSelectInterestButton() {

@@ -9,12 +9,9 @@ open class SelectInterestsViewModel @Inject constructor(application: Application
 
     private val selectedInterests = mutableSetOf<String>()
 
-    fun addInterests(interest: String) {
-        selectedInterests.add(interest)
-    }
-
-    fun removeInterests(interest: String) {
-        selectedInterests.remove(interest)
+    fun resetSelectedInterests(newSelectedInterests: Set<String>) {
+        selectedInterests.clear()
+        selectedInterests.addAll(newSelectedInterests)
     }
 
     fun getSelectedInterests(): Set<String> {
