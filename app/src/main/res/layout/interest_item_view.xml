@@ -8,6 +8,14 @@
         <variable
             name="backgroundType"
             type="BackgroundType" />
+
+        <variable
+            name="text"
+            type="String" />
+
+        <variable
+            name="clickListener"
+            type="com.somasoma.speakworld.domain.custom_views.InterestItemClickListener" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,6 +25,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
+        android:onClick="@{() -> clickListener.onClick(text)}"
         android:background="@{backgroundType == BackgroundType.FILLED_GRAY ? @drawable/filled_interest_item_background : backgroundType == BackgroundType.FILLED_YELLOW ? @drawable/highlighted_filled_interest_item_background : backgroundType == BackgroundType.YELLOW ? @drawable/highlighted_interest_item_background : @drawable/interest_item_background, default=@drawable/interest_item_background}"
         android:orientation="horizontal"
         android:paddingHorizontal="15dp"
@@ -29,6 +38,7 @@
             android:maxLines="1"
             android:textColor="@color/text_color_primary"
             android:textSize="13dp"
+            android:text="@{text}"
             tools:text="스포츠" />
 
     </LinearLayout>
