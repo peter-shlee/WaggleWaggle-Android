@@ -24,4 +24,5 @@
     <color name="text_color_tab">#4e4e4e</color>
     <color name="background_circle_yellow">#ffe086</color>
     <color name="shadow_gray">#707070</color>
+    <color name="interest_item_gray">#e6e6e6</color>
 </resources>
