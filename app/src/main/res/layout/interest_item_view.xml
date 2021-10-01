@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="com.somasoma.speakworld.domain.custom_views.InterestItemView.BackgroundType" />
+
+        <variable
+            name="backgroundType"
+            type="BackgroundType" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@{backgroundType == BackgroundType.FILLED_GRAY ? @drawable/filled_interest_item_background : backgroundType == BackgroundType.FILLED_YELLOW ? @drawable/highlighted_filled_interest_item_background : backgroundType == BackgroundType.YELLOW ? @drawable/highlighted_interest_item_background : @drawable/interest_item_background, default=@drawable/interest_item_background}"
+        android:orientation="horizontal"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="5dp">
+
+        <TextView
+            android:id="@+id/txt_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="@color/text_color_primary"
+            android:textSize="13dp"
+            tools:text="스포츠" />
+
+    </LinearLayout>
+</layout>
