@@ -14,7 +14,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.somasoma.speakworld.R
 import com.somasoma.speakworld.databinding.FragmentSetInterestsBinding
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 open class SelectInterestsDialogFragment : BottomSheetDialogFragment() {
@@ -94,7 +93,9 @@ open class SelectInterestsDialogFragment : BottomSheetDialogFragment() {
     private fun initViewModel() {
         activityViewModel?.let {
             val selectedInterests = it.getSelectedInterests()
-            viewModel.setSelectedInterests(selectedInterests)
+            selectedInterests?.let {
+                viewModel.setSelectedInterests(selectedInterests)
+            }
         }
     }
 
@@ -105,7 +106,6 @@ open class SelectInterestsDialogFragment : BottomSheetDialogFragment() {
 
     private fun onInterestsLoaded(interestsSet: Set<String>) {
         adapter.submitList(interestsSet.toList())
-        Timber.d(interestsSet.toString())
     }
 
     private fun onInterestKeywordClicked(interestKeyword: String, isSelected: Boolean) {

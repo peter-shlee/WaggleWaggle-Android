@@ -8,271 +8,291 @@
             type="com.somasoma.speakworld.domain.auth.sign_up.SignUpViewModel" />
     </data>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".domain.auth.sign_up.SignUpActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:id="@+id/btn_back"
+            android:layout_width="26dp"
+            android:layout_height="27dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="26dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_back" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="25dp"
+            android:text="회원가입"
+            android:textColor="@color/text_color_secondary"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@id/btn_back"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".domain.auth.sign_up.SignUpActivity">
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_title">
 
-            <LinearLayout
-                android:id="@+id/btn_back"
-                android:layout_width="26dp"
-                android:layout_height="27dp"
-                android:layout_marginStart="17dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginTop="26dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_back" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/txt_title"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:layout_marginLeft="14dp"
-                android:layout_marginTop="25dp"
-                android:text="회원가입"
-                android:textColor="@color/text_color_secondary"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toRightOf="@id/btn_back"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txt_info"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="56.5dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginRight="30dp"
-                android:text="간편하게 가입하고\n와글와글 서비스를 이용하세요!"
-                android:textColor="@color/black"
-                android:textSize="22dp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txt_title" />
-
-            <TextView
-                android:id="@+id/txt_sub_info"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3.5dp"
-                android:text="와글와글은 닉네임으로 간편한 회원가입이 가능합니다."
-                android:textColor="@color/text_color_hint"
-                android:textSize="12dp"
-                app:layout_constraintLeft_toLeftOf="@id/txt_info"
-                app:layout_constraintRight_toRightOf="@id/txt_info"
-                app:layout_constraintTop_toBottomOf="@id/txt_info" />
-
-            <TextView
-                android:id="@+id/txt_nickname"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="34dp"
-                android:text="닉네임"
-                android:textColor="@color/text_color_primary"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="@id/txt_info"
-                app:layout_constraintRight_toRightOf="@id/txt_info"
-                app:layout_constraintTop_toBottomOf="@id/txt_sub_info" />
-
-            <EditText
-                android:id="@+id/edit_text_nickname"
-                android:layout_width="0dp"
-                android:layout_height="33dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/round_border_background"
-                android:hint="닉네임을 입력해주세요"
-                android:paddingHorizontal="12dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/text_color_hint"
-                android:textSize="12dp"
-                android:maxLines="1"
-                app:layout_constraintLeft_toLeftOf="@id/txt_sub_info"
-                app:layout_constraintRight_toLeftOf="@id/btn_check_nickname"
-                app:layout_constraintTop_toBottomOf="@id/txt_nickname" />
-
-            <Button
-                android:id="@+id/btn_check_nickname"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:background="@drawable/round_button_background"
-                android:backgroundTint="@color/gray1"
-                android:text="중복확인"
-                android:textSize="12dp"
-                app:backgroundTint="@null"
-                app:layout_constraintBottom_toBottomOf="@id/edit_text_nickname"
-                app:layout_constraintLeft_toRightOf="@id/edit_text_nickname"
-                app:layout_constraintRight_toRightOf="@id/txt_info"
-                app:layout_constraintTop_toTopOf="@id/edit_text_nickname" />
-
-            <TextView
-                android:id="@+id/txt_nickname_info"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="2dp"
-                android:text="영어, 숫자만 사용하여 최대 10자"
-                android:textColor="@color/text_color_primary"
-                android:textSize="10dp"
-                app:layout_constraintLeft_toLeftOf="@id/txt_info"
-                app:layout_constraintRight_toRightOf="@id/txt_info"
-                app:layout_constraintTop_toBottomOf="@id/edit_text_nickname" />
-
-            <TextView
-                android:id="@+id/txt_nation"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="국적"
-                android:textColor="@color/text_color_primary"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="@id/txt_info"
-                app:layout_constraintRight_toRightOf="@id/txt_info"
-                app:layout_constraintTop_toBottomOf="@id/txt_nickname_info" />
-
-            <Spinner
-                android:id="@+id/dropdown_nation"
-                android:layout_width="0dp"
-                android:layout_height="33dp"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/round_border_background"
-                android:paddingHorizontal="12dp"
-                app:layout_constraintLeft_toLeftOf="@id/txt_info"
-                app:layout_constraintRight_toRightOf="@id/txt_info"
-                app:layout_constraintTop_toBottomOf="@id/txt_nation" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/ic_login_updown"
-                app:layout_constraintBottom_toBottomOf="@id/dropdown_nation"
-                app:layout_constraintRight_toRightOf="@id/dropdown_nation"
-                app:layout_constraintTop_toTopOf="@id/dropdown_nation" />
-
-            <TextView
-                android:id="@+id/text_language"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="23dp"
-                android:text="언어"
-                android:textColor="@color/text_color_primary"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="@id/txt_info"
-                app:layout_constraintRight_toRightOf="@id/txt_info"
-                app:layout_constraintTop_toBottomOf="@id/dropdown_nation" />
-
-            <Spinner
-                android:id="@+id/dropdown_language"
-                android:layout_width="0dp"
-                android:layout_height="33dp"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/round_border_background"
-                android:paddingHorizontal="12dp"
-                app:layout_constraintLeft_toLeftOf="@id/txt_info"
-                app:layout_constraintRight_toRightOf="@id/txt_nickname_info"
-                app:layout_constraintTop_toBottomOf="@id/text_language" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/ic_login_updown"
-                app:layout_constraintBottom_toBottomOf="@id/dropdown_language"
-                app:layout_constraintRight_toRightOf="@id/dropdown_language"
-                app:layout_constraintTop_toTopOf="@id/dropdown_language" />
-
-            <TextView
-                android:id="@+id/txt_interest"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="관심사"
-                android:textColor="@color/text_color_primary"
-                android:textSize="14dp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="@id/txt_info"
-                app:layout_constraintRight_toLeftOf="@id/btn_select_interest"
-                app:layout_constraintTop_toBottomOf="@id/dropdown_language" />
-
-            <LinearLayout
-                android:id="@+id/btn_select_interest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.onClickSelectInterestButton()}"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="@id/txt_interest"
-                app:layout_constraintLeft_toRightOf="@id/txt_interest"
-                app:layout_constraintRight_toRightOf="@id/txt_info"
-                app:layout_constraintTop_toTopOf="@id/txt_interest">
+                android:layout_marginTop="56.5dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txt_info"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="선택하기"
-                    android:textColor="@color/text_color_button"
-                    android:textSize="12dp" />
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:text="간편하게 가입하고\n와글와글 서비스를 이용하세요!"
+                    android:textColor="@color/black"
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_sub_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3.5dp"
+                    android:text="와글와글은 닉네임으로 간편한 회원가입이 가능합니다."
+                    android:textColor="@color/text_color_hint"
+                    android:textSize="12dp"
+                    app:layout_constraintLeft_toLeftOf="@id/txt_info"
+                    app:layout_constraintRight_toRightOf="@id/txt_info"
+                    app:layout_constraintTop_toBottomOf="@id/txt_info" />
+
+                <TextView
+                    android:id="@+id/txt_nickname"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="34dp"
+                    android:text="닉네임"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="@id/txt_info"
+                    app:layout_constraintRight_toRightOf="@id/txt_info"
+                    app:layout_constraintTop_toBottomOf="@id/txt_sub_info" />
+
+                <EditText
+                    android:id="@+id/edit_text_nickname"
+                    android:layout_width="0dp"
+                    android:layout_height="33dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/round_border_background"
+                    android:hint="닉네임을 입력해주세요"
+                    android:maxLines="1"
+                    android:paddingHorizontal="12dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_color_hint"
+                    android:textSize="12dp"
+                    app:layout_constraintLeft_toLeftOf="@id/txt_sub_info"
+                    app:layout_constraintRight_toLeftOf="@id/btn_check_nickname"
+                    app:layout_constraintTop_toBottomOf="@id/txt_nickname" />
+
+                <Button
+                    android:id="@+id/btn_check_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:background="@drawable/round_button_background"
+                    android:backgroundTint="@color/gray1"
+                    android:text="중복확인"
+                    android:textSize="12dp"
+                    app:backgroundTint="@null"
+                    app:layout_constraintBottom_toBottomOf="@id/edit_text_nickname"
+                    app:layout_constraintLeft_toRightOf="@id/edit_text_nickname"
+                    app:layout_constraintRight_toRightOf="@id/txt_info"
+                    app:layout_constraintTop_toTopOf="@id/edit_text_nickname" />
+
+                <TextView
+                    android:id="@+id/txt_nickname_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="2dp"
+                    android:text="영어, 숫자만 사용하여 최대 10자"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="10dp"
+                    app:layout_constraintLeft_toLeftOf="@id/txt_info"
+                    app:layout_constraintRight_toRightOf="@id/txt_info"
+                    app:layout_constraintTop_toBottomOf="@id/edit_text_nickname" />
+
+                <TextView
+                    android:id="@+id/txt_nation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="국적"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="@id/txt_info"
+                    app:layout_constraintRight_toRightOf="@id/txt_info"
+                    app:layout_constraintTop_toBottomOf="@id/txt_nickname_info" />
+
+                <Spinner
+                    android:id="@+id/dropdown_nation"
+                    android:layout_width="0dp"
+                    android:layout_height="33dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/round_border_background"
+                    android:paddingHorizontal="12dp"
+                    app:layout_constraintLeft_toLeftOf="@id/txt_info"
+                    app:layout_constraintRight_toRightOf="@id/txt_info"
+                    app:layout_constraintTop_toBottomOf="@id/txt_nation" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_login_go_b" />
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_login_updown"
+                    app:layout_constraintBottom_toBottomOf="@id/dropdown_nation"
+                    app:layout_constraintRight_toRightOf="@id/dropdown_nation"
+                    app:layout_constraintTop_toTopOf="@id/dropdown_nation" />
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/text_language"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="23dp"
+                    android:text="언어"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="@id/txt_info"
+                    app:layout_constraintRight_toRightOf="@id/txt_info"
+                    app:layout_constraintTop_toBottomOf="@id/dropdown_nation" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list_interest"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="9dp"
-                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:layout_constraintLeft_toLeftOf="@id/txt_info"
-                app:layout_constraintRight_toRightOf="@id/txt_info"
-                app:layout_constraintTop_toBottomOf="@id/txt_interest"
-                tools:itemCount="3"
-                tools:listitem="@layout/interest_item_view" />
+                <Spinner
+                    android:id="@+id/dropdown_language"
+                    android:layout_width="0dp"
+                    android:layout_height="33dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/round_border_background"
+                    android:paddingHorizontal="12dp"
+                    app:layout_constraintLeft_toLeftOf="@id/txt_info"
+                    app:layout_constraintRight_toRightOf="@id/txt_nickname_info"
+                    app:layout_constraintTop_toBottomOf="@id/text_language" />
 
-            <Button
-                android:id="@+id/btn_register"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="34.5dp"
-                android:background="@drawable/round_button_background"
-                android:backgroundTint="@color/gray1"
-                android:text="가입하기"
-                android:textColor="@color/white"
-                app:backgroundTint="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/list_interest" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_login_updown"
+                    app:layout_constraintBottom_toBottomOf="@id/dropdown_language"
+                    app:layout_constraintRight_toRightOf="@id/dropdown_language"
+                    app:layout_constraintTop_toTopOf="@id/dropdown_language" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+                <TextView
+                    android:id="@+id/txt_interest"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:text="관심사"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="@id/txt_info"
+                    app:layout_constraintRight_toLeftOf="@id/btn_select_interest"
+                    app:layout_constraintTop_toBottomOf="@id/dropdown_language" />
+
+                <LinearLayout
+                    android:id="@+id/btn_select_interest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onClickSelectInterestButton()}"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@id/txt_interest"
+                    app:layout_constraintLeft_toRightOf="@id/txt_interest"
+                    app:layout_constraintRight_toRightOf="@id/txt_info"
+                    app:layout_constraintTop_toTopOf="@id/txt_interest">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="선택하기"
+                        android:textColor="@color/text_color_button"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_login_go_b" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_interest"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:layout_constraintBottom_toTopOf="@id/space"
+                    app:layout_constraintLeft_toLeftOf="@id/txt_info"
+                    app:layout_constraintRight_toRightOf="@id/txt_info"
+                    app:layout_constraintTop_toBottomOf="@id/txt_interest"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/interest_item_view" />
+
+                <Space
+                    android:id="@+id/space"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toTopOf="@id/btn_register"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/list_interest"
+                    app:layout_constraintVertical_weight="1" />
+
+                <Button
+                    android:id="@+id/btn_register"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginBottom="34.5dp"
+                    android:background="@drawable/round_button_background"
+                    android:backgroundTint="@color/gray1"
+                    android:text="가입하기"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@null"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/space" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
