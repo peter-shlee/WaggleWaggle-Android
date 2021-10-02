@@ -26,14 +26,22 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initBinding()
+        observe()
+    }
 
+    private fun initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         binding.listInterest.adapter = adapter
         setLayoutManager()
+    }
 
-        observe()
+    private fun setLayoutManager() {
+        val layoutManager = FlexboxLayoutManager(this)
+        layoutManager.flexDirection = FlexDirection.ROW
+        binding.listInterest.layoutManager = layoutManager
     }
 
     private fun observe() {
@@ -41,12 +49,6 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.selectedInterests.observe(this) { onSelectedInterestsChanged(it) }
         viewModel.languages.observe(this) { onLanguagesLoaded(it) }
         viewModel.nations.observe(this) { onNationsLoaded(it) }
-    }
-
-    private fun setLayoutManager() {
-        val layoutManager = FlexboxLayoutManager(this)
-        layoutManager.flexDirection = FlexDirection.ROW
-        binding.listInterest.layoutManager = layoutManager
     }
 
     private fun showSelectInterestsDialog() {

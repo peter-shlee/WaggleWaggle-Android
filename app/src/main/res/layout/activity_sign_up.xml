@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="com.somasoma.speakworld.domain.auth.sign_up.SignUpViewModel.InputState" />
+
         <variable
             name="viewModel"
             type="com.somasoma.speakworld.domain.auth.sign_up.SignUpViewModel" />
@@ -103,15 +105,16 @@
                 <EditText
                     android:id="@+id/edit_text_nickname"
                     android:layout_width="0dp"
-                    android:layout_height="33dp"
+                    android:layout_height="36dp"
                     android:layout_marginTop="6dp"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/round_border_background"
+                    android:background="@{viewModel.nicknameInputState == InputState.POSITIVE ? @drawable/round_border_positive_background : viewModel.nicknameInputState == InputState.NEGATIVE ? @drawable/round_border_negative_background : @drawable/round_border_background}"
                     android:hint="닉네임을 입력해주세요"
                     android:maxLines="1"
                     android:paddingHorizontal="12dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/text_color_hint"
+                    android:onTextChanged="@{viewModel.onNicknameChanged}"
                     android:textSize="12dp"
                     app:layout_constraintLeft_toLeftOf="@id/txt_sub_info"
                     app:layout_constraintRight_toLeftOf="@id/btn_check_nickname"
@@ -122,9 +125,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:background="@drawable/round_button_background"
-                    android:backgroundTint="@color/gray1"
+                    android:backgroundTint="@{btnCheckNickname.enabled ? @color/point_blue : @color/gray1}"
                     android:text="중복확인"
                     android:textSize="12dp"
+                    android:enabled="@{viewModel.nicknameInputState == InputState.ENABLED ? true : false}"
+                    android:textColor="@color/white"
                     app:backgroundTint="@null"
                     app:layout_constraintBottom_toBottomOf="@id/edit_text_nickname"
                     app:layout_constraintLeft_toRightOf="@id/edit_text_nickname"
@@ -138,8 +143,8 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="2dp"
-                    android:text="영어, 숫자만 사용하여 최대 10자"
-                    android:textColor="@color/text_color_primary"
+                    android:text="@{viewModel.showDuplicateNicknameText ? `중복된 닉네임 입니다.` : `영어, 한글, 숫자를 사용하여 최대 8자`}"
+                    android:textColor="@{viewModel.nicknameInputState == InputState.NEGATIVE ? @color/point_red : @color/text_color_primary}"
                     android:textSize="10dp"
                     app:layout_constraintLeft_toLeftOf="@id/txt_info"
                     app:layout_constraintRight_toRightOf="@id/txt_info"
@@ -161,7 +166,7 @@
                 <Spinner
                     android:id="@+id/dropdown_nation"
                     android:layout_width="0dp"
-                    android:layout_height="33dp"
+                    android:layout_height="36dp"
                     android:layout_marginTop="6dp"
                     android:background="@drawable/round_border_background"
                     android:paddingHorizontal="12dp"
@@ -195,7 +200,7 @@
                 <Spinner
                     android:id="@+id/dropdown_language"
                     android:layout_width="0dp"
-                    android:layout_height="33dp"
+                    android:layout_height="36dp"
                     android:layout_marginTop="6dp"
                     android:background="@drawable/round_border_background"
                     android:paddingHorizontal="12dp"
