@@ -40,6 +40,10 @@ class SignUpViewModel @Inject constructor(application: Application): SelectInter
         showSelectInterestsDialogEvent.call()
     }
 
+    fun onClickCheckNicknameDuplicatedButton() {
+        _nicknameInputState.value = InputState.POSITIVE
+    }
+
     fun onNicknameChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         _nicknameInputState.value = InputState.DISABLED
         _showDuplicateNicknameText.value = false
@@ -50,6 +54,7 @@ class SignUpViewModel @Inject constructor(application: Application): SelectInter
     private fun validateNickname(nickname: String) {
         if (nickname.isBlank()) {
             _nicknameInputState.value = InputState.DISABLED
+            return
         }
 
         if (nicknamePattern.matcher(nickname).matches()) {
