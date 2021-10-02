@@ -57,6 +57,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.36"
     kapt "com.google.dagger:hilt-android-compiler:2.36"
 
+    implementation "androidx.security:security-crypto:1.0.0"
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation 'com.jakewharton.timber:timber:4.7.1'
 

@@ -39,7 +39,7 @@ class InterestListAdapter(
         ) {
             val isSelected = interestKeyword in viewModel.getSelectedInterests()
 
-            fun changeItemViewBackground() {
+            fun changeItemViewBackground(isSelected: Boolean) {
                 binding.backgroundType = if (isSelected) {
                     InterestItemView.BackgroundType.YELLOW
                 } else {
@@ -48,19 +48,23 @@ class InterestListAdapter(
             }
 
             binding.text = interestKeyword
+
             binding.backgroundType = if (isSelected) {
                 InterestItemView.BackgroundType.FILLED_YELLOW
             } else {
                 InterestItemView.BackgroundType.YELLOW
             }
+
             binding.clickListener = InterestItemClickListener {
-                if (isSelected) {
+                val currentSelectedState =
+                    binding.backgroundType == InterestItemView.BackgroundType.FILLED_YELLOW
+                if (currentSelectedState) {
                     viewModel.removeSelectedInterests(interestKeyword)
                 } else {
                     viewModel.addSelectedInterests(interestKeyword)
                 }
-                changeItemViewBackground()
-                onItemClick(it, isSelected)
+                changeItemViewBackground(currentSelectedState)
+                onItemClick(it, currentSelectedState)
             }
 
             binding.executePendingBindings()
