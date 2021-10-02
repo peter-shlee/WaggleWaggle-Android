@@ -92,7 +92,7 @@ open class SelectInterestsDialogFragment : BottomSheetDialogFragment() {
 
     private fun initViewModel() {
         activityViewModel?.let {
-            val selectedInterests = it.getSelectedInterests()
+            val selectedInterests = it.selectedInterests.value
             selectedInterests?.let {
                 viewModel.setSelectedInterests(selectedInterests)
             }
