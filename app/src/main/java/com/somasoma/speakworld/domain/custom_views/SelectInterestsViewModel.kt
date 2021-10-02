@@ -15,8 +15,4 @@ open class SelectInterestsViewModel @Inject constructor(application: Application
     fun resetSelectedInterests(newSelectedInterests: Set<String>) {
         _selectedInterests.value = newSelectedInterests.toMutableSet()
     }
-
-    fun getSelectedInterests(): Set<String>? {
-        return selectedInterests.value
-    }
 }

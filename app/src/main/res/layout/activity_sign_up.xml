@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <import type="com.somasoma.speakworld.domain.auth.sign_up.SignUpViewModel.InputState" />
 
         <variable
@@ -262,6 +264,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="9dp"
+                    android:visibility="@{viewModel.selectedInterests.empty ? View.GONE : View.VISIBLE}"
                     app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:layout_constraintBottom_toTopOf="@id/space"
                     app:layout_constraintLeft_toLeftOf="@id/txt_info"
@@ -269,6 +272,18 @@
                     app:layout_constraintTop_toBottomOf="@id/txt_interest"
                     tools:itemCount="3"
                     tools:listitem="@layout/interest_item_view" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="관심사를 선택해 주세요."
+                    android:textColor="@color/point_red"
+                    android:textSize="12dp"
+                    android:visibility="@{viewModel.selectedInterests.empty ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintLeft_toLeftOf="@id/txt_info"
+                    app:layout_constraintRight_toRightOf="@id/txt_info"
+                    app:layout_constraintTop_toTopOf="@id/list_interest" />
+
 
                 <Space
                     android:id="@+id/space"
