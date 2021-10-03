@@ -36,4 +36,6 @@ class SharedPreferenceHelper @Inject constructor(private val sharedPreferences: 
 
     fun putStringSet(key: String, value: Set<String>) =
         sharedPreferences.edit().putStringSet(key, value).apply()
+
+    fun remove(key: String) = sharedPreferences.edit().remove(key).apply()
 }
