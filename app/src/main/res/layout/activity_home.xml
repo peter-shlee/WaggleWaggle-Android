@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.somasoma.speakworld.domain.home.HomeViewModel" />
+            type="com.somasoma.wagglewaggle.domain.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
