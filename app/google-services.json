@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "736537997052",
+    "firebase_url": "https://speak-world-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "speak-world",
     "storage_bucket": "speak-world.appspot.com"
   },
@@ -35,7 +36,36 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "736537997052-kv7gt64c6nlninmg0spo64a46dv3qb0n.apps.googleusercontent.com",
+              "client_id": "736537997052-bjh386l6rt0gdusm6d88poudaub0duj2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736537997052:android:412825be5e002d2969f179",
+        "android_client_info": {
+          "package_name": "com.somasoma.wagglewaggle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "736537997052-kv7gt64c6nlninmg0spo64a46dv3qb0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAedWeIWIv6wXTa6VVPHqAZbxLiavuATbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "736537997052-bjh386l6rt0gdusm6d88poudaub0duj2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

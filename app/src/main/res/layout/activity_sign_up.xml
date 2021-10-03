@@ -5,11 +5,11 @@
 
         <import type="android.view.View" />
 
-        <import type="com.somasoma.speakworld.domain.auth.sign_up.SignUpViewModel.InputState" />
+        <import type="com.somasoma.wagglewaggle.domain.auth.sign_up.SignUpViewModel.InputState" />
 
         <variable
             name="viewModel"
-            type="com.somasoma.speakworld.domain.auth.sign_up.SignUpViewModel" />
+            type="com.somasoma.wagglewaggle.domain.auth.sign_up.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.somasoma.speakworld.domain.setting.change_language.SettingChangeLanguageViewModel" />
+            type="com.somasoma.wagglewaggle.domain.setting.change_language.SettingChangeLanguageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

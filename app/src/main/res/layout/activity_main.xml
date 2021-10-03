@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.somasoma.speakworld.domain.home.MainViewModel" />
+            type="com.somasoma.wagglewaggle.domain.home.MainViewModel" />
     </data>
 
     <RelativeLayout
