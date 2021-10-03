@@ -1,9 +1,9 @@
 package com.somasoma.wagglewaggle.core.di.hilt.module
 
 import com.somasoma.wagglewaggle.core.repository.AuthRepository
+import com.somasoma.wagglewaggle.core.repository.AuthRepositoryImpl
 import com.somasoma.wagglewaggle.core.repository.AvatarsRepository
 import com.somasoma.wagglewaggle.core.repository.UserRepository
-import com.somasoma.wagglewaggle.core.repository.firebase_repository.FirebaseAuthRepository
 import com.somasoma.wagglewaggle.core.repository.firebase_repository.FirebaseAvatarsRepository
 import com.somasoma.wagglewaggle.core.repository.firebase_repository.FirebaseUserRepository
 import dagger.Binds
@@ -21,5 +21,5 @@ abstract class RemoteModule {
     abstract fun bindUserRepository(firebaseUserRepository: FirebaseUserRepository): UserRepository
 
     @Binds
-    abstract fun bindAuthRepository(firebaseAuthRepository: FirebaseAuthRepository): AuthRepository
+    abstract fun bindAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository
 }
