@@ -62,7 +62,7 @@ class SignUpViewModel @Inject constructor(
     fun onNicknameChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         _nicknameInputState.value = InputState.DISABLED
         _showDuplicateNicknameText.value = false
-        nickname = s.toString()
+        nickname = s.toString().trim()
         validateNickname(nickname)
     }
 
