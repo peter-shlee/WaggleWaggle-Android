@@ -8,14 +8,13 @@ import androidx.databinding.DataBindingUtil
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.somasoma.wagglewaggle.R
-import com.somasoma.wagglewaggle.core.ApplicationService
 import com.somasoma.wagglewaggle.core.usecase.UserConnectedStateUseCase
 import com.somasoma.wagglewaggle.databinding.ActivitySignInAndSignUpBinding
-import com.somasoma.wagglewaggle.domain.auth.sign_up_set_name.SignUpSetNameActivity
-import com.somasoma.wagglewaggle.domain.home.HomeActivity
+import com.somasoma.wagglewaggle.domain.auth.sign_up.SignUpActivity
+import com.somasoma.wagglewaggle.domain.home.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -48,27 +47,28 @@ class SignInAndSignUpActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            updateUI(user, false)
-        }
+        AuthUI.getInstance().signOut(this).addOnCompleteListener(OnCompleteListener {
 
-        val intent = Intent(this, ApplicationService::class.java)
-        startService(intent)
+        })
+//        FirebaseAuth.getInstance().currentUser?.getIdToken(false)?.addOnCompleteListener(
+//            OnCompleteListener {
+//                if (it.isSuccessful) {
+//                    it.result?.token?.let { token ->
+//                        viewModel.firebaseUserToken = token
+//                            viewModel.getAccessToken()
+//                    }
+//                }
+//            })
+
+        // TODO 유저 접속상태 체크를 위해 사용했던 서비스인데, 이제 접속상태 체크 방식이 바뀌어 삭제해야 함.
+//        val intent = Intent(this, ApplicationService::class.java)
+//        startService(intent)
     }
 
     private fun observe() {
         viewModel.navigateToSignInPageEvent.observe(this) { navigateToFireBaseAuthSignIn() }
-    }
-
-    private fun updateUI(user: FirebaseUser?, isNewUser: Boolean) {
-        user?.let {
-            if (isNewUser) {
-                navigateToSignUpSetNameActivity()
-            } else {
-                navigateToHomeActivity()
-            }
-        }
+        viewModel.navigateToMainEvent.observe(this) { navigateToMainActivity() }
+        viewModel.navigateToSignUpEvent.observe(this) { navigateToSignUpActivity() }
     }
 
     private fun navigateToFireBaseAuthSignIn() {
@@ -85,37 +85,40 @@ class SignInAndSignUpActivity : AppCompatActivity() {
         signInLauncher.launch(signInIntent)
     }
 
-    private fun navigateToSignUpSetNameActivity() {
-        val intent = Intent(this, SignUpSetNameActivity::class.java)
-        startActivity(intent)
+    private fun navigateToMainActivity() {
+        val navigateIntent = Intent(this, MainActivity::class.java)
+        navigateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        navigateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        navigateIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(navigateIntent)
     }
 
-    private fun navigateToHomeActivity() {
-        setCurrentUserOnline()
-
-        val intent = Intent(this, HomeActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
+    private fun navigateToSignUpActivity() {
+        val navigateIntent = Intent(this, SignUpActivity::class.java)
+        startActivity(navigateIntent)
     }
 
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
-        val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
             // Successfully signed in
-            val user = FirebaseAuth.getInstance().currentUser
-            Timber.d(user.toString())
-            val isNewUser: Boolean = response?.isNewUser ?: false
-            updateUI(user, isNewUser)
+            Timber.d(FirebaseAuth.getInstance().currentUser.toString())
+            FirebaseAuth.getInstance().currentUser?.getIdToken(false)?.addOnCompleteListener(
+                OnCompleteListener {
+                    if (it.isSuccessful) {
+                        it.result?.token?.let { token ->
+                            viewModel.firebaseUserToken = token
+                            viewModel.getAccessToken()
+                        }
+                    }
+                })
         } else {
             Timber.w("signInWithCredential:failure")
-            // error dialog 띄우기
-            updateUI(null, false)
+            // TODO: error dialog 띄우기
         }
     }
 
     private fun setCurrentUserOnline() {
+        // TODO 유저 접속상태 체크를 위해 사용했던 서비스인데, 이제 접속상태 체크 방식이 바뀌어 삭제해야 함.
         userConnectedStateUseCase.registerOnUserConnectedStateCallback {}
         userConnectedStateUseCase.postCurrentUserOnline()
     }

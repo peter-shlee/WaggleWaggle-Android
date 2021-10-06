@@ -9,9 +9,9 @@ import com.somasoma.wagglewaggle.core.repository.firebase_repository.FirebaseUse
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.components.SingletonComponent
 
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 @Module
 abstract class RemoteModule {
     @Binds

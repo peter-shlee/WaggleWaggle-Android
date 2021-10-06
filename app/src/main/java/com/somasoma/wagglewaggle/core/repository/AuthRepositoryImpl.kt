@@ -16,7 +16,8 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val application: Application,
-    @ForAuthAPI private val authRetrofits: Pair<Retrofit, Retrofit>
+    @ForAuthAPI private val authRetrofits: Pair<Retrofit, Retrofit>,
+    private val userConnectedStateUseCase: UserConnectedStateUseCase
 ) : AuthRepository {
     companion object {
         private const val FIREBASE_URL =
@@ -25,9 +26,6 @@ class AuthRepositoryImpl @Inject constructor(
 
     private val publicAuthService = authRetrofits.second.create(AuthService::class.java)
     private val authService = authRetrofits.first.create(AuthService::class.java)
-
-    @Inject
-    lateinit var userConnectedStateUseCase: UserConnectedStateUseCase
 
     override fun signOut(
         onSuccessCallback: () -> Unit,

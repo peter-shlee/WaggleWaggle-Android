@@ -3,6 +3,7 @@
     package="com.somasoma.wagglewaggle">
 
     <application
+        android:usesCleartextTraffic="true"
         android:name="com.somasoma.wagglewaggle.core.SpeakWorldApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
