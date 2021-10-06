@@ -11,19 +11,14 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.somasoma.wagglewaggle.R
-import com.somasoma.wagglewaggle.domain.usecase.UserConnectedStateUseCase
 import com.somasoma.wagglewaggle.databinding.ActivitySignInAndSignUpBinding
 import com.somasoma.wagglewaggle.presentation.auth.sign_up.SignUpActivity
 import com.somasoma.wagglewaggle.presentation.home.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignInAndSignUpActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var userConnectedStateUseCase: UserConnectedStateUseCase
 
     private val viewModel: SignInAndSignUpViewModel by viewModels()
 
@@ -56,10 +51,6 @@ class SignInAndSignUpActivity : AppCompatActivity() {
                     }
                 }
             })
-
-        // TODO 유저 접속상태 체크를 위해 사용했던 서비스인데, 이제 접속상태 체크 방식이 바뀌어 삭제해야 함.
-//        val intent = Intent(this, ApplicationService::class.java)
-//        startService(intent)
     }
 
     private fun observe() {
@@ -112,11 +103,5 @@ class SignInAndSignUpActivity : AppCompatActivity() {
             Timber.w("signInWithCredential:failure")
             // TODO: error dialog 띄우기
         }
-    }
-
-    private fun setCurrentUserOnline() {
-        // TODO 유저 접속상태 체크를 위해 사용했던 서비스인데, 이제 접속상태 체크 방식이 바뀌어 삭제해야 함.
-        userConnectedStateUseCase.registerOnUserConnectedStateCallback {}
-        userConnectedStateUseCase.postCurrentUserOnline()
     }
 }

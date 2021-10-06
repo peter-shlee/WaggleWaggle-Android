@@ -19,12 +19,6 @@
         <activity android:name="com.somasoma.wagglewaggle.presentation.auth.sign_up.SignUpActivity"
             android:exported="true"/>
 
-        <service
-            android:name="com.somasoma.wagglewaggle.core.ApplicationService"
-            android:enabled="true"
-            android:exported="false"
-            android:stopWithTask="false" />
-
         <activity
             android:name="com.somasoma.wagglewaggle.presentation.setting.change_language.SettingChangeLanguageActivity"
             android:windowSoftInputMode="adjustResize" />
