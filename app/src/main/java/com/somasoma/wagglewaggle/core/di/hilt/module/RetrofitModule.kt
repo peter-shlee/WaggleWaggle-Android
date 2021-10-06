@@ -2,6 +2,7 @@ package com.somasoma.wagglewaggle.core.di.hilt.module
 
 import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForAccessHttp
 import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForAuthAPI
+import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForMemberAPI
 import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForPublicHttp
 import dagger.Module
 import dagger.Provides
@@ -16,6 +17,9 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class RetrofitModule {
+    companion object {
+        const val API_SERVER_BASE_URL = "http://13.125.56.68:8080/"
+    }
 
     @Provides
     @Singleton
@@ -23,7 +27,7 @@ class RetrofitModule {
     fun provideAuthRetrofit(@ForAccessHttp accessHttpClient: OkHttpClient, @ForPublicHttp publicHttpClient: OkHttpClient): Pair<Retrofit, Retrofit> {
         val retrofit =
             Retrofit.Builder()
-                .baseUrl("")
+                .baseUrl(API_SERVER_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(accessHttpClient)
@@ -31,7 +35,7 @@ class RetrofitModule {
 
         val publicRetrofit =
             Retrofit.Builder()
-                .baseUrl("")
+                .baseUrl(API_SERVER_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(publicHttpClient)
@@ -40,4 +44,15 @@ class RetrofitModule {
         return retrofit to publicRetrofit
     }
 
+    @Provides
+    @Singleton
+    @ForMemberAPI
+    fun provideMemberRetrofit(@ForAccessHttp accessHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(API_SERVER_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(accessHttpClient)
+            .build()
+    }
 }

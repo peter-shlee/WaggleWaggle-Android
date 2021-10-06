@@ -48,7 +48,7 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.showSelectInterestsDialogEvent.observe(this) { showSelectInterestsDialog() }
         viewModel.selectedInterests.observe(this) { onSelectedInterestsChanged(it) }
         viewModel.languages.observe(this) { onLanguagesLoaded(it) }
-        viewModel.nations.observe(this) { onNationsLoaded(it) }
+        viewModel.countries.observe(this) { onNationsLoaded(it) }
     }
 
     private fun showSelectInterestsDialog() {
@@ -63,12 +63,12 @@ class SignUpActivity : AppCompatActivity() {
         adapter.submitList(selectedInterests.toList())
     }
 
-    private fun onLanguagesLoaded(languages: List<String>) {
+    private fun onLanguagesLoaded(languages: List<String?>) {
         val languageSpinnerListener = getLanguageSpinnerListener(languages)
         initSpinner(binding.dropdownLanguage, languages, languageSpinnerListener)
     }
 
-    private fun getLanguageSpinnerListener(languages: List<String>) =
+    private fun getLanguageSpinnerListener(languages: List<String?>) =
         object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -84,12 +84,12 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
-    private fun onNationsLoaded(nations: List<String>) {
+    private fun onNationsLoaded(nations: List<String?>) {
         val nationSpinnerListener = getNationSpinnerListener(nations)
         initSpinner(binding.dropdownNation, nations, nationSpinnerListener)
     }
 
-    private fun getNationSpinnerListener(nations: List<String>) =
+    private fun getNationSpinnerListener(nations: List<String?>) =
         object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -107,7 +107,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun initSpinner(
         spinner: Spinner,
-        strings: List<String>,
+        strings: List<String?>,
         listener: AdapterView.OnItemSelectedListener
     ) {
         spinner.adapter = ArrayAdapter(this, R.layout.spinner_item, strings)

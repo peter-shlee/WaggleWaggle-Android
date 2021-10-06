@@ -23,20 +23,8 @@ class NetworkUtil @Inject constructor(
         val currentTime = System.currentTimeMillis()
         val authTokenExpiredIn =
             sharedPreferenceHelper.getLong(PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN)
-        val refreshTokenExpiredIn =
-            sharedPreferenceHelper.getLong(PreferenceConstant.REFRESH_TOKEN_EXPIRED_IN)
 
-        if (currentTime >= refreshTokenExpiredIn) {
-            // 로그아웃
-            sharedPreferenceHelper.remove(PreferenceConstant.ACCESS_TOKEN)
-            sharedPreferenceHelper.remove(PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN)
-            sharedPreferenceHelper.remove(PreferenceConstant.REFRESH_TOKEN)
-            sharedPreferenceHelper.remove(PreferenceConstant.REFRESH_TOKEN_EXPIRED_IN)
-            return
-        }
-
-        if (currentTime >= authTokenExpiredIn) {
-            // 토큰 재발급 후 apiCall 호출
+        if (currentTime >= authTokenExpiredIn) { // access token 만료, 토큰 재발급 후 apiCall 호출
             apiCall(
                 postRefreshUseCase.postRefresh(
                     RefreshRequest(
@@ -56,8 +44,8 @@ class NetworkUtil @Inject constructor(
                     }
                 }
 
-                onErrorCallback = {
-                    // 로그아웃
+                onErrorCallback = { // refresh token 만료
+                    // TODO: 로그아웃 후 인트로 화면으로 이동
                     sharedPreferenceHelper.remove(PreferenceConstant.ACCESS_TOKEN)
                     sharedPreferenceHelper.remove(PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN)
                     sharedPreferenceHelper.remove(PreferenceConstant.REFRESH_TOKEN)

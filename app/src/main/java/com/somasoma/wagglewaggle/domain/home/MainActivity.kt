@@ -1,5 +1,6 @@
 package com.somasoma.wagglewaggle.domain.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowInsets
 import androidx.activity.viewModels
@@ -8,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.core.dp2Px
 import com.somasoma.wagglewaggle.databinding.ActivityMainBinding
+import com.somasoma.wagglewaggle.domain.setting.SettingActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +29,15 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+    }
+
+    fun observe() {
+        viewModel.navigateToSettingEvent.observe(this) { navigateToSettingActivity() }
+    }
+
+    private fun navigateToSettingActivity() {
+        val navigateIntent = Intent(this, SettingActivity::class.java)
+        startActivity(navigateIntent)
     }
 
     private fun initViewModel() {

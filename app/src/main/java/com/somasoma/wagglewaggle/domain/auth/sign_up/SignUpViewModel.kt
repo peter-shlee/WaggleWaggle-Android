@@ -3,23 +3,33 @@ package com.somasoma.wagglewaggle.domain.auth.sign_up
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.SingleLiveEvent
+import com.somasoma.wagglewaggle.core.usecase.GetCountryListUseCase
+import com.somasoma.wagglewaggle.core.usecase.GetLanguageListUseCase
 import com.somasoma.wagglewaggle.domain.custom_views.SelectInterestsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.disposables.CompositeDisposable
 import java.util.regex.Pattern
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(application: Application): SelectInterestsViewModel(application) {
+class SignUpViewModel @Inject constructor(
+    application: Application,
+    private val networkUtil: NetworkUtil,
+    private val getLanguageListUseCase: GetLanguageListUseCase,
+    private val getCountryListUseCase: GetCountryListUseCase
+) : SelectInterestsViewModel(application) {
     companion object {
         private const val NICKNAME_REGEX = "[A-Za-z|가-힣|ㄱ-ㅎ|ㅏ-ㅣ\\d\\s]{2,8}\$"
         private val nicknamePattern = Pattern.compile(NICKNAME_REGEX)
     }
 
-    private val _nations = MutableLiveData<List<String>>()
-    var nations: LiveData<List<String>> = _nations
-    private val _languages = MutableLiveData<List<String>>()
-    var languages: LiveData<List<String>> = _languages
+    private val compositeDisposable = CompositeDisposable()
+    private val _countries = MutableLiveData<List<String?>>()
+    var countries: LiveData<List<String?>> = _countries
+    private val _languages = MutableLiveData<List<String?>>()
+    var languages: LiveData<List<String?>> = _languages
     var selectedLanguage: String? = null
     var selectedNation: String? = null
     private val _nicknameInputState = MutableLiveData(InputState.DISABLED)
@@ -27,14 +37,19 @@ class SignUpViewModel @Inject constructor(application: Application): SelectInter
     private val _showDuplicateNicknameText = MutableLiveData(false)
     var showDuplicateNicknameText: LiveData<Boolean> = _showDuplicateNicknameText
     private var nickname: String = ""
+    val showSelectInterestsDialogEvent = SingleLiveEvent<Unit>()
 
     init {
-        _nations.value = listOf("대한민국", "미국", "영국")
-        _languages.value = listOf("한국어", "영어")
+        getLanguageList()
+        getCountryList()
+
         resetSelectedInterests(setOf("스포츠", "BTS", "엔터"))
     }
 
-    val showSelectInterestsDialogEvent = SingleLiveEvent<Unit>()
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.dispose()
+    }
 
     fun onClickSelectInterestButton() {
         showSelectInterestsDialogEvent.call()
@@ -61,6 +76,34 @@ class SignUpViewModel @Inject constructor(application: Application): SelectInter
             _nicknameInputState.value = InputState.ENABLED
         } else {
             _nicknameInputState.value = InputState.NEGATIVE
+        }
+    }
+
+    private fun getCountryList() {
+        networkUtil.restApiCall(getCountryListUseCase.getCountryList(), compositeDisposable) {
+            onSuccessCallback = {
+                it?.countries?.let {
+                    _countries.value = it
+                }
+            }
+
+            onErrorCallback = {
+
+            }
+        }
+    }
+
+    private fun getLanguageList() {
+        networkUtil.restApiCall(getLanguageListUseCase.getLanguageList(), compositeDisposable) {
+            onSuccessCallback = {
+                it?.languages?.let {
+                    _languages.value = it
+                }
+            }
+
+            onErrorCallback = {
+
+            }
         }
     }
 
