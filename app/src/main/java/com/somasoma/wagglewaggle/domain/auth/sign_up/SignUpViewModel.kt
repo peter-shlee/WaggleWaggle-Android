@@ -40,29 +40,8 @@ class SignUpViewModel @Inject constructor(
     val showSelectInterestsDialogEvent = SingleLiveEvent<Unit>()
 
     init {
-        networkUtil.restApiCall(getLanguageListUseCase.getLanguageList(), compositeDisposable) {
-            onSuccessCallback = {
-                it?.languages?.let {
-                    _languages.value = it
-                }
-            }
-
-            onErrorCallback = {
-
-            }
-        }
-
-        networkUtil.restApiCall(getCountryListUseCase.getCountryList(), compositeDisposable) {
-            onSuccessCallback = {
-                it?.countries?.let {
-                    _countries.value = it
-                }
-            }
-
-            onErrorCallback = {
-
-            }
-        }
+        getLanguageList()
+        getCountryList()
 
         resetSelectedInterests(setOf("스포츠", "BTS", "엔터"))
     }
@@ -97,6 +76,34 @@ class SignUpViewModel @Inject constructor(
             _nicknameInputState.value = InputState.ENABLED
         } else {
             _nicknameInputState.value = InputState.NEGATIVE
+        }
+    }
+
+    private fun getCountryList() {
+        networkUtil.restApiCall(getCountryListUseCase.getCountryList(), compositeDisposable) {
+            onSuccessCallback = {
+                it?.countries?.let {
+                    _countries.value = it
+                }
+            }
+
+            onErrorCallback = {
+
+            }
+        }
+    }
+
+    private fun getLanguageList() {
+        networkUtil.restApiCall(getLanguageListUseCase.getLanguageList(), compositeDisposable) {
+            onSuccessCallback = {
+                it?.languages?.let {
+                    _languages.value = it
+                }
+            }
+
+            onErrorCallback = {
+
+            }
         }
     }
 
