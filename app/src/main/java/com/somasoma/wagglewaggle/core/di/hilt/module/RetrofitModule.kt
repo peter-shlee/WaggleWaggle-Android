@@ -16,6 +16,9 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class RetrofitModule {
+    companion object {
+        const val API_SERVER_BASE_URL = "https://13.125.221.112/"
+    }
 
     @Provides
     @Singleton
@@ -23,7 +26,7 @@ class RetrofitModule {
     fun provideAuthRetrofit(@ForAccessHttp accessHttpClient: OkHttpClient, @ForPublicHttp publicHttpClient: OkHttpClient): Pair<Retrofit, Retrofit> {
         val retrofit =
             Retrofit.Builder()
-                .baseUrl("")
+                .baseUrl(API_SERVER_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(accessHttpClient)
@@ -31,7 +34,7 @@ class RetrofitModule {
 
         val publicRetrofit =
             Retrofit.Builder()
-                .baseUrl("")
+                .baseUrl(API_SERVER_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(publicHttpClient)
