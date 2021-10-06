@@ -3,7 +3,7 @@
 
     <data>
 
-        <import type="com.somasoma.wagglewaggle.domain.custom_views.InterestItemView.BackgroundType" />
+        <import type="com.somasoma.wagglewaggle.presentation.custom_views.InterestItemView.BackgroundType" />
 
         <variable
             name="backgroundType"
@@ -15,7 +15,7 @@
 
         <variable
             name="clickListener"
-            type="com.somasoma.wagglewaggle.domain.custom_views.InterestItemClickListener" />
+            type="com.somasoma.wagglewaggle.presentation.custom_views.InterestItemClickListener" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

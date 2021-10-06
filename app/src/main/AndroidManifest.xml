@@ -11,12 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SpeakWorld">
-        <activity android:name="com.somasoma.wagglewaggle.domain.follow.FollowerActivity" />
-        <activity android:name="com.somasoma.wagglewaggle.domain.home.MainActivity" />
-        <activity android:name="com.somasoma.wagglewaggle.domain.home.CreateWorldActivity" />
-        <activity android:name="com.somasoma.wagglewaggle.domain.profile.ProfileActivity" />
-        <activity android:name="com.somasoma.wagglewaggle.domain.setting.EditProfileActivity" />
-        <activity android:name="com.somasoma.wagglewaggle.domain.auth.sign_up.SignUpActivity"
+        <activity android:name="com.somasoma.wagglewaggle.presentation.follow.FollowerActivity" />
+        <activity android:name="com.somasoma.wagglewaggle.presentation.home.MainActivity" />
+        <activity android:name="com.somasoma.wagglewaggle.presentation.home.CreateWorldActivity" />
+        <activity android:name="com.somasoma.wagglewaggle.presentation.profile.ProfileActivity" />
+        <activity android:name="com.somasoma.wagglewaggle.presentation.setting.EditProfileActivity" />
+        <activity android:name="com.somasoma.wagglewaggle.presentation.auth.sign_up.SignUpActivity"
             android:exported="true"/>
 
         <service
@@ -26,20 +26,20 @@
             android:stopWithTask="false" />
 
         <activity
-            android:name="com.somasoma.wagglewaggle.domain.setting.change_language.SettingChangeLanguageActivity"
+            android:name="com.somasoma.wagglewaggle.presentation.setting.change_language.SettingChangeLanguageActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.somasoma.wagglewaggle.domain.setting.change_name.SettingChangeNameActivity"
+            android:name="com.somasoma.wagglewaggle.presentation.setting.change_name.SettingChangeNameActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.somasoma.wagglewaggle.domain.setting.SettingActivity" />
+        <activity android:name="com.somasoma.wagglewaggle.presentation.setting.SettingActivity" />
         <activity
-            android:name="com.somasoma.wagglewaggle.domain.auth.sign_up_set_language.SignUpSetLanguageActivity"
+            android:name="com.somasoma.wagglewaggle.presentation.auth.sign_up_set_language.SignUpSetLanguageActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.somasoma.wagglewaggle.domain.auth.sign_up_set_name.SignUpSetNameActivity"
+            android:name="com.somasoma.wagglewaggle.presentation.auth.sign_up_set_name.SignUpSetNameActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.somasoma.wagglewaggle.domain.home.HomeActivity" />
-        <activity android:name="com.somasoma.wagglewaggle.domain.auth.sign_in_and_sign_up.SignInAndSignUpActivity">
+        <activity android:name="com.somasoma.wagglewaggle.presentation.home.HomeActivity" />
+        <activity android:name="com.somasoma.wagglewaggle.presentation.auth.sign_in_and_sign_up.SignInAndSignUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
