@@ -47,18 +47,15 @@ class SignInAndSignUpActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        AuthUI.getInstance().signOut(this).addOnCompleteListener(OnCompleteListener {
-
-        })
-//        FirebaseAuth.getInstance().currentUser?.getIdToken(false)?.addOnCompleteListener(
-//            OnCompleteListener {
-//                if (it.isSuccessful) {
-//                    it.result?.token?.let { token ->
-//                        viewModel.firebaseUserToken = token
-//                            viewModel.getAccessToken()
-//                    }
-//                }
-//            })
+        FirebaseAuth.getInstance().currentUser?.getIdToken(false)?.addOnCompleteListener(
+            OnCompleteListener {
+                if (it.isSuccessful) {
+                    it.result?.token?.let { token ->
+                        viewModel.firebaseUserToken = token
+                            viewModel.getAccessToken()
+                    }
+                }
+            })
 
         // TODO 유저 접속상태 체크를 위해 사용했던 서비스인데, 이제 접속상태 체크 방식이 바뀌어 삭제해야 함.
 //        val intent = Intent(this, ApplicationService::class.java)

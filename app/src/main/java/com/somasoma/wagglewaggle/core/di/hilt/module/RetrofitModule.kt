@@ -2,6 +2,7 @@ package com.somasoma.wagglewaggle.core.di.hilt.module
 
 import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForAccessHttp
 import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForAuthAPI
+import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForMemberAPI
 import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForPublicHttp
 import dagger.Module
 import dagger.Provides
@@ -43,4 +44,15 @@ class RetrofitModule {
         return retrofit to publicRetrofit
     }
 
+    @Provides
+    @Singleton
+    @ForMemberAPI
+    fun provideMemberRetrofit(@ForAccessHttp accessHttpClient: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(API_SERVER_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(accessHttpClient)
+            .build()
+    }
 }
