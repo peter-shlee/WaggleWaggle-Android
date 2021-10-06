@@ -1,7 +1,7 @@
 package com.somasoma.wagglewaggle.core
 
-import com.somasoma.wagglewaggle.core.model.dto.auth.RefreshRequest
-import com.somasoma.wagglewaggle.core.usecase.PostRefreshUseCase
+import com.somasoma.wagglewaggle.data.model.dto.auth.RefreshRequest
+import com.somasoma.wagglewaggle.domain.usecase.PostRefreshUseCase
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

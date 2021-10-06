@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.somasoma.wagglewaggle.domain.home.MainViewModel" />
+            type="com.somasoma.wagglewaggle.presentation.home.MainViewModel" />
     </data>
 
     <RelativeLayout
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="1000dp"
-            tools:context=".domain.home.MainActivity">
+            tools:context=".presentation.home.MainActivity">
 
             <LinearLayout
                 android:id="@+id/top_bar"

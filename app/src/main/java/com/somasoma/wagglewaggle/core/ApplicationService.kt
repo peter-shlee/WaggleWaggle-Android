@@ -3,7 +3,7 @@ package com.somasoma.wagglewaggle.core
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.somasoma.wagglewaggle.core.usecase.UserConnectedStateUseCase
+import com.somasoma.wagglewaggle.domain.usecase.UserConnectedStateUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
