@@ -16,12 +16,18 @@ class SettingViewModel @Inject constructor(
 ) :
     AndroidViewModel(application) {
 
+    val navigateToPrevPageEvent = SingleLiveEvent<Unit>()
+
     val navigateToSignInAndSignOutEvent = SingleLiveEvent<Unit>()
     val signOutFailedEvent = SingleLiveEvent<Unit>()
     val deleteAccountFailedEvent = SingleLiveEvent<Unit>()
     val removeUserInfoFailedEvent = SingleLiveEvent<Unit>()
     val navigateToChangeNameEvent = SingleLiveEvent<Unit>()
     val navigateToChangeLanguageEvent = SingleLiveEvent<Unit>()
+
+    fun onClickBackButton() {
+        navigateToPrevPageEvent.call()
+    }
 
     fun onClickChangeNameButton() {
         navigateToChangeNameEvent.call()

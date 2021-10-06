@@ -30,12 +30,18 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun observe() {
+        viewModel.navigateToPrevPageEvent.observe(this) { navigateToPrevPage() }
+
         viewModel.navigateToChangeNameEvent.observe(this) { navigateToChangeName() }
         viewModel.navigateToChangeLanguageEvent.observe(this) { navigateToChangeLanguage() }
         viewModel.navigateToSignInAndSignOutEvent.observe(this) { navigateToSignInAndSignOut() }
         viewModel.signOutFailedEvent.observe(this) { onSignOutFailed() }
         viewModel.deleteAccountFailedEvent.observe(this) { onDeleteAccountFailed() }
         viewModel.removeUserInfoFailedEvent.observe(this) { onRemoveUserInfoFailed() }
+    }
+
+    private fun navigateToPrevPage() {
+        finish()
     }
 
     private fun navigateToChangeName() {
