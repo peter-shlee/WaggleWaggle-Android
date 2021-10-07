@@ -26,15 +26,17 @@ class HttpClientModule {
     @Singleton
     @ForAccessHttp
     fun provideOkHttpClientForAccessToken(sharedPreferenceHelper: SharedPreferenceHelper): OkHttpClient {
-        val accessToken = sharedPreferenceHelper.getString(PreferenceConstant.ACCESS_TOKEN)
-
         val builder = OkHttpClient.Builder()
 
         // add authorization header
         builder.addInterceptor(Interceptor { chain ->
             chain.proceed(
                 chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $accessToken")
+                    .addHeader(
+                        "Authorization", "Bearer ${
+                            sharedPreferenceHelper.getString(PreferenceConstant.ACCESS_TOKEN)
+                        }"
+                    )
                     .build()
             )
         })

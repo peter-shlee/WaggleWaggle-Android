@@ -1,6 +1,7 @@
-package com.somasoma.wagglewaggle.data.repository
+package com.somasoma.wagglewaggle.data.repository_impl
 
 import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForMemberAPI
+import com.somasoma.wagglewaggle.domain.repository.MemberRepository
 import com.somasoma.wagglewaggle.data.service.MemberService
 import retrofit2.Retrofit
 import javax.inject.Inject

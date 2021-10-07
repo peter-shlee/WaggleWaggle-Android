@@ -1,57 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.somasoma.wagglewaggle.presentation.follower_following.FollowerFollowingViewModel" />
+    </data>
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.follow.FollowerActivity">
+        tools:context=".presentation.follower_following.FollowerFollowingActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/btn_back"
-                android:layout_width="26dp"
-                android:layout_height="27dp"
-                android:layout_marginStart="17dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginTop="26dp"
+                android:id="@+id/top_bar"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:background="@color/white"
+                android:elevation="4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_back" />
+                    android:layout_marginStart="7dp"
+                    android:layout_marginLeft="7dp"
+                    android:src="@drawable/ic_home_logo" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:onClick="@{() -> viewModel.onClickSettingButton()}"
+                    android:background="@null"
+                    android:src="@drawable/ic_home_setting_b" />
 
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/txt_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:layout_marginLeft="14dp"
-                android:layout_marginTop="25dp"
-                android:text="팔로워 / 팔로잉"
-                android:textColor="@color/text_color_secondary"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toRightOf="@id/btn_back"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:theme="@style/Base.Widget.Design.TabLayout"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txt_title"
+                app:layout_constraintTop_toBottomOf="@id/top_bar"
                 app:tabIndicatorColor="@color/point_yellow"
                 app:tabIndicatorHeight="2dp"
                 app:tabTextAppearance="@style/TabLayoutTextStyle"
@@ -105,6 +114,7 @@
                 android:elevation="1000dp"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:onClick="@{() -> viewModel.onClickHomeButton()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/btn_create_world"
@@ -131,6 +141,7 @@
                 android:elevation="1000dp"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:onClick="@{() -> viewModel.onClickCreateRoomButton()}"
                 app:layout_constraintBottom_toBottomOf="@id/btn_home"
                 app:layout_constraintLeft_toRightOf="@id/btn_home"
                 app:layout_constraintRight_toLeftOf="@id/btn_follow">

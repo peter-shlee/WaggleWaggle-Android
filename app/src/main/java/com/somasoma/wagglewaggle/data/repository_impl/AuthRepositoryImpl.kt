@@ -1,4 +1,4 @@
-package com.somasoma.wagglewaggle.data.repository
+package com.somasoma.wagglewaggle.data.repository_impl
 
 import android.app.Application
 import com.firebase.ui.auth.AuthUI
@@ -7,8 +7,8 @@ import com.somasoma.wagglewaggle.data.model.dto.auth.FirebaseRequest
 import com.somasoma.wagglewaggle.data.model.dto.auth.FirebaseResponse
 import com.somasoma.wagglewaggle.data.model.dto.auth.RefreshRequest
 import com.somasoma.wagglewaggle.data.model.dto.auth.RefreshResponse
+import com.somasoma.wagglewaggle.domain.repository.AuthRepository
 import com.somasoma.wagglewaggle.data.service.AuthService
-import com.somasoma.wagglewaggle.domain.usecase.UserConnectedStateUseCase
 import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -16,8 +16,7 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val application: Application,
-    @ForAuthAPI private val authRetrofits: Pair<Retrofit, Retrofit>,
-    private val userConnectedStateUseCase: UserConnectedStateUseCase
+    @ForAuthAPI private val authRetrofits: Pair<Retrofit, Retrofit>
 ) : AuthRepository {
     companion object {
         private const val FIREBASE_URL =
@@ -31,8 +30,6 @@ class AuthRepositoryImpl @Inject constructor(
         onSuccessCallback: () -> Unit,
         onFailureCallback: () -> Unit
     ) {
-        userConnectedStateUseCase.postCurrentUserOffline()
-
         AuthUI.getInstance()
             .signOut(application)
             .addOnCompleteListener {
@@ -46,8 +43,6 @@ class AuthRepositoryImpl @Inject constructor(
         onSuccessCallback: () -> Unit,
         onFailureCallback: () -> Unit
     ) {
-        userConnectedStateUseCase.postCurrentUserOffline()
-
         AuthUI.getInstance()
             .delete(application)
             .addOnCompleteListener { // 유저 계정 삭제 성공 시

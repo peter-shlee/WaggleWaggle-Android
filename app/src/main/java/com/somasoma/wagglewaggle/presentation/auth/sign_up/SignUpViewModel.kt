@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.SingleLiveEvent
-import com.somasoma.wagglewaggle.domain.usecase.GetCountryListUseCase
-import com.somasoma.wagglewaggle.domain.usecase.GetLanguageListUseCase
+import com.somasoma.wagglewaggle.domain.usecase.member.GetCountryListUseCase
+import com.somasoma.wagglewaggle.domain.usecase.member.GetLanguageListUseCase
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectInterestsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.CompositeDisposable
