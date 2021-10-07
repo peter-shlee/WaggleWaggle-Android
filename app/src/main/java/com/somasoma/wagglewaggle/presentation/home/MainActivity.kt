@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.core.dp2Px
 import com.somasoma.wagglewaggle.databinding.ActivityMainBinding
+import com.somasoma.wagglewaggle.presentation.follow.FollowerActivity
 import com.somasoma.wagglewaggle.presentation.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,14 +31,29 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+
+        observe()
     }
 
     fun observe() {
         viewModel.navigateToSettingEvent.observe(this) { navigateToSettingActivity() }
+        viewModel.navigateToCreateWorld.observe(this) { navigateToCreateWorldActivity() }
+        viewModel.navigateToFollowerFollowing.observe(this) { navigateToFollowerFollowingActivity() }
     }
 
     private fun navigateToSettingActivity() {
         val navigateIntent = Intent(this, SettingActivity::class.java)
+        startActivity(navigateIntent)
+    }
+
+    private fun navigateToFollowerFollowingActivity() {
+        val navigateIntent = Intent(this, FollowerActivity::class.java)
+        navigateIntent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+        startActivity(navigateIntent)
+    }
+
+    private fun navigateToCreateWorldActivity() {
+        val navigateIntent = Intent(this, CreateWorldActivity::class.java)
         startActivity(navigateIntent)
     }
 

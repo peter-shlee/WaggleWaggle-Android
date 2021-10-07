@@ -229,6 +229,7 @@
                 android:elevation="1000dp"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:onClick="@{() -> viewModel.onClickCreateWorldButton()}"
                 app:layout_constraintBottom_toBottomOf="@id/btn_home"
                 app:layout_constraintLeft_toRightOf="@id/btn_home"
                 app:layout_constraintRight_toLeftOf="@id/btn_follow">
@@ -255,6 +256,7 @@
                 android:elevation="1000dp"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:onClick="@{() -> viewModel.onClickFollowButton()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/btn_create_world"
                 app:layout_constraintRight_toRightOf="parent"

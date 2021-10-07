@@ -16,8 +16,18 @@ class MainViewModel @Inject constructor(
     var backgroundSemicircleHeight: Int = 0
 
     val navigateToSettingEvent = SingleLiveEvent<Unit>()
+    val navigateToFollowerFollowing = SingleLiveEvent<Unit>()
+    val navigateToCreateWorld = SingleLiveEvent<Unit>()
 
     fun onClickSettingButton() {
         navigateToSettingEvent.call()
+    }
+
+    fun onClickFollowButton() {
+        navigateToFollowerFollowing.call()
+    }
+
+    fun onClickCreateWorldButton() {
+        navigateToCreateWorld.call()
     }
 }
