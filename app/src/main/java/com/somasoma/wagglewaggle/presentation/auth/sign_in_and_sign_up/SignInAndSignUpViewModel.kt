@@ -7,7 +7,7 @@ import com.somasoma.wagglewaggle.core.PreferenceConstant
 import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
 import com.somasoma.wagglewaggle.core.SingleLiveEvent
 import com.somasoma.wagglewaggle.data.model.dto.auth.FirebaseRequest
-import com.somasoma.wagglewaggle.domain.usecase.PostFirebaseUseCase
+import com.somasoma.wagglewaggle.domain.usecase.auth.PostFirebaseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.somasoma.wagglewaggle.data.repository
+package com.somasoma.wagglewaggle.data.repository.impl
 
 import android.app.Application
 import com.firebase.ui.auth.AuthUI
@@ -7,6 +7,7 @@ import com.somasoma.wagglewaggle.data.model.dto.auth.FirebaseRequest
 import com.somasoma.wagglewaggle.data.model.dto.auth.FirebaseResponse
 import com.somasoma.wagglewaggle.data.model.dto.auth.RefreshRequest
 import com.somasoma.wagglewaggle.data.model.dto.auth.RefreshResponse
+import com.somasoma.wagglewaggle.data.repository.AuthRepository
 import com.somasoma.wagglewaggle.data.service.AuthService
 import io.reactivex.Single
 import retrofit2.Response

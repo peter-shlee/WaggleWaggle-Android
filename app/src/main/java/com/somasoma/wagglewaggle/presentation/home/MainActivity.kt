@@ -10,8 +10,9 @@ import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.core.dp2Px
 import com.somasoma.wagglewaggle.databinding.ActivityMainBinding
 import com.somasoma.wagglewaggle.presentation.setting.SettingActivity
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     companion object {
         private const val BACKGROUND_SEMICIRCLE_HEIGHT_IN_DP = 295

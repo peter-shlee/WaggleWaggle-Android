@@ -1,4 +1,4 @@
-package com.somasoma.wagglewaggle.domain.usecase
+package com.somasoma.wagglewaggle.domain.usecase.member
 
 import com.somasoma.wagglewaggle.data.repository.MemberRepository
 import javax.inject.Inject
