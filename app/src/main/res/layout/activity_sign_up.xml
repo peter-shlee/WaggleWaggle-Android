@@ -208,7 +208,7 @@
                     android:background="@drawable/round_border_background"
                     android:paddingHorizontal="12dp"
                     app:layout_constraintLeft_toLeftOf="@id/txt_info"
-                    app:layout_constraintRight_toRightOf="@id/txt_nickname_info"
+                    app:layout_constraintRight_toRightOf="@id/txt_info"
                     app:layout_constraintTop_toBottomOf="@id/text_language" />
 
                 <ImageView
