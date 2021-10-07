@@ -17,6 +17,7 @@ class SettingViewModel @Inject constructor(
     AndroidViewModel(application) {
 
     val navigateToPrevPageEvent = SingleLiveEvent<Unit>()
+    val navigateToEditProfileEvent = SingleLiveEvent<Unit>()
 
     val navigateToSignInAndSignOutEvent = SingleLiveEvent<Unit>()
     val signOutFailedEvent = SingleLiveEvent<Unit>()
@@ -28,6 +29,11 @@ class SettingViewModel @Inject constructor(
     fun onClickBackButton() {
         navigateToPrevPageEvent.call()
     }
+
+    fun onClickEditProfile() {
+        navigateToEditProfileEvent.call()
+    }
+
 
     fun onClickChangeNameButton() {
         navigateToChangeNameEvent.call()
