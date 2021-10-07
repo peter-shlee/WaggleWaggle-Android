@@ -4,7 +4,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.somasoma.wagglewaggle.data.model.Avatars
+import com.somasoma.wagglewaggle.data.model.TmpAvatars
 import com.somasoma.wagglewaggle.domain.repository.AvatarsRepository
 import timber.log.Timber
 import javax.inject.Inject
@@ -18,11 +18,11 @@ class FirebaseAvatarsRepository @Inject constructor() : AvatarsRepository {
 
     private var database = FirebaseDatabase.getInstance(FIREBASE_URL).reference
 
-    override fun getAvatars(callback: (Avatars) -> Unit) {
+    override fun getAvatars(callback: (TmpAvatars) -> Unit) {
         val userListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 Timber.d(snapshot.value.toString())
-                val avatars: Avatars? = snapshot.getValue(Avatars::class.java)
+                val avatars: TmpAvatars? = snapshot.getValue(TmpAvatars::class.java)
                 avatars?.let(callback)
             }
 

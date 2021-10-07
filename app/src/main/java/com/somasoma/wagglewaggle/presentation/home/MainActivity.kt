@@ -6,8 +6,10 @@ import android.view.WindowInsets
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.viewpager2.widget.ViewPager2
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.core.dp2Px
+import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.databinding.ActivityMainBinding
 import com.somasoma.wagglewaggle.presentation.follower_following.FollowerFollowingActivity
 import com.somasoma.wagglewaggle.presentation.setting.SettingActivity
@@ -22,23 +24,56 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
+    private var avatarSelectViewPagerAdapter = AvatarSelectPagerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initViewModel()
+        initBinding()
+        observe()
+    }
 
+    private fun initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        initAvatarSelectViewPager()
+    }
 
-        observe()
+    private fun initAvatarSelectViewPager() {
+        binding.viewpagerSelectCharacter.adapter = avatarSelectViewPagerAdapter
+        binding.viewpagerSelectCharacter.isUserInputEnabled = false
+        binding.viewpagerSelectCharacter.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                viewModel.onAvatarSelected(position)
+            }
+        })
     }
 
     fun observe() {
         viewModel.navigateToSettingEvent.observe(this) { navigateToSettingActivity() }
         viewModel.navigateToCreateWorld.observe(this) { navigateToCreateWorldActivity() }
         viewModel.navigateToFollowerFollowing.observe(this) { navigateToFollowerFollowingActivity() }
+        viewModel.avatars.observe(this) { onAvatarListLoaded(it) }
+        viewModel.scrollToNextAvatarEvent.observe(this) { scrollToNextAvatar() }
+        viewModel.scrollToPrevAvatarEvent.observe(this) { scrollToPrevAvatar() }
+    }
+
+    private fun onAvatarListLoaded(avatarList: List<Avatar>) {
+        avatarSelectViewPagerAdapter.submitList(avatarList)
+    }
+
+    private fun scrollToNextAvatar() {
+        binding.viewpagerSelectCharacter.currentItem =
+            binding.viewpagerSelectCharacter.currentItem + 1
+    }
+
+    private fun scrollToPrevAvatar() {
+        binding.viewpagerSelectCharacter.currentItem =
+            binding.viewpagerSelectCharacter.currentItem - 1
     }
 
     private fun navigateToSettingActivity() {
