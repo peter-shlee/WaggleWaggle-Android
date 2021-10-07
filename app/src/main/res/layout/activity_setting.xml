@@ -55,6 +55,7 @@
             android:paddingHorizontal="30dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:onClick="@{() -> viewModel.onClickEditProfile()}"
             app:layout_constraintTop_toBottomOf="@id/txt_title">
 
             <TextView

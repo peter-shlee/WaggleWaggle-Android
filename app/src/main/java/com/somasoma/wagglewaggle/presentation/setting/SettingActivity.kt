@@ -17,12 +17,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class SettingActivity : AppCompatActivity() {
 
     private val viewModel: SettingViewModel by viewModels()
+    private lateinit var binding: ActivitySettingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivitySettingBinding =
-            DataBindingUtil.setContentView(this, R.layout.activity_setting)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_setting)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
@@ -31,6 +31,7 @@ class SettingActivity : AppCompatActivity() {
 
     private fun observe() {
         viewModel.navigateToPrevPageEvent.observe(this) { navigateToPrevPage() }
+        viewModel.navigateToEditProfileEvent.observe(this) { navigateToEditProfile() }
 
         viewModel.navigateToChangeNameEvent.observe(this) { navigateToChangeName() }
         viewModel.navigateToChangeLanguageEvent.observe(this) { navigateToChangeLanguage() }
@@ -42,6 +43,11 @@ class SettingActivity : AppCompatActivity() {
 
     private fun navigateToPrevPage() {
         finish()
+    }
+
+    private fun navigateToEditProfile() {
+        val navigateIntent = Intent(this, EditProfileActivity::class.java)
+        startActivity(navigateIntent)
     }
 
     private fun navigateToChangeName() {
