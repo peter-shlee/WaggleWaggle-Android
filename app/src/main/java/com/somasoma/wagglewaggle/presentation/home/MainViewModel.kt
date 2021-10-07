@@ -2,7 +2,10 @@ package com.somasoma.wagglewaggle.presentation.home
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.somasoma.wagglewaggle.core.SingleLiveEvent
+import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.domain.usecase.world.GetWorldListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -18,6 +21,12 @@ class MainViewModel @Inject constructor(
     val navigateToSettingEvent = SingleLiveEvent<Unit>()
     val navigateToFollowerFollowing = SingleLiveEvent<Unit>()
     val navigateToCreateWorld = SingleLiveEvent<Unit>()
+    private val _avatars = MutableLiveData<List<Avatar>>()
+    val avatars: LiveData<List<Avatar>> = _avatars
+
+    init {
+        _avatars.value = Avatar.values().toList()
+    }
 
     fun onClickSettingButton() {
         navigateToSettingEvent.call()

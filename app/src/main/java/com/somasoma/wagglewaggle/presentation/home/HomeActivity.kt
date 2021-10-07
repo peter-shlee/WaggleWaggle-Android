@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.somasoma.wagglewaggle.R
-import com.somasoma.wagglewaggle.data.model.Avatars
+import com.somasoma.wagglewaggle.data.model.TmpAvatars
 import com.somasoma.wagglewaggle.databinding.ActivityHomeBinding
 import com.somasoma.wagglewaggle.databinding.CharacterPagerItemBinding
 import com.somasoma.wagglewaggle.presentation.setting.SettingActivity
@@ -33,7 +33,7 @@ class HomeActivity : AppCompatActivity() {
         binding.viewModel = viewModel
 
         viewPagerAdapter =
-            CharacterPagerAdapter(viewModel.avatars.value ?: Avatars(arrayListOf()))
+            CharacterPagerAdapter(viewModel.avatars.value ?: TmpAvatars(arrayListOf()))
         binding.viewpagerSelectCharacter.adapter = viewPagerAdapter
 
         binding.viewpagerSelectCharacter.registerOnPageChangeCallback(object :
@@ -71,7 +71,7 @@ class HomeActivity : AppCompatActivity() {
     }
 }
 
-class CharacterPagerAdapter(var avatars: Avatars) :
+class CharacterPagerAdapter(var avatars: TmpAvatars) :
     RecyclerView.Adapter<CharacterViewHolder>() {
     override fun getItemCount(): Int {
         return avatars.list?.size ?: 0

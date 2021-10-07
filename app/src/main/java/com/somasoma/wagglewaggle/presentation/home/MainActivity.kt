@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.core.dp2Px
+import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.databinding.ActivityMainBinding
 import com.somasoma.wagglewaggle.presentation.follower_following.FollowerFollowingActivity
 import com.somasoma.wagglewaggle.presentation.setting.SettingActivity
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
+    private var avatarSelectViewPagerAdapter = AvatarSelectPagerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        binding.viewpagerSelectCharacter.adapter = avatarSelectViewPagerAdapter
 
         observe()
     }
@@ -39,6 +42,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.navigateToSettingEvent.observe(this) { navigateToSettingActivity() }
         viewModel.navigateToCreateWorld.observe(this) { navigateToCreateWorldActivity() }
         viewModel.navigateToFollowerFollowing.observe(this) { navigateToFollowerFollowingActivity() }
+        viewModel.avatars.observe(this) { onAvatarListLoaded(it) }
+    }
+
+    private fun onAvatarListLoaded(avatarList: List<Avatar>) {
+        avatarSelectViewPagerAdapter.submitList(avatarList)
     }
 
     private fun navigateToSettingActivity() {

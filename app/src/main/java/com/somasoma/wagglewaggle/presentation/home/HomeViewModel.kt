@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.somasoma.wagglewaggle.core.SingleLiveEvent
-import com.somasoma.wagglewaggle.data.model.Avatars
+import com.somasoma.wagglewaggle.data.model.TmpAvatars
 import com.somasoma.wagglewaggle.data.model.User
 import com.somasoma.wagglewaggle.domain.usecase.GetCharactersUseCase
 import com.somasoma.wagglewaggle.domain.usecase.GetUserUseCase
@@ -19,9 +19,9 @@ class HomeViewModel @Inject constructor(
     private val getCharactersUseCase: GetCharactersUseCase
 ) : AndroidViewModel(application) {
     private val _user = MutableLiveData(User("-", "-"))
-    private val _characters = MutableLiveData(Avatars(arrayListOf()))
+    private val _characters = MutableLiveData(TmpAvatars(arrayListOf()))
     val user: LiveData<User> = _user
-    val avatars: LiveData<Avatars> = _characters
+    val avatars: LiveData<TmpAvatars> = _characters
     val navigateToSettingActivityEvent = SingleLiveEvent<Unit>()
     var selectedCharacter: String? = null
 
