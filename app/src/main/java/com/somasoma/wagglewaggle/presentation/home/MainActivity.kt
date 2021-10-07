@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.core.dp2Px
 import com.somasoma.wagglewaggle.databinding.ActivityMainBinding
-import com.somasoma.wagglewaggle.presentation.follow.FollowerActivity
+import com.somasoma.wagglewaggle.presentation.follower_following.FollowerFollowingActivity
 import com.somasoma.wagglewaggle.presentation.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToFollowerFollowingActivity() {
-        val navigateIntent = Intent(this, FollowerActivity::class.java)
+        val navigateIntent = Intent(this, FollowerFollowingActivity::class.java)
         navigateIntent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
         startActivity(navigateIntent)
     }
