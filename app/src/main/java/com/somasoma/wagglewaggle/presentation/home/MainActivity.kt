@@ -6,6 +6,7 @@ import android.view.WindowInsets
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.viewpager2.widget.ViewPager2
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.core.dp2Px
 import com.somasoma.wagglewaggle.data.Avatar
@@ -34,6 +35,13 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         binding.viewpagerSelectCharacter.adapter = avatarSelectViewPagerAdapter
+        binding.viewpagerSelectCharacter.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                viewModel.onAvatarSelected(position)
+            }
+        })
 
         observe()
     }
@@ -43,10 +51,22 @@ class MainActivity : AppCompatActivity() {
         viewModel.navigateToCreateWorld.observe(this) { navigateToCreateWorldActivity() }
         viewModel.navigateToFollowerFollowing.observe(this) { navigateToFollowerFollowingActivity() }
         viewModel.avatars.observe(this) { onAvatarListLoaded(it) }
+        viewModel.scrollToNextAvatarEvent.observe(this) { scrollToNextAvatar() }
+        viewModel.scrollToPrevAvatarEvent.observe(this) { scrollToPrevAvatar() }
     }
 
     private fun onAvatarListLoaded(avatarList: List<Avatar>) {
         avatarSelectViewPagerAdapter.submitList(avatarList)
+    }
+
+    private fun scrollToNextAvatar() {
+        binding.viewpagerSelectCharacter.currentItem =
+            binding.viewpagerSelectCharacter.currentItem + 1
+    }
+
+    private fun scrollToPrevAvatar() {
+        binding.viewpagerSelectCharacter.currentItem =
+            binding.viewpagerSelectCharacter.currentItem - 1
     }
 
     private fun navigateToSettingActivity() {
