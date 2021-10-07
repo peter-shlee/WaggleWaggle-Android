@@ -1,8 +1,8 @@
-package com.somasoma.wagglewaggle.data.repository.impl
+package com.somasoma.wagglewaggle.data.repository_impl
 
 import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForWorldAPI
-import com.somasoma.wagglewaggle.data.repository.WorldRepository
 import com.somasoma.wagglewaggle.data.service.WorldService
+import com.somasoma.wagglewaggle.domain.repository.WorldRepository
 import retrofit2.Retrofit
 import javax.inject.Inject
 

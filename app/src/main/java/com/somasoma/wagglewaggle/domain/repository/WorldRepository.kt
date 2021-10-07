@@ -1,4 +1,4 @@
-package com.somasoma.wagglewaggle.data.repository
+package com.somasoma.wagglewaggle.domain.repository
 
 import com.somasoma.wagglewaggle.data.model.dto.world.WorldListResponse
 import io.reactivex.Single

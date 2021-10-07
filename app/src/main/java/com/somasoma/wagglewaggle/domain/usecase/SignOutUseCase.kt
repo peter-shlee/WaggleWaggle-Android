@@ -1,6 +1,6 @@
 package com.somasoma.wagglewaggle.domain.usecase
 
-import com.somasoma.wagglewaggle.data.repository.AuthRepository
+import com.somasoma.wagglewaggle.domain.repository.AuthRepository
 import javax.inject.Inject
 
 class SignOutUseCase @Inject constructor(private val authRepository: AuthRepository) {

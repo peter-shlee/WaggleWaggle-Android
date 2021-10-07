@@ -1,11 +1,11 @@
 package com.somasoma.wagglewaggle.core.di.hilt.module
 
-import com.somasoma.wagglewaggle.data.repository.*
-import com.somasoma.wagglewaggle.data.repository.firebase_repository.FirebaseAvatarsRepository
-import com.somasoma.wagglewaggle.data.repository.firebase_repository.FirebaseUserRepository
-import com.somasoma.wagglewaggle.data.repository.impl.AuthRepositoryImpl
-import com.somasoma.wagglewaggle.data.repository.impl.MemberRepositoryImpl
-import com.somasoma.wagglewaggle.data.repository.impl.WorldRepositoryImpl
+import com.somasoma.wagglewaggle.data.repository_impl.firebase_repository.FirebaseAvatarsRepository
+import com.somasoma.wagglewaggle.data.repository_impl.firebase_repository.FirebaseUserRepository
+import com.somasoma.wagglewaggle.data.repository_impl.AuthRepositoryImpl
+import com.somasoma.wagglewaggle.data.repository_impl.MemberRepositoryImpl
+import com.somasoma.wagglewaggle.data.repository_impl.WorldRepositoryImpl
+import com.somasoma.wagglewaggle.domain.repository.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

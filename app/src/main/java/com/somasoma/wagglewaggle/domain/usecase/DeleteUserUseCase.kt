@@ -1,6 +1,6 @@
 package com.somasoma.wagglewaggle.domain.usecase
 
-import com.somasoma.wagglewaggle.data.repository.UserRepository
+import com.somasoma.wagglewaggle.domain.repository.UserRepository
 import javax.inject.Inject
 
 class DeleteUserUseCase @Inject constructor(private val userRepository: UserRepository) {

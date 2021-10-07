@@ -1,4 +1,4 @@
-package com.somasoma.wagglewaggle.data.repository.firebase_repository
+package com.somasoma.wagglewaggle.data.repository_impl.firebase_repository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -6,7 +6,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.somasoma.wagglewaggle.data.model.User
-import com.somasoma.wagglewaggle.data.repository.UserRepository
+import com.somasoma.wagglewaggle.domain.repository.UserRepository
 import timber.log.Timber
 import javax.inject.Inject
 
