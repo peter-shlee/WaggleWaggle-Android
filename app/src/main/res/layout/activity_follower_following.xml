@@ -47,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"
                     android:layout_marginRight="15dp"
+                    android:onClick="@{() -> viewModel.onClickSettingButton()}"
                     android:background="@null"
                     android:src="@drawable/ic_home_setting_b" />
 
@@ -113,7 +114,7 @@
                 android:elevation="1000dp"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:onClick="@{() -> viewModel.onHomeButtonClicked()}"
+                android:onClick="@{() -> viewModel.onClickHomeButton()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/btn_create_world"
@@ -140,7 +141,7 @@
                 android:elevation="1000dp"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:onClick="@{() -> viewModel.onCreateRoomButtonClicked()}"
+                android:onClick="@{() -> viewModel.onClickCreateRoomButton()}"
                 app:layout_constraintBottom_toBottomOf="@id/btn_home"
                 app:layout_constraintLeft_toRightOf="@id/btn_home"
                 app:layout_constraintRight_toLeftOf="@id/btn_follow">

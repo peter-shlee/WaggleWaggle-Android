@@ -12,12 +12,17 @@ class FollowerFollowingViewModel @Inject constructor(application: Application) :
 
     val navigateToMainEvent = SingleLiveEvent<Unit>()
     val navigateToCreateWorldEvent = SingleLiveEvent<Unit>()
+    val navigateToSettingEvent = SingleLiveEvent<Unit>()
 
-    fun onCreateRoomButtonClicked() {
+    fun onClickCreateRoomButton() {
         navigateToCreateWorldEvent.call()
     }
 
-    fun onHomeButtonClicked() {
+    fun onClickHomeButton() {
         navigateToMainEvent.call()
+    }
+
+    fun onClickSettingButton() {
+        navigateToSettingEvent.call()
     }
 }

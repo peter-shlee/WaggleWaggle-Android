@@ -9,6 +9,7 @@ import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.databinding.ActivityFollowerFollowingBinding
 import com.somasoma.wagglewaggle.presentation.home.CreateWorldActivity
 import com.somasoma.wagglewaggle.presentation.home.MainActivity
+import com.somasoma.wagglewaggle.presentation.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,6 +28,7 @@ class FollowerFollowingActivity : AppCompatActivity() {
     private fun observe() {
         viewModel.navigateToCreateWorldEvent.observe(this) { navigateToCreateWorld() }
         viewModel.navigateToMainEvent.observe(this) { navigateToMain() }
+        viewModel.navigateToSettingEvent.observe(this) { navigateToSettingEvent() }
     }
 
     private fun navigateToCreateWorld() {
@@ -37,6 +39,11 @@ class FollowerFollowingActivity : AppCompatActivity() {
     private fun navigateToMain() {
         val navigateIntent = Intent(this, MainActivity::class.java)
         navigateIntent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+        startActivity(navigateIntent)
+    }
+
+    private fun navigateToSettingEvent() {
+        val navigateIntent = Intent(this, SettingActivity::class.java)
         startActivity(navigateIntent)
     }
 }
