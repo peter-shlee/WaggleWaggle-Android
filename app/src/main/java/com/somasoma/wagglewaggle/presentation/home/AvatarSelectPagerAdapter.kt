@@ -36,41 +36,49 @@ class AvatarSelectPagerAdapter :
                 Avatar.FEMALE1 -> {
                     Glide.with(binding.root)
                         .load(R.drawable.female1_wave)
+                        .centerInside()
                         .into(binding.imgAvatar)
                 }
                 Avatar.FEMALE2 -> {
                     Glide.with(binding.root)
                         .load(R.drawable.female2_wave)
+                        .centerInside()
                         .into(binding.imgAvatar)
                 }
                 Avatar.FEMALE3 -> {
                     Glide.with(binding.root)
                         .load(R.drawable.female3_wave)
+                        .centerInside()
                         .into(binding.imgAvatar)
                 }
                 Avatar.FEMALE4 -> {
                     Glide.with(binding.root)
                         .load(R.drawable.female4_wave)
+                        .centerInside()
                         .into(binding.imgAvatar)
                 }
                 Avatar.MALE1 -> {
                     Glide.with(binding.root)
                         .load(R.drawable.male1_wave)
+                        .centerInside()
                         .into(binding.imgAvatar)
                 }
                 Avatar.MALE2 -> {
                     Glide.with(binding.root)
                         .load(R.drawable.male2_wave)
+                        .centerInside()
                         .into(binding.imgAvatar)
                 }
                 Avatar.MALE3 -> {
                     Glide.with(binding.root)
                         .load(R.drawable.male3_wave)
+                        .centerInside()
                         .into(binding.imgAvatar)
                 }
                 Avatar.MALE4 -> {
                     Glide.with(binding.root)
                         .load(R.drawable.male4_wave)
+                        .centerInside()
                         .into(binding.imgAvatar)
                 }
             }

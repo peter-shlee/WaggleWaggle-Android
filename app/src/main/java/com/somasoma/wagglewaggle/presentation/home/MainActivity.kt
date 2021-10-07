@@ -30,11 +30,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         initViewModel()
+        initBinding()
+        observe()
+    }
 
+    private fun initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        initAvatarSelectViewPager()
+    }
+
+    private fun initAvatarSelectViewPager() {
         binding.viewpagerSelectCharacter.adapter = avatarSelectViewPagerAdapter
+        binding.viewpagerSelectCharacter.isUserInputEnabled = false
         binding.viewpagerSelectCharacter.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -42,8 +51,6 @@ class MainActivity : AppCompatActivity() {
                 viewModel.onAvatarSelected(position)
             }
         })
-
-        observe()
     }
 
     fun observe() {
