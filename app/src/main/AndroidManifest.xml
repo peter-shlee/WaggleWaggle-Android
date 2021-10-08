@@ -34,7 +34,6 @@
         <activity
             android:name="com.somasoma.wagglewaggle.presentation.auth.sign_up_set_name.SignUpSetNameActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.somasoma.wagglewaggle.presentation.main.HomeActivity" />
         <activity android:name="com.somasoma.wagglewaggle.presentation.auth.sign_in_and_sign_up.SignInAndSignUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
