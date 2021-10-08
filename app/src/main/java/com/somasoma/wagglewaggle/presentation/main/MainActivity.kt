@@ -1,4 +1,4 @@
-package com.somasoma.wagglewaggle.presentation.home
+package com.somasoma.wagglewaggle.presentation.main
 
 import android.content.Intent
 import android.os.Bundle

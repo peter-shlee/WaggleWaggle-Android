@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.somasoma.wagglewaggle.presentation.home.CreateWorldViewModel" />
+            type="com.somasoma.wagglewaggle.presentation.main.CreateWorldViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,7 +13,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.home.CreateWorldActivity">
+        tools:context=".presentation.main.CreateWorldActivity">
 
         <LinearLayout
             android:id="@+id/btn_back"
