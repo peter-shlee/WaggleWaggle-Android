@@ -32,6 +32,7 @@ class SettingActivity : AppCompatActivity() {
     private fun observe() {
         viewModel.navigateToPrevPageEvent.observe(this) { navigateToPrevPage() }
         viewModel.navigateToEditProfileEvent.observe(this) { navigateToEditProfile() }
+        viewModel.navigateToSignInAndSignUpEvent.observe(this) { navigateToSignInAndSignUp() }
 
         viewModel.navigateToChangeNameEvent.observe(this) { navigateToChangeName() }
         viewModel.navigateToChangeLanguageEvent.observe(this) { navigateToChangeLanguage() }
@@ -49,6 +50,13 @@ class SettingActivity : AppCompatActivity() {
         val navigateIntent = Intent(this, EditProfileActivity::class.java)
         startActivity(navigateIntent)
     }
+
+    private fun navigateToSignInAndSignUp() {
+        val navigateIntent = Intent(this, SignInAndSignUpActivity::class.java)
+        navigateIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(navigateIntent)
+    }
+
 
     private fun navigateToChangeName() {
         val intent = Intent(this, SettingChangeNameActivity::class.java)
