@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initAvatarSelectViewPager() {
         binding.viewpagerSelectCharacter.adapter = avatarSelectViewPagerAdapter
+        binding.viewpagerSelectCharacter.isUserInputEnabled = false
         binding.viewpagerSelectCharacter.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
