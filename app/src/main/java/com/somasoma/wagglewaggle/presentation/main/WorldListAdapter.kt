@@ -21,13 +21,18 @@ class WorldListAdapter :
         holder.bind(getItem(position))
     }
 
-    class ViewHolder private constructor(val binding: WorldListItemBinding) :
+    class ViewHolder private constructor(
+        val binding: WorldListItemBinding,
+        private val adapter: KeywordListInWorldListItemAdapter
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         companion object {
-            fun from(parent: ViewGroup): WorldListAdapter.ViewHolder {
+            fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = WorldListItemBinding.inflate(layoutInflater, parent, false)
-                return WorldListAdapter.ViewHolder(binding)
+                val adapter = KeywordListInWorldListItemAdapter()
+                binding.listKeyword.adapter = adapter
+                return ViewHolder(binding, adapter)
             }
         }
 
@@ -35,6 +40,7 @@ class WorldListAdapter :
             binding.txtCurrentUserCount.text = (worldRoom.people ?: 0).toString()
             binding.txtWorldName.text = worldRoom.map
             binding.txtWorldTitle.text = worldRoom.topic
+            adapter.submitList(worldRoom.keywords)
             Glide.with(binding.root)
                 .load(R.drawable.map_jongmyo)
                 .centerCrop()
