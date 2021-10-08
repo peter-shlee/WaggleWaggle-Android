@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.core.dp2Px
 import com.somasoma.wagglewaggle.data.Avatar
+import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
 import com.somasoma.wagglewaggle.databinding.ActivityMainBinding
 import com.somasoma.wagglewaggle.presentation.follower_following.FollowerFollowingActivity
 import com.somasoma.wagglewaggle.presentation.setting.SettingActivity
@@ -24,7 +25,8 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
-    private var avatarSelectViewPagerAdapter = AvatarSelectPagerAdapter()
+    private val avatarSelectViewPagerAdapter = AvatarSelectPagerAdapter()
+    private val worldListAdapter = WorldListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,12 +40,13 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        binding.listWorld.adapter = worldListAdapter
+        binding.listWorld.isNestedScrollingEnabled = false
         initAvatarSelectViewPager()
     }
 
     private fun initAvatarSelectViewPager() {
         binding.viewpagerSelectCharacter.adapter = avatarSelectViewPagerAdapter
-        binding.viewpagerSelectCharacter.isUserInputEnabled = false
         binding.viewpagerSelectCharacter.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -58,12 +61,17 @@ class MainActivity : AppCompatActivity() {
         viewModel.navigateToCreateWorld.observe(this) { navigateToCreateWorldActivity() }
         viewModel.navigateToFollowerFollowing.observe(this) { navigateToFollowerFollowingActivity() }
         viewModel.avatars.observe(this) { onAvatarListLoaded(it) }
+        viewModel.worlds.observe(this) { onWorldListLoaded(it) }
         viewModel.scrollToNextAvatarEvent.observe(this) { scrollToNextAvatar() }
         viewModel.scrollToPrevAvatarEvent.observe(this) { scrollToPrevAvatar() }
     }
 
     private fun onAvatarListLoaded(avatarList: List<Avatar>) {
         avatarSelectViewPagerAdapter.submitList(avatarList)
+    }
+
+    private fun onWorldListLoaded(worldList: List<WorldRoom>) {
+        worldListAdapter.submitList(worldList)
     }
 
     private fun scrollToNextAvatar() {
@@ -96,6 +104,7 @@ class MainActivity : AppCompatActivity() {
         val screenWidth = getScreenWidth()
         viewModel.backgroundSemicircleHeight = calculateBackgroundSemicircleHeight(screenWidth)
         viewModel.backgroundSemicircleRadius = calculateBackgroundSemicircleRadius(screenWidth)
+        viewModel.topBarHeight = dp2Px(this, 64f)
     }
 
     private fun getScreenWidth() = if (android.os.Build.VERSION.SDK_INT < 30) {

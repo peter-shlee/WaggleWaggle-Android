@@ -26,6 +26,7 @@ class MainViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
     var backgroundSemicircleRadius: Int = 0
     var backgroundSemicircleHeight: Int = 0
+    var topBarHeight: Int = 0
 
     val navigateToSettingEvent = SingleLiveEvent<Unit>()
     val navigateToFollowerFollowing = SingleLiveEvent<Unit>()
