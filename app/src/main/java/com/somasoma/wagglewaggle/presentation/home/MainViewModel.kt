@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.somasoma.wagglewaggle.core.SingleLiveEvent
 import com.somasoma.wagglewaggle.data.Avatar
+import com.somasoma.wagglewaggle.domain.usecase.member.GetOnlineUseCase
 import com.somasoma.wagglewaggle.domain.usecase.world.GetWorldListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import timber.log.Timber
@@ -14,7 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     application: Application,
-    private val getWorldListUseCase: GetWorldListUseCase
+    private val getWorldListUseCase: GetWorldListUseCase,
+    private val getOnlineUseCase: GetOnlineUseCase
 ) : AndroidViewModel(application) {
     var backgroundSemicircleRadius: Int = 0
     var backgroundSemicircleHeight: Int = 0
