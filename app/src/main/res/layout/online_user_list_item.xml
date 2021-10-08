@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="member"
+            type="com.somasoma.wagglewaggle.data.model.dto.member.Member" />
+
+        <variable
+            name="avatar"
+            type="com.somasoma.wagglewaggle.data.Avatar" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageView
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            app:avatar="@{avatar}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:maxWidth="55dp"
+            android:maxLines="1"
+            android:text="@{member.nickName}"
+            android:textColor="@color/black"
+            android:textSize="12dp"
+            tools:text="닉네임여덟글자는" />
+
+    </LinearLayout>
+</layout>

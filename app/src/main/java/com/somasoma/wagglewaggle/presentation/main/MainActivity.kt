@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.core.dp2Px
 import com.somasoma.wagglewaggle.data.Avatar
+import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
 import com.somasoma.wagglewaggle.databinding.ActivityMainBinding
 import com.somasoma.wagglewaggle.presentation.follower_following.FollowerFollowingActivity
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val avatarSelectViewPagerAdapter = AvatarSelectPagerAdapter()
     private val worldListAdapter = WorldListAdapter()
+    private val onlineUserListAdapter = OnlineUserListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.listWorld.adapter = worldListAdapter
         binding.listWorld.isNestedScrollingEnabled = false
+        binding.listOnline.adapter = onlineUserListAdapter
         initAvatarSelectViewPager()
     }
 
@@ -63,6 +66,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.navigateToFollowerFollowing.observe(this) { navigateToFollowerFollowingActivity() }
         viewModel.avatars.observe(this) { onAvatarListLoaded(it) }
         viewModel.worlds.observe(this) { onWorldListLoaded(it) }
+        viewModel.onlineUsers.observe(this) { onOnlineUserListLoaded(it) }
         viewModel.scrollToNextAvatarEvent.observe(this) { scrollToNextAvatar() }
         viewModel.scrollToPrevAvatarEvent.observe(this) { scrollToPrevAvatar() }
     }
@@ -73,6 +77,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun onWorldListLoaded(worldList: List<WorldRoom>) {
         worldListAdapter.submitList(worldList)
+    }
+
+    private fun onOnlineUserListLoaded(onlineUsers: List<Member>) {
+        onlineUserListAdapter.submitList(onlineUsers)
     }
 
     private fun scrollToNextAvatar() {

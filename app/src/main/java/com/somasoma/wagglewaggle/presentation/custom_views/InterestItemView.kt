@@ -28,7 +28,7 @@ class InterestItemView @JvmOverloads constructor(
         }
     }
 
-    private var binding: InterestItemViewBinding = DataBindingUtil.inflate(
+    private val binding: InterestItemViewBinding = DataBindingUtil.inflate(
         LayoutInflater.from(context),
         R.layout.interest_item_view,
         this,
