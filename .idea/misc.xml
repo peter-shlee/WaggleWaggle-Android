@@ -23,6 +23,9 @@
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/round_border_positive_background.xml" value="0.553125" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/round_button_background.xml" value="0.4197916666666667" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/toggle.xml" value="0.4703703703703704" />
+        <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/world_list_item_background.xml" value="0.5453125" />
+        <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/world_list_item_explanation_background.xml" value="0.5453125" />
+        <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/world_list_item_image_background.xml" value="0.5453125" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/layout/activity_create_world.xml" value="0.5385416666666667" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/layout/activity_edit_profile.xml" value="0.4" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/layout/activity_follower.xml" value="0.4140625" />
@@ -44,6 +47,7 @@
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/layout/interest_item_view.xml" value="0.4140625" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/layout/map_info_fragment.xml" value="0.540625" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/layout/spinner_item.xml" value="0.41041666666666665" />
+        <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/layout/world_list_item.xml" value="0.5291666666666667" />
       </map>
     </option>
   </component>

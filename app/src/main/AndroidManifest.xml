@@ -15,9 +15,9 @@
             android:name="com.somasoma.wagglewaggle.presentation.follower_following.FollowerFollowingActivity"
             android:theme="@style/noAnimeTheme" />
         <activity
-            android:name="com.somasoma.wagglewaggle.presentation.home.MainActivity"
+            android:name="com.somasoma.wagglewaggle.presentation.main.MainActivity"
             android:theme="@style/noAnimeTheme" />
-        <activity android:name="com.somasoma.wagglewaggle.presentation.home.CreateWorldActivity" />
+        <activity android:name="com.somasoma.wagglewaggle.presentation.main.CreateWorldActivity" />
         <activity android:name="com.somasoma.wagglewaggle.presentation.profile.ProfileActivity" />
         <activity android:name="com.somasoma.wagglewaggle.presentation.setting.EditProfileActivity" />
         <activity android:name="com.somasoma.wagglewaggle.presentation.auth.sign_up.SignUpActivity" />
@@ -34,7 +34,6 @@
         <activity
             android:name="com.somasoma.wagglewaggle.presentation.auth.sign_up_set_name.SignUpSetNameActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.somasoma.wagglewaggle.presentation.home.HomeActivity" />
         <activity android:name="com.somasoma.wagglewaggle.presentation.auth.sign_in_and_sign_up.SignInAndSignUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

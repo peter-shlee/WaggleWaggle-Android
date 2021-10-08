@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.databinding.ActivitySignInAndSignUpBinding
 import com.somasoma.wagglewaggle.presentation.auth.sign_up.SignUpActivity
-import com.somasoma.wagglewaggle.presentation.home.MainActivity
+import com.somasoma.wagglewaggle.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 

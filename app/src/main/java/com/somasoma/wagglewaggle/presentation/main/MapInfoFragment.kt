@@ -1,4 +1,4 @@
-package com.somasoma.wagglewaggle.presentation.home
+package com.somasoma.wagglewaggle.presentation.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
