@@ -12,4 +12,5 @@ class WorldRepositoryImpl @Inject constructor(@ForWorldAPI private val worldRetr
     private val worldService = worldRetrofit.create(WorldService::class.java)
 
     override fun getWorldList() = worldService.getWorldList()
+    override suspend fun getWorldListWithCoroutine() = worldService.getWorldListWithCoroutine()
 }

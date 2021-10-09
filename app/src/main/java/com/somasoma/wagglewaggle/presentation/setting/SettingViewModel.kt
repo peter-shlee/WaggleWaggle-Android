@@ -6,7 +6,6 @@ import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.PreferenceConstant
 import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
 import com.somasoma.wagglewaggle.core.SingleLiveEvent
-import com.somasoma.wagglewaggle.domain.usecase.DeleteAccountUseCase
 import com.somasoma.wagglewaggle.domain.usecase.SignOutUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.DeleteLogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,8 +18,7 @@ class SettingViewModel @Inject constructor(
     private val networkUtil: NetworkUtil,
     private val sharedPreferenceHelper: SharedPreferenceHelper,
     private val deleteLogoutUseCase: DeleteLogoutUseCase,
-    private val signOutUseCase: SignOutUseCase,
-    private val deleteAccountUseCase: DeleteAccountUseCase
+    private val signOutUseCase: SignOutUseCase
 ) :
     AndroidViewModel(application) {
 
@@ -28,13 +26,6 @@ class SettingViewModel @Inject constructor(
     val navigateToEditProfileEvent = SingleLiveEvent<Unit>()
     val navigateToSignInAndSignUpEvent = SingleLiveEvent<Unit>()
     private val compositeDisposable = CompositeDisposable()
-
-    val navigateToSignInAndSignOutEvent = SingleLiveEvent<Unit>()
-    val signOutFailedEvent = SingleLiveEvent<Unit>()
-    val deleteAccountFailedEvent = SingleLiveEvent<Unit>()
-    val removeUserInfoFailedEvent = SingleLiveEvent<Unit>()
-    val navigateToChangeNameEvent = SingleLiveEvent<Unit>()
-    val navigateToChangeLanguageEvent = SingleLiveEvent<Unit>()
 
     fun onClickBackButton() {
         navigateToPrevPageEvent.call()
@@ -64,44 +55,5 @@ class SettingViewModel @Inject constructor(
 
             }
         }
-    }
-
-
-    fun onClickChangeNameButton() {
-        navigateToChangeNameEvent.call()
-    }
-
-    fun onClickChangeLanguageButton() {
-        navigateToChangeLanguageEvent.call()
-    }
-
-    fun onClickSignOutButton() {
-        signOutUseCase.signOut(
-            onSuccessCallback = {
-                navigateToSignInAndSignOutEvent.call()
-            },
-            onFailureCallback = { signOutFailedEvent.call() })
-    }
-
-    fun onClickDeleteAccountButton() {
-        deleteAccountUseCase.deleteAccount(
-            onSuccessCallback = {
-                onDeleteAccountSuccess()
-            },
-            onFailureCallback = { deleteAccountFailedEvent.call() })
-    }
-
-    private fun onDeleteAccountSuccess() {
-        navigateToSignInAndSignOutEvent.call()
-
-        // TODO 보안 문제로 클라이언트에서는 유저가 탈퇴한 후 유저정보를 삭제할 수 없음 - 삭제된 유저의 uid 따로 저장 등으로 변경 필요함
-//        deleteUserUseCase.deleteUser(
-//            onSuccessCallback = {
-//                navigateToSignInAndSignOutEvent.call()
-//            },
-//            onFailureCallback = {
-//                removeUserInfoFailedEvent.call()
-//                navigateToSignInAndSignOutEvent.call()
-//            })
     }
 }

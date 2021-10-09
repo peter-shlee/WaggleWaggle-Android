@@ -19,6 +19,9 @@ interface MemberService {
     @GET("member/online")
     fun getOnline(): Single<Response<OnlineResponse>>
 
+    @GET("member/online")
+    suspend fun getOnlineWithCoroutine(): Response<OnlineResponse>
+
     @DELETE("member/logout")
     fun deleteLogout(): Single<Response<LogoutResponse>>
 }
