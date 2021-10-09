@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/airplane_button.xml" value="0.4430769230769231" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/bottom_sheet_background.xml" value="0.4197916666666667" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/button_background.xml" value="0.4234375" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/circle_in_background.xml" value="0.4666666666666667" />
@@ -23,6 +24,7 @@
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/round_border_negative_background.xml" value="0.553125" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/round_border_positive_background.xml" value="0.553125" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/round_button_background.xml" value="0.4197916666666667" />
+        <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/setting_button.xml" value="0.4430769230769231" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/toggle.xml" value="0.4703703703703704" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/world_list_item_background.xml" value="0.5453125" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/drawable/world_list_item_explanation_background.xml" value="0.5453125" />

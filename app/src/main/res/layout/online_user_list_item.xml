@@ -10,6 +10,12 @@
         <variable
             name="avatar"
             type="com.somasoma.wagglewaggle.data.Avatar" />
+
+        <variable
+            name="profileImageBackgroundColor"
+            type="com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor" />
+
+        <import type="com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,6 +31,7 @@
         <com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageView
             android:layout_width="55dp"
             android:layout_height="55dp"
+            app:backgroundColor="@{profileImageBackgroundColor}"
             app:avatar="@{avatar}" />
 
         <TextView

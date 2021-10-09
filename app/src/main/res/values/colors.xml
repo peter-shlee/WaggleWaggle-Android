@@ -27,4 +27,9 @@
     <color name="background_circle_yellow">#ffe086</color>
     <color name="shadow_gray">#707070</color>
     <color name="interest_item_gray">#e6e6e6</color>
+    <color name="profile_image_background_purple">#d0a4c0</color>
+    <color name="profile_image_background_blue">#b1c8df</color>
+    <color name="profile_image_background_yellow">#ffe48b</color>
+    <color name="profile_image_background_green">#dbe1a9</color>
+    <color name="profile_image_background_orange">#f1c3a1</color>
 </resources>

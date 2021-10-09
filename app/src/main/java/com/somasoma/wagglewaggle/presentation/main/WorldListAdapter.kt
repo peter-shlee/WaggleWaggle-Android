@@ -34,12 +34,13 @@ class WorldListAdapter :
                 binding.listKeyword.adapter = adapter
                 return ViewHolder(binding, adapter)
             }
+
+            private const val MAX_USER_COUNT = 20
         }
 
         fun bind(worldRoom: WorldRoom) {
-            binding.txtCurrentUserCount.text = (worldRoom.people ?: 0).toString()
-            binding.txtWorldName.text = worldRoom.map
-            binding.txtWorldTitle.text = worldRoom.topic
+            binding.worldRoom = worldRoom
+            binding.maxUserCount = MAX_USER_COUNT
             adapter.submitList(worldRoom.keywords)
             Glide.with(binding.root)
                 .load(R.drawable.map_jongmyo)
