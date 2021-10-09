@@ -59,6 +59,9 @@ class AuthRepositoryImpl @Inject constructor(
     override fun postRefresh(refreshRequest: RefreshRequest): Single<Response<RefreshResponse?>> =
         authService.postRefresh(refreshRequest)
 
+    override suspend fun postFirebaseWithCoroutine(firebaseRequest: FirebaseRequest): Response<FirebaseResponse?> =
+        publicAuthService.postFirebaseWithCoroutine(firebaseRequest)
+
     override suspend fun postRefreshWithCoroutine(refreshRequest: RefreshRequest): Response<RefreshResponse?> =
         authService.postRefreshWithCoroutine(refreshRequest)
 }

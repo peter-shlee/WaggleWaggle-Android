@@ -13,5 +13,6 @@ interface AuthRepository {
 
     fun postFirebase(firebaseRequest: FirebaseRequest): Single<Response<FirebaseResponse?>>
     fun postRefresh(refreshRequest: RefreshRequest): Single<Response<RefreshResponse?>>
+    suspend fun postFirebaseWithCoroutine(firebaseRequest: FirebaseRequest): Response<FirebaseResponse?>
     suspend fun postRefreshWithCoroutine(refreshRequest: RefreshRequest): Response<RefreshResponse?>
 }

@@ -2,6 +2,7 @@ package com.somasoma.wagglewaggle.presentation.auth.sign_in_and_sign_up
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.PreferenceConstant
 import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
@@ -37,12 +38,11 @@ class SignInAndSignUpViewModel @Inject constructor(
 
     fun getAccessToken() {
         networkUtil.publicRestApiCall(
-            postFirebaseUseCase.postFirebase(
-                FirebaseRequest(
-                    firebaseUserToken
-                )
+            postFirebaseUseCase::postFirebaseWithCoroutine,
+            FirebaseRequest(
+                firebaseUserToken
             ),
-            compositeDisposable
+            viewModelScope
         ) {
             onSuccessCallback = {
                 it?.run {
@@ -75,8 +75,6 @@ class SignInAndSignUpViewModel @Inject constructor(
                         }
                     }
                 }
-
-
             }
 
             onErrorCallback = {
