@@ -97,11 +97,11 @@ class SignUpActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                viewModel.selectedNation = nations[position]
+                viewModel.selectedCountry = nations[position]
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                viewModel.selectedNation = nations[0]
+                viewModel.selectedCountry = nations[0]
             }
         }
 

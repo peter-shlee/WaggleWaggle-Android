@@ -10,7 +10,6 @@ import com.somasoma.wagglewaggle.domain.usecase.member.GetCountryListUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetLanguageListUseCase
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectInterestsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.disposables.CompositeDisposable
 import java.util.regex.Pattern
 import javax.inject.Inject
 
@@ -26,13 +25,12 @@ class SignUpViewModel @Inject constructor(
         private val nicknamePattern = Pattern.compile(NICKNAME_REGEX)
     }
 
-    private val compositeDisposable = CompositeDisposable()
     private val _countries = MutableLiveData<List<String?>>()
     var countries: LiveData<List<String?>> = _countries
     private val _languages = MutableLiveData<List<String?>>()
     var languages: LiveData<List<String?>> = _languages
     var selectedLanguage: String? = null
-    var selectedNation: String? = null
+    var selectedCountry: String? = null
     private val _nicknameInputState = MutableLiveData(InputState.DISABLED)
     var nicknameInputState: LiveData<InputState> = _nicknameInputState
     private val _showDuplicateNicknameText = MutableLiveData(false)
@@ -45,11 +43,6 @@ class SignUpViewModel @Inject constructor(
         getCountryList()
 
         resetSelectedInterests(setOf("스포츠", "BTS", "엔터"))
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.dispose()
     }
 
     fun onClickSelectInterestButton() {
