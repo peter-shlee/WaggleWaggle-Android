@@ -81,6 +81,7 @@
             android:paddingHorizontal="30dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:onClick="@{() -> toggleAlarm.performClick()}"
             app:layout_constraintTop_toBottomOf="@id/edit_profile">
 
             <TextView
@@ -93,6 +94,7 @@
                 android:textStyle="bold" />
 
             <ToggleButton
+                android:id="@+id/toggle_alarm"
                 android:layout_width="39dp"
                 android:layout_height="31dp"
                 android:background="@drawable/toggle"
