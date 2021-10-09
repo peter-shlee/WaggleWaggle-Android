@@ -39,20 +39,6 @@ class SignInAndSignUpActivity : AppCompatActivity() {
         observe()
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        FirebaseAuth.getInstance().currentUser?.getIdToken(false)?.addOnCompleteListener(
-            OnCompleteListener {
-                if (it.isSuccessful) {
-                    it.result?.token?.let { token ->
-                        viewModel.firebaseUserToken = token
-                            viewModel.getAccessToken()
-                    }
-                }
-            })
-    }
-
     private fun observe() {
         viewModel.navigateToSignInPageEvent.observe(this) { navigateToFireBaseAuthSignIn() }
         viewModel.navigateToMainEvent.observe(this) { navigateToMainActivity() }
