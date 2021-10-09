@@ -3,6 +3,7 @@ package com.somasoma.wagglewaggle.presentation.auth.sign_up
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.SingleLiveEvent
 import com.somasoma.wagglewaggle.domain.usecase.member.GetCountryListUseCase
@@ -80,7 +81,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     private fun getCountryList() {
-        networkUtil.restApiCall(getCountryListUseCase.getCountryList(), compositeDisposable) {
+        networkUtil.restApiCall(getCountryListUseCase::getCountryList, Unit, viewModelScope) {
             onSuccessCallback = {
                 it?.countries?.let {
                     _countries.value = it
@@ -94,7 +95,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     private fun getLanguageList() {
-        networkUtil.restApiCall(getLanguageListUseCase.getLanguageList(), compositeDisposable) {
+        networkUtil.restApiCall(getLanguageListUseCase::getLanguageList, Unit, viewModelScope) {
             onSuccessCallback = {
                 it?.languages?.let {
                     _languages.value = it

@@ -5,9 +5,6 @@ import com.somasoma.wagglewaggle.domain.repository.AuthRepository
 import javax.inject.Inject
 
 class PostRefreshUseCase @Inject constructor(private val authRepository: AuthRepository) {
-    fun postRefresh(refreshRequest: RefreshRequest) =
+    suspend fun postRefresh(refreshRequest: RefreshRequest) =
         authRepository.postRefresh(refreshRequest)
-
-    suspend fun postRefreshWithCoroutine(refreshRequest: RefreshRequest) =
-        authRepository.postRefreshWithCoroutine(refreshRequest)
 }

@@ -4,6 +4,5 @@ import com.somasoma.wagglewaggle.domain.repository.MemberRepository
 import javax.inject.Inject
 
 class GetCountryListUseCase @Inject constructor(private val memberRepository: MemberRepository) {
-    fun getCountryList() = memberRepository.getCountryList()
-    suspend fun getCountryListWithCoroutine(unit: Unit) = memberRepository.getCountryListWithCoroutine()
+    suspend fun getCountryList(unit: Unit) = memberRepository.getCountryList()
 }

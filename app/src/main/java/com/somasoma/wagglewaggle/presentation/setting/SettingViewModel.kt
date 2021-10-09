@@ -2,6 +2,7 @@ package com.somasoma.wagglewaggle.presentation.setting
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.PreferenceConstant
 import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
@@ -36,7 +37,7 @@ class SettingViewModel @Inject constructor(
     }
 
     fun onClickSignOut() {
-        networkUtil.restApiCall(deleteLogoutUseCase.deleteLogout(), compositeDisposable) {
+        networkUtil.restApiCall(deleteLogoutUseCase::deleteLogout, Unit, viewModelScope) {
             onSuccessCallback = {
                 sharedPreferenceHelper.remove(PreferenceConstant.REFRESH_TOKEN)
                 sharedPreferenceHelper.remove(PreferenceConstant.ACCESS_TOKEN)

@@ -1,10 +1,8 @@
 package com.somasoma.wagglewaggle.domain.repository
 
 import com.somasoma.wagglewaggle.data.model.dto.world.WorldListResponse
-import io.reactivex.Single
 import retrofit2.Response
 
 interface WorldRepository {
-    fun getWorldList(): Single<Response<WorldListResponse>>
-    suspend fun getWorldListWithCoroutine(): Response<WorldListResponse>
+    suspend fun getWorldList(): Response<WorldListResponse>
 }
