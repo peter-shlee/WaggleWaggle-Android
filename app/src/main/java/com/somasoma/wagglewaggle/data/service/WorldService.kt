@@ -8,4 +8,7 @@ import retrofit2.http.GET
 interface WorldService {
     @GET("world/world-room/list")
     fun getWorldList(): Single<Response<WorldListResponse>>
+
+    @GET("world/world-room/list")
+    suspend fun getWorldListWithCoroutine(): Response<WorldListResponse>
 }

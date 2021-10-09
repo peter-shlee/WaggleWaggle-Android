@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.SingleLiveEvent
 import com.somasoma.wagglewaggle.data.Avatar
@@ -43,24 +44,24 @@ class MainViewModel @Inject constructor(
 
     init {
         makeAvatars()
-//        getOnlineUsers()
-//        getWorlds()
-        _onlineUsers.value = listOf(
-            Member(1, "Mike", null, null, null, "male3", null, null, null, null),
-            Member(2, "찰스", null, null, null, "male1", null, null, null, null),
-            Member(3, "Rady", null, null, null, "female3", null, null, null, null),
-            Member(4, "하링", null, null, null, "female2", null, null, null, null),
-            Member(5, "메리", null, null, null, "male2", null, null, null, null),
-            Member(6, "leon", null, null, null, "male3", null, null, null, null),
-            Member(7, "Peter", null, null, null, null, null, null, null, null),
-        )
-        _worlds.value = listOf(
-            WorldRoom(null, null, "함께 놀아요", "종묘", 8, null, listOf("111", "222", "333"), null),
-            WorldRoom(null, null, "Let's Play", "종묘", 1, null, listOf("444", "555", "666"), null),
-            WorldRoom(null, null, "월드 제목", "종묘", 17, null, listOf("777", "888", "999"), null),
-            WorldRoom(null, null, "동해물과 백두산이", "종묘", 20, null, listOf("1010", "1111", "1212"), null),
-            WorldRoom(null, null, "마르고 닳도록 하느님이 보우하사 우리나라 만세", "종묘", 0, null, listOf("1313", "1414", "1515", "1313", "1414", "1515", "1313", "1414", "1515"), null),
-        )
+        getOnlineUsers()
+        getWorlds()
+//        _onlineUsers.value = listOf(
+//            Member(1, "Mike", null, null, null, "male3", null, null, null, null),
+//            Member(2, "찰스", null, null, null, "male1", null, null, null, null),
+//            Member(3, "Rady", null, null, null, "female3", null, null, null, null),
+//            Member(4, "하링", null, null, null, "female2", null, null, null, null),
+//            Member(5, "메리", null, null, null, "male2", null, null, null, null),
+//            Member(6, "leon", null, null, null, "male3", null, null, null, null),
+//            Member(7, "Peter", null, null, null, null, null, null, null, null),
+//        )
+//        _worlds.value = listOf(
+//            WorldRoom(null, null, "함께 놀아요", "종묘", 8, null, listOf("111", "222", "333"), null),
+//            WorldRoom(null, null, "Let's Play", "종묘", 1, null, listOf("444", "555", "666"), null),
+//            WorldRoom(null, null, "월드 제목", "종묘", 17, null, listOf("777", "888", "999"), null),
+//            WorldRoom(null, null, "동해물과 백두산이", "종묘", 20, null, listOf("1010", "1111", "1212"), null),
+//            WorldRoom(null, null, "마르고 닳도록 하느님이 보우하사 우리나라 만세", "종묘", 0, null, listOf("1313", "1414", "1515", "1313", "1414", "1515", "1313", "1414", "1515"), null),
+//        )
     }
 
     override fun onCleared() {
@@ -129,7 +130,11 @@ class MainViewModel @Inject constructor(
 
 
     private fun getWorlds() {
-        networkUtil.restApiCall(getWorldListUseCase.getWorldList(), compositeDisposable) {
+        networkUtil.restApiCall(
+            getWorldListUseCase::getWorldListWithCoroutine,
+            Unit,
+            viewModelScope
+        ) {
             onSuccessCallback = { it ->
                 it?.worldRoomList?.let { worldRoomList ->
                     _worlds.value = makeWorlds(worldRoomList)

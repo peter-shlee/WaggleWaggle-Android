@@ -6,4 +6,5 @@ import retrofit2.Response
 
 interface WorldRepository {
     fun getWorldList(): Single<Response<WorldListResponse>>
+    suspend fun getWorldListWithCoroutine(): Response<WorldListResponse>
 }
