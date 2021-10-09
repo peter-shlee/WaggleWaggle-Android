@@ -18,5 +18,6 @@ class MemberRepositoryImpl @Inject constructor(
     override fun getCountryList() = memberService.getCountryList()
     override fun getLanguageList() = memberService.getLanguageList()
     override fun getOnline(): Single<Response<OnlineResponse>> = memberService.getOnline()
+    override suspend fun getOnlineWithCoroutine() = memberService.getOnlineWithCoroutine()
     override fun deleteLogout() = memberService.deleteLogout()
 }

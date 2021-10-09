@@ -74,7 +74,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun getOnlineUsers() {
-        networkUtil.restApiCall(getOnlineUseCase.getOnline(), compositeDisposable) {
+        networkUtil.restApiCall(getOnlineUseCase::getOnlineWithCoroutine, Unit, viewModelScope) {
             onSuccessCallback = { onlineResponse ->
                 _onlineUsers.value = makeOnlineUserList(onlineResponse)
                 Timber.d(onlineUsers.value.toString())

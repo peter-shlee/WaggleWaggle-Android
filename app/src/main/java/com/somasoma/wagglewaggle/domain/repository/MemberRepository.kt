@@ -11,5 +11,6 @@ interface MemberRepository {
     fun getCountryList(): Single<Response<CountryListResponse>>
     fun getLanguageList(): Single<Response<LanguageListResponse>>
     fun getOnline(): Single<Response<OnlineResponse>>
+    suspend fun getOnlineWithCoroutine(): Response<OnlineResponse>
     fun deleteLogout(): Single<Response<LogoutResponse>>
 }
