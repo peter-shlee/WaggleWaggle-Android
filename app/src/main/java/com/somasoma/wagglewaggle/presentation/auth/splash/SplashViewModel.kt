@@ -2,6 +2,7 @@ package com.somasoma.wagglewaggle.presentation.auth.splash
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.PreferenceConstant
 import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
@@ -30,14 +31,14 @@ class SplashViewModel @Inject constructor(
         compositeDisposable.dispose()
     }
 
+
     fun getAccessToken() {
         networkUtil.publicRestApiCall(
-            postFirebaseUseCase.postFirebase(
-                FirebaseRequest(
-                    firebaseUserToken
-                )
+            postFirebaseUseCase::postFirebase,
+            FirebaseRequest(
+                firebaseUserToken
             ),
-            compositeDisposable
+            viewModelScope
         ) {
             onSuccessCallback = {
                 it?.run {

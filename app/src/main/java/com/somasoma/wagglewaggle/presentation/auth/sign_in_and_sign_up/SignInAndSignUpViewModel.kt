@@ -38,7 +38,7 @@ class SignInAndSignUpViewModel @Inject constructor(
 
     fun getAccessToken() {
         networkUtil.publicRestApiCall(
-            postFirebaseUseCase::postFirebaseWithCoroutine,
+            postFirebaseUseCase::postFirebase,
             FirebaseRequest(
                 firebaseUserToken
             ),

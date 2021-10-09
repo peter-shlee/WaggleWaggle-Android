@@ -74,7 +74,7 @@ class MainViewModel @Inject constructor(
     }
 
     private fun getOnlineUsers() {
-        networkUtil.restApiCall(getOnlineUseCase::getOnlineWithCoroutine, Unit, viewModelScope) {
+        networkUtil.restApiCall(getOnlineUseCase::getOnline, Unit, viewModelScope) {
             onSuccessCallback = { onlineResponse ->
                 _onlineUsers.value = makeOnlineUserList(onlineResponse)
                 Timber.d(onlineUsers.value.toString())
@@ -131,7 +131,7 @@ class MainViewModel @Inject constructor(
 
     private fun getWorlds() {
         networkUtil.restApiCall(
-            getWorldListUseCase::getWorldListWithCoroutine,
+            getWorldListUseCase::getWorldList,
             Unit,
             viewModelScope
         ) {

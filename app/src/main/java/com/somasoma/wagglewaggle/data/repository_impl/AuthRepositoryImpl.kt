@@ -9,7 +9,6 @@ import com.somasoma.wagglewaggle.data.model.dto.auth.RefreshRequest
 import com.somasoma.wagglewaggle.data.model.dto.auth.RefreshResponse
 import com.somasoma.wagglewaggle.data.service.AuthService
 import com.somasoma.wagglewaggle.domain.repository.AuthRepository
-import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
@@ -53,15 +52,9 @@ class AuthRepositoryImpl @Inject constructor(
             }
     }
 
-    override fun postFirebase(firebaseRequest: FirebaseRequest): Single<Response<FirebaseResponse?>> =
+    override suspend fun postFirebase(firebaseRequest: FirebaseRequest): Response<FirebaseResponse?> =
         publicAuthService.postFirebase(firebaseRequest)
 
-    override fun postRefresh(refreshRequest: RefreshRequest): Single<Response<RefreshResponse?>> =
+    override suspend fun postRefresh(refreshRequest: RefreshRequest): Response<RefreshResponse?> =
         authService.postRefresh(refreshRequest)
-
-    override suspend fun postFirebaseWithCoroutine(firebaseRequest: FirebaseRequest): Response<FirebaseResponse?> =
-        publicAuthService.postFirebaseWithCoroutine(firebaseRequest)
-
-    override suspend fun postRefreshWithCoroutine(refreshRequest: RefreshRequest): Response<RefreshResponse?> =
-        authService.postRefreshWithCoroutine(refreshRequest)
 }

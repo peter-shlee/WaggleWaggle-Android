@@ -4,5 +4,5 @@ import com.somasoma.wagglewaggle.domain.repository.MemberRepository
 import javax.inject.Inject
 
 class GetLanguageListUseCase @Inject constructor(private val memberRepository: MemberRepository) {
-    fun getLanguageList() = memberRepository.getLanguageList()
+    suspend fun getLanguageList(unit: Unit) = memberRepository.getLanguageList()
 }
