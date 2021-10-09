@@ -15,4 +15,7 @@ interface AuthService {
 
     @POST("test/auth/refresh")
     fun postRefresh(@Body refreshRequest: RefreshRequest): Single<Response<RefreshResponse?>>
+
+    @POST("test/auth/refresh")
+    fun postRefreshWithCoroutine(@Body refreshRequest: RefreshRequest): Response<RefreshResponse?>
 }
