@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+
+        <variable
+            name="backgroundTintColor"
+            type="int" />
+    </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/circle_in_background"
+        android:backgroundTint="@{backgroundTintColor}"
         android:orientation="vertical">
 
         <ImageView

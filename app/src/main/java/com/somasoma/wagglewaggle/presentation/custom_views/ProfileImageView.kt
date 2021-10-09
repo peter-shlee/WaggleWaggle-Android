@@ -1,9 +1,11 @@
 package com.somasoma.wagglewaggle.presentation.custom_views
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
@@ -22,6 +24,13 @@ class ProfileImageView @JvmOverloads constructor(
         @BindingAdapter("app:avatar")
         fun setAvatar(view: ProfileImageView, avatar: Avatar) {
             view.avatar = avatar
+        }
+
+
+        @JvmStatic
+        @BindingAdapter("app:backgroundColor")
+        fun setBackgroundTint(view: ProfileImageView, color: ProfileImageBackgroundColor) {
+            view.backgroundTint = color
         }
     }
 
@@ -42,5 +51,12 @@ class ProfileImageView @JvmOverloads constructor(
             Glide.with(binding.root)
                 .load(getProfileAvatarResourceId(value))
                 .into(binding.imgCharacter)
+        }
+
+    var backgroundTint: ProfileImageBackgroundColor = ProfileImageBackgroundColor.GREEN
+        @SuppressLint("ResourceType")
+        set(color) {
+            field = color
+            binding.backgroundTintColor = ContextCompat.getColor(binding.root.context, color.value)
         }
 }

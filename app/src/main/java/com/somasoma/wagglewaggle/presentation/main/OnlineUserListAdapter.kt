@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.databinding.OnlineUserListItemBinding
+import com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor
 
 class OnlineUserListAdapter :
     ListAdapter<Member, OnlineUserListAdapter.ViewHolder>(MemberDiffCallback()) {
@@ -33,6 +34,7 @@ class OnlineUserListAdapter :
         fun bind(member: Member) {
             binding.member = member
             binding.avatar = stringToAvatar(member.avatar)
+            binding.profileImageBackgroundColor = getBackgroundColor(member.id ?: 0)
         }
 
         private fun stringToAvatar(avatarName: String?) = when (avatarName) {
@@ -46,6 +48,9 @@ class OnlineUserListAdapter :
             "male4" -> Avatar.MALE4
             else -> Avatar.MALE1
         }
+
+        private fun getBackgroundColor(memberId: Int): ProfileImageBackgroundColor =
+            ProfileImageBackgroundColor.values()[memberId.mod(ProfileImageBackgroundColor.values().size)]
     }
 }
 

@@ -46,13 +46,13 @@ class MainViewModel @Inject constructor(
 //        getOnlineUsers()
 //        getWorlds()
         _onlineUsers.value = listOf(
-            Member(null, "Mike", null, null, null, "male3", null, null, null, null),
-            Member(null, "찰스", null, null, null, "male1", null, null, null, null),
-            Member(null, "Rady", null, null, null, "female3", null, null, null, null),
-            Member(null, "하링", null, null, null, "female2", null, null, null, null),
-            Member(null, "메리", null, null, null, "male2", null, null, null, null),
-            Member(null, "leon", null, null, null, "male3", null, null, null, null),
-            Member(null, "Peter", null, null, null, null, null, null, null, null),
+            Member(1, "Mike", null, null, null, "male3", null, null, null, null),
+            Member(2, "찰스", null, null, null, "male1", null, null, null, null),
+            Member(3, "Rady", null, null, null, "female3", null, null, null, null),
+            Member(4, "하링", null, null, null, "female2", null, null, null, null),
+            Member(5, "메리", null, null, null, "male2", null, null, null, null),
+            Member(6, "leon", null, null, null, "male3", null, null, null, null),
+            Member(7, "Peter", null, null, null, null, null, null, null, null),
         )
         _worlds.value = listOf(
             WorldRoom(null, null, "함께 놀아요", "종묘", 8, null, listOf("111", "222", "333"), null),
