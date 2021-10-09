@@ -17,8 +17,8 @@ interface AuthService {
     fun postRefresh(@Body refreshRequest: RefreshRequest): Single<Response<RefreshResponse?>>
 
     @POST("test/auth/firebase")
-    fun postFirebaseWithCoroutine(@Body firebaseRequest: FirebaseRequest): Response<FirebaseResponse?>
+    suspend fun postFirebaseWithCoroutine(@Body firebaseRequest: FirebaseRequest): Response<FirebaseResponse?>
 
     @POST("test/auth/refresh")
-    fun postRefreshWithCoroutine(@Body refreshRequest: RefreshRequest): Response<RefreshResponse?>
+    suspend fun postRefreshWithCoroutine(@Body refreshRequest: RefreshRequest): Response<RefreshResponse?>
 }

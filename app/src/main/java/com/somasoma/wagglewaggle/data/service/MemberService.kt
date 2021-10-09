@@ -13,8 +13,14 @@ interface MemberService {
     @GET("member/country-list")
     fun getCountryList(): Single<Response<CountryListResponse>>
 
+    @GET("member/country-list")
+    suspend fun getCountryListWithCoroutine(): Response<CountryListResponse>
+
     @GET("member/language-list")
     fun getLanguageList(): Single<Response<LanguageListResponse>>
+
+    @GET("member/language-list")
+    suspend fun getLanguageListWithCoroutine(): Response<LanguageListResponse>
 
     @GET("member/online")
     fun getOnline(): Single<Response<OnlineResponse>>
@@ -24,4 +30,7 @@ interface MemberService {
 
     @DELETE("member/logout")
     fun deleteLogout(): Single<Response<LogoutResponse>>
+
+    @DELETE("member/logout")
+    suspend fun deleteLogoutWithCoroutine(): Response<LogoutResponse>
 }

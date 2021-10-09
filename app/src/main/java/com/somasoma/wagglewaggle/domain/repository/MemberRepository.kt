@@ -9,8 +9,11 @@ import retrofit2.Response
 
 interface MemberRepository {
     fun getCountryList(): Single<Response<CountryListResponse>>
+    suspend fun getCountryListWithCoroutine(): Response<CountryListResponse>
     fun getLanguageList(): Single<Response<LanguageListResponse>>
+    suspend fun getLanguageListWithCoroutine(): Response<LanguageListResponse>
     fun getOnline(): Single<Response<OnlineResponse>>
     suspend fun getOnlineWithCoroutine(): Response<OnlineResponse>
     fun deleteLogout(): Single<Response<LogoutResponse>>
+    suspend fun deleteLogoutWithCoroutine(): Response<LogoutResponse>
 }

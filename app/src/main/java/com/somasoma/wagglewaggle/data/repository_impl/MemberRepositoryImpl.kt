@@ -16,8 +16,11 @@ class MemberRepositoryImpl @Inject constructor(
     private val memberService = memberRetrofit.create(MemberService::class.java)
 
     override fun getCountryList() = memberService.getCountryList()
+    override suspend fun getCountryListWithCoroutine() = memberService.getCountryListWithCoroutine()
     override fun getLanguageList() = memberService.getLanguageList()
+    override suspend fun getLanguageListWithCoroutine() = memberService.getLanguageListWithCoroutine()
     override fun getOnline(): Single<Response<OnlineResponse>> = memberService.getOnline()
     override suspend fun getOnlineWithCoroutine() = memberService.getOnlineWithCoroutine()
     override fun deleteLogout() = memberService.deleteLogout()
+    override suspend fun deleteLogoutWithCoroutine() = memberService.deleteLogoutWithCoroutine()
 }
