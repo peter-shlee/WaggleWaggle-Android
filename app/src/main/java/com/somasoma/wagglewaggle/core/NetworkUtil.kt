@@ -20,6 +20,11 @@ class NetworkUtil @Inject constructor(
     private val sharedPreferenceHelper: SharedPreferenceHelper,
     private val postRefreshUseCase: PostRefreshUseCase
 ) {
+    companion object {
+        private const val MINUTE_IN_SECONDS = 60
+        private const val MINUTES_BEFORE_TOKEN_EXPIRES = 30
+    }
+
     fun <T, S> restApiCall(
         useCase: suspend (T) -> Response<S>,
         request: T,
@@ -30,7 +35,7 @@ class NetworkUtil @Inject constructor(
         val authTokenExpiredIn =
             sharedPreferenceHelper.getLong(PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN)
 
-        if (currentTime >= authTokenExpiredIn) { // access token 만료, 토큰 재발급 후 apiCall 호출
+        if (currentTime >= authTokenExpiredIn - (MINUTES_BEFORE_TOKEN_EXPIRES * MINUTE_IN_SECONDS)) { // 토큰 재발급 후 apiCall 호출
             scope.launch {
                 try {
                     val response = withContext(Dispatchers.IO) {
@@ -43,13 +48,23 @@ class NetworkUtil @Inject constructor(
                             )
                         )
                     }
+
                     if (response.isSuccessful) {
                         response.body()?.accessToken?.let { newToken ->
                             sharedPreferenceHelper.putString(
                                 PreferenceConstant.ACCESS_TOKEN,
                                 newToken
                             )
+
                         }
+
+                        response.body()?.accessTokenExpiresIn?.let { newTokenExpiredIn ->
+                            sharedPreferenceHelper.putLong(
+                                PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN,
+                                newTokenExpiredIn
+                            )
+                        }
+
                         apiCall(useCase, request, scope, setApiCallback)
                     } else { // refresh token 만료
                         signOut()
