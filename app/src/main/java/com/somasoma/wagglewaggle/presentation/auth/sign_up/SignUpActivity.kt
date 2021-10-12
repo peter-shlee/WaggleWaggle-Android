@@ -45,6 +45,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun observe() {
+        viewModel.navigateToPrevPageEvent.observe(this) { navigateToPrevPage() }
         viewModel.showSelectInterestsDialogEvent.observe(this) { showSelectInterestsDialog() }
         viewModel.selectedInterests.observe(this) { onSelectedInterestsChanged(it) }
         viewModel.languages.observe(this) { onLanguagesLoaded(it) }
@@ -112,6 +113,10 @@ class SignUpActivity : AppCompatActivity() {
     ) {
         spinner.adapter = ArrayAdapter(this, R.layout.spinner_item, strings)
         spinner.onItemSelectedListener = listener
+    }
+
+    private fun navigateToPrevPage() {
+        finish()
     }
 
 }

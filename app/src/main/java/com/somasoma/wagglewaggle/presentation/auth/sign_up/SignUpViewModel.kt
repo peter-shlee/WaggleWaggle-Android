@@ -40,12 +40,15 @@ class SignUpViewModel @Inject constructor(
     var showDuplicateNicknameText: LiveData<Boolean> = _showDuplicateNicknameText
     private var nickname: String = ""
     val showSelectInterestsDialogEvent = SingleLiveEvent<Unit>()
+    val navigateToPrevPageEvent = SingleLiveEvent<Unit>()
 
     init {
         getLanguageList()
         getCountryList()
+    }
 
-        resetSelectedInterests(setOf("스포츠", "BTS", "엔터"))
+    fun onClickBackButton() {
+        navigateToPrevPageEvent.call()
     }
 
     fun onClickSelectInterestButton() {
