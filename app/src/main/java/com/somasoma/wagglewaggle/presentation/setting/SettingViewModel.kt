@@ -7,8 +7,10 @@ import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.PreferenceConstant
 import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
 import com.somasoma.wagglewaggle.core.SingleLiveEvent
+import com.somasoma.wagglewaggle.domain.usecase.DeleteAccountUseCase
 import com.somasoma.wagglewaggle.domain.usecase.SignOutUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.DeleteLogoutUseCase
+import com.somasoma.wagglewaggle.domain.usecase.member.DeleteMemberUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
@@ -19,6 +21,8 @@ class SettingViewModel @Inject constructor(
     private val networkUtil: NetworkUtil,
     private val sharedPreferenceHelper: SharedPreferenceHelper,
     private val deleteLogoutUseCase: DeleteLogoutUseCase,
+    private val deleteMemberUseCase: DeleteMemberUseCase,
+    private val deleteAccountUseCase: DeleteAccountUseCase,
     private val signOutUseCase: SignOutUseCase
 ) :
     AndroidViewModel(application) {
@@ -46,6 +50,29 @@ class SettingViewModel @Inject constructor(
                 signOutUseCase.signOut({
                     navigateToSignInAndSignUpEvent.call()
                 }) {}
+            }
+
+            onErrorCallback = {
+
+            }
+
+            onNetworkErrorCallback = {
+
+            }
+        }
+    }
+
+    fun onClickDeleteAccount() {
+        networkUtil.restApiCall(deleteMemberUseCase::deleteMember, Unit, viewModelScope) {
+            onSuccessCallback = {
+                if (it?.status?.equals("ok") == true) {
+                    sharedPreferenceHelper.remove(PreferenceConstant.REFRESH_TOKEN)
+                    sharedPreferenceHelper.remove(PreferenceConstant.ACCESS_TOKEN)
+                    sharedPreferenceHelper.remove(PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN)
+                    deleteAccountUseCase.deleteAccount({
+                        navigateToSignInAndSignUpEvent.call()
+                    }, {})
+                }
             }
 
             onErrorCallback = {

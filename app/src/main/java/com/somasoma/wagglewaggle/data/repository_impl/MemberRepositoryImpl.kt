@@ -16,4 +16,5 @@ class MemberRepositoryImpl @Inject constructor(
     override suspend fun getLanguageList() = memberService.getLanguageList()
     override suspend fun getOnline() = memberService.getOnline()
     override suspend fun deleteLogout() = memberService.deleteLogout()
+    override suspend fun deleteMember() = memberService.deleteMember()
 }
