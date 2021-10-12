@@ -4,6 +4,7 @@ import com.somasoma.wagglewaggle.data.model.dto.member.*
 import retrofit2.Response
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface MemberService {
@@ -24,4 +25,7 @@ interface MemberService {
 
     @DELETE("member/{memberID}")
     suspend fun deleteMember(@Path("memberID") memberId: Int = -1): Response<DeleteMemberResponse>
+
+    @PUT("member/edit-member")
+    suspend fun putEditMember(member: Member): Response<Unit>
 }
