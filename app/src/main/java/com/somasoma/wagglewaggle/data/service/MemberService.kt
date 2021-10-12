@@ -8,7 +8,7 @@ import com.somasoma.wagglewaggle.data.model.dto.member.OnlineResponse
 import retrofit2.Response
 import retrofit2.http.DELETE
 import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.Path
 
 interface MemberService {
     @GET("member/country-list")
@@ -23,6 +23,6 @@ interface MemberService {
     @DELETE("member/logout")
     suspend fun deleteLogout(): Response<LogoutResponse>
 
-    @DELETE("member/logout")
-    suspend fun deleteMember(@Query("memberID ") memberId: Int = -1): Response<DeleteMemberResponse>
+    @DELETE("member/{memberID}")
+    suspend fun deleteMember(@Path("memberID") memberId: Int = -1): Response<DeleteMemberResponse>
 }
