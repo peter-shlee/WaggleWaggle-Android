@@ -123,7 +123,6 @@ class NetworkUtil @Inject constructor(
         sharedPreferenceHelper.remove(PreferenceConstant.ACCESS_TOKEN)
         sharedPreferenceHelper.remove(PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN)
         sharedPreferenceHelper.remove(PreferenceConstant.REFRESH_TOKEN)
-        sharedPreferenceHelper.remove(PreferenceConstant.REFRESH_TOKEN_EXPIRED_IN)
     }
 
     private fun navigateToSignInAndSignUp() {
