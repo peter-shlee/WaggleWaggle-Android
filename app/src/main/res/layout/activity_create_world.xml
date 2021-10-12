@@ -3,9 +3,13 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <import type="com.somasoma.wagglewaggle.core.InputState" />
+
         <variable
             name="viewModel"
-            type="com.somasoma.wagglewaggle.presentation.main.CreateWorldViewModel" />
+            type="com.somasoma.wagglewaggle.presentation.main.create_world.CreateWorldViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,7 +17,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.main.CreateWorldActivity">
+        tools:context=".presentation.main.create_world.CreateWorldActivity">
 
         <LinearLayout
             android:id="@+id/btn_back"
@@ -22,7 +26,7 @@
             android:layout_marginStart="17dp"
             android:layout_marginLeft="17dp"
             android:layout_marginTop="26dp"
-            android:onClick="@{() -> viewModel.onBackButtonClicked()}"
+            android:onClick="@{() -> viewModel.onClickBackButton()}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -77,15 +81,16 @@
                 <EditText
                     android:id="@+id/edit_text_nickname"
                     android:layout_width="0dp"
-                    android:layout_height="33dp"
+                    android:layout_height="36dp"
                     android:layout_marginTop="6dp"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/round_border_background"
+                    android:background="@{viewModel.worldNameInputState == InputState.POSITIVE ? @drawable/round_border_positive_background : viewModel.worldNameInputState == InputState.NEGATIVE ? @drawable/round_border_negative_background : @drawable/round_border_background}"
                     android:hint="제목을 입력해주세요"
                     android:paddingHorizontal="12dp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/text_color_hint"
                     android:textSize="12dp"
+                    android:onTextChanged="@{viewModel.onWorldNameChanged}"
                     app:layout_constraintLeft_toLeftOf="@id/txt_world_title"
                     app:layout_constraintRight_toRightOf="@id/txt_world_title"
                     app:layout_constraintTop_toBottomOf="@id/txt_world_title" />
@@ -97,8 +102,8 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginTop="2dp"
-                    android:text="영어, 숫자만 사용하여 최대 10자"
-                    android:textColor="@color/text_color_primary"
+                    android:text="영어, 한글, 숫자를 사용하여 최대 20자"
+                    android:textColor="@{viewModel.worldNameInputState == InputState.NEGATIVE ? @color/point_red : viewModel.worldNameInputState == InputState.POSITIVE ? @color/point_blue : @color/text_color_primary}"
                     android:textSize="10dp"
                     app:layout_constraintLeft_toLeftOf="@id/txt_world_title"
                     app:layout_constraintRight_toRightOf="@id/txt_world_title"
@@ -121,10 +126,15 @@
                     android:id="@+id/list_map"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="9dp"
+                    android:orientation="horizontal"
+                    android:clipToPadding="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintLeft_toLeftOf="@id/txt_world_title"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_map" />
+                    app:layout_constraintTop_toBottomOf="@id/txt_map"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/map_list_item" />
 
 
                 <TextView
@@ -145,6 +155,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:onClick="@{() -> viewModel.onClickSelectInterest()}"
                     app:layout_constraintBottom_toBottomOf="@id/text_keyword"
                     app:layout_constraintLeft_toRightOf="@id/text_keyword"
                     app:layout_constraintRight_toRightOf="@id/txt_world_title"
@@ -169,11 +180,27 @@
                     android:id="@+id/list_keyword"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="9dp"
+                    android:minHeight="20dp"
+                    android:visibility="@{viewModel.selectedInterests.empty ? View.INVISIBLE : View.VISIBLE}"
                     app:layout_constraintBottom_toTopOf="@id/space"
                     app:layout_constraintLeft_toLeftOf="@id/txt_world_title"
                     app:layout_constraintRight_toRightOf="@id/txt_world_title"
-                    app:layout_constraintTop_toBottomOf="@id/text_keyword" />
+                    app:layout_constraintTop_toBottomOf="@id/text_keyword"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/interest_item_view" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:text="관심사를 선택해 주세요."
+                    android:textColor="@color/point_red"
+                    android:textSize="12dp"
+                    android:visibility="@{viewModel.selectedInterests.empty ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintLeft_toLeftOf="@id/txt_world_title"
+                    app:layout_constraintRight_toRightOf="@id/txt_world_title"
+                    app:layout_constraintTop_toTopOf="@id/list_keyword" />
 
                 <Space
                     android:id="@+id/space"
@@ -191,10 +218,13 @@
                     android:layout_height="44dp"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginBottom="34.5dp"
+                    android:layout_marginTop="40dp"
                     android:background="@drawable/round_button_background"
-                    android:backgroundTint="@color/gray1"
+                    android:backgroundTint="@{btnCreate.enabled ? @color/point_blue : @color/gray1}"
                     android:text="만들기"
                     android:textColor="@color/white"
+                    android:enabled="@{!viewModel.selectedInterests.empty &amp;&amp; viewModel.worldNameInputState == InputState.POSITIVE ? true : false}"
+                    android:onClick="@{() -> viewModel.onClickCreateButton()}"
                     app:backgroundTint="@null"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -202,9 +232,6 @@
                     app:layout_constraintTop_toBottomOf="@id/space" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
         </ScrollView>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

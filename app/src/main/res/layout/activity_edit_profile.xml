@@ -235,7 +235,6 @@
                     android:layout_marginTop="9dp"
                     android:minHeight="20dp"
                     android:visibility="@{viewModel.selectedInterests.empty ? View.INVISIBLE : View.VISIBLE}"
-                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:layout_constraintBottom_toTopOf="@id/text_introduce"
                     app:layout_constraintLeft_toLeftOf="@id/txt_nickname"
                     app:layout_constraintRight_toRightOf="@id/txt_nickname"

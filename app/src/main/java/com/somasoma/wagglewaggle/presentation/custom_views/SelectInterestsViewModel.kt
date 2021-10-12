@@ -23,6 +23,7 @@ open class SelectInterestsViewModel @Inject constructor(
 
     init {
         getInterestList()
+        resetSelectedInterests(mutableSetOf())
     }
 
     fun resetSelectedInterests(newSelectedInterests: Set<String>) {

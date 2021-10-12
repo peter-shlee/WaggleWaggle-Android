@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.databinding.ActivityFollowerFollowingBinding
-import com.somasoma.wagglewaggle.presentation.main.CreateWorldActivity
+import com.somasoma.wagglewaggle.presentation.main.create_world.CreateWorldActivity
 import com.somasoma.wagglewaggle.presentation.main.MainActivity
 import com.somasoma.wagglewaggle.presentation.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint

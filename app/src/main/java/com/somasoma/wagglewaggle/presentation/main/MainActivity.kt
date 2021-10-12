@@ -14,6 +14,7 @@ import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
 import com.somasoma.wagglewaggle.databinding.ActivityMainBinding
 import com.somasoma.wagglewaggle.presentation.follower_following.FollowerFollowingActivity
+import com.somasoma.wagglewaggle.presentation.main.create_world.CreateWorldActivity
 import com.somasoma.wagglewaggle.presentation.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 

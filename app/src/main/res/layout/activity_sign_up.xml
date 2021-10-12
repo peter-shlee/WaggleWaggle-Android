@@ -5,7 +5,7 @@
 
         <import type="android.view.View" />
 
-        <import type="com.somasoma.wagglewaggle.presentation.auth.sign_up.SignUpViewModel.InputState" />
+        <import type="com.somasoma.wagglewaggle.core.InputState" />
 
         <variable
             name="viewModel"
@@ -266,7 +266,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="9dp"
                     android:visibility="@{viewModel.selectedInterests.empty ? View.GONE : View.VISIBLE}"
-                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:layout_constraintBottom_toTopOf="@id/space"
                     app:layout_constraintLeft_toLeftOf="@id/txt_info"
                     app:layout_constraintRight_toRightOf="@id/txt_info"
