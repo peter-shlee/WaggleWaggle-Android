@@ -10,4 +10,5 @@ interface MemberRepository {
     suspend fun getOnline(): Response<OnlineResponse>
     suspend fun deleteLogout(): Response<LogoutResponse>
     suspend fun deleteMember(): Response<DeleteMemberResponse>
+    suspend fun putEditMember(member: Member): Response<Unit>
 }
