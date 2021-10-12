@@ -17,7 +17,7 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/create_world_map_list_item_background"
         android:backgroundTint="@{isSelected ? @color/point_yellow : @color/transparent}"
-        android:padding="3dp">
+        android:padding="1.5dp">
 
         <LinearLayout
             android:id="@+id/frame"

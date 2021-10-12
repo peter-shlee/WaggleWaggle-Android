@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.somasoma.wagglewaggle.core.InputState
 import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.SingleLiveEvent
 import com.somasoma.wagglewaggle.domain.usecase.member.GetCountryListUseCase
@@ -101,12 +102,5 @@ class SignUpViewModel @Inject constructor(
 
             }
         }
-    }
-
-    enum class InputState {
-        DISABLED,
-        ENABLED,
-        NEGATIVE,
-        POSITIVE
     }
 }
