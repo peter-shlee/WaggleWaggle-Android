@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.SingleLiveEvent
 import com.somasoma.wagglewaggle.domain.usecase.member.GetCountryListUseCase
+import com.somasoma.wagglewaggle.domain.usecase.member.GetInterestListUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetLanguageListUseCase
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectInterestsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +19,9 @@ class SignUpViewModel @Inject constructor(
     application: Application,
     private val networkUtil: NetworkUtil,
     private val getLanguageListUseCase: GetLanguageListUseCase,
-    private val getCountryListUseCase: GetCountryListUseCase
-) : SelectInterestsViewModel(application) {
+    private val getCountryListUseCase: GetCountryListUseCase,
+    getInterestListUseCase: GetInterestListUseCase
+) : SelectInterestsViewModel(application, networkUtil, getInterestListUseCase) {
     companion object {
         private const val NICKNAME_REGEX = "[A-Za-z|가-힣|ㄱ-ㅎ|ㅏ-ㅣ\\d\\s]{2,8}\$"
         private val nicknamePattern = Pattern.compile(NICKNAME_REGEX)

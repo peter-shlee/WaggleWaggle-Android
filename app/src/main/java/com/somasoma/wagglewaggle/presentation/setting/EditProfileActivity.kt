@@ -15,7 +15,6 @@ import com.somasoma.wagglewaggle.databinding.ActivityEditProfileBinding
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectInterestsDialogFragment
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectedInterestListAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class EditProfileActivity : AppCompatActivity() {
@@ -66,7 +65,6 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun onSelectedInterestsChanged(selectedInterests: Set<String>) {
-        Timber.d("hello")
         adapter.submitList(selectedInterests.toList())
     }
 

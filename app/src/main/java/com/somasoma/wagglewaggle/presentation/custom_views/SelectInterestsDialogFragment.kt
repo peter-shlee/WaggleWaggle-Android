@@ -34,7 +34,6 @@ open class SelectInterestsDialogFragment : BottomSheetDialogFragment() {
             val selectInterestsViewModel: SelectInterestsViewModel by activityViewModels()
             setViewModel(selectInterestsViewModel)
         }
-        initViewModel()
         observe()
     }
 
@@ -90,18 +89,13 @@ open class SelectInterestsDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun initViewModel() {
-        activityViewModel?.let {
-            val selectedInterests = it.selectedInterests.value
-            selectedInterests?.let {
-                viewModel.setSelectedInterests(selectedInterests)
-            }
-        }
-    }
-
     private fun observe() {
+        activityViewModel?.selectedInterests?.observe(this) { viewModel.setSelectedInterests(it) }
+        activityViewModel?.interests?.observe(this) {
+            viewModel.setInterests(it)
+            onInterestsLoaded(it)
+        }
         viewModel.closeDialogEvent.observe(this) { dismiss() }
-        viewModel.interests.observe(this) { onInterestsLoaded(it) }
     }
 
     private fun onInterestsLoaded(interestsSet: Set<String>) {

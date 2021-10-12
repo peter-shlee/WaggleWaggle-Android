@@ -12,7 +12,6 @@ import com.somasoma.wagglewaggle.domain.usecase.SignOutUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.DeleteLogoutUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.DeleteMemberUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,7 +29,6 @@ class SettingViewModel @Inject constructor(
     val navigateToPrevPageEvent = SingleLiveEvent<Unit>()
     val navigateToEditProfileEvent = SingleLiveEvent<Unit>()
     val navigateToSignInAndSignUpEvent = SingleLiveEvent<Unit>()
-    private val compositeDisposable = CompositeDisposable()
 
     fun onClickBackButton() {
         navigateToPrevPageEvent.call()
@@ -49,7 +47,9 @@ class SettingViewModel @Inject constructor(
 
                 signOutUseCase.signOut({
                     navigateToSignInAndSignUpEvent.call()
-                }) {}
+                }) {
+                    navigateToSignInAndSignUpEvent.call()
+                }
             }
 
             onErrorCallback = {
