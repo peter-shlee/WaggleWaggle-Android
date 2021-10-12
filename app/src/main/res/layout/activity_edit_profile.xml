@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.somasoma.wagglewaggle.presentation.setting.EditProfileViewModel" />
@@ -205,6 +207,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:onClick="@{() -> viewModel.onClickSelectInterestButton()}"
                     app:layout_constraintBottom_toBottomOf="@id/text_interest"
                     app:layout_constraintLeft_toRightOf="@id/text_interest"
                     app:layout_constraintRight_toRightOf="@id/txt_nickname"
@@ -225,6 +228,33 @@
 
                 </LinearLayout>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_interest"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:minHeight="20dp"
+                    android:visibility="@{viewModel.selectedInterests.empty ? View.INVISIBLE : View.VISIBLE}"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:layout_constraintBottom_toTopOf="@id/text_introduce"
+                    app:layout_constraintLeft_toLeftOf="@id/txt_nickname"
+                    app:layout_constraintRight_toRightOf="@id/txt_nickname"
+                    app:layout_constraintTop_toBottomOf="@id/text_interest"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/interest_item_view" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:text="관심사를 선택해 주세요."
+                    android:textColor="@color/point_red"
+                    android:textSize="12dp"
+                    android:visibility="@{viewModel.selectedInterests.empty ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintLeft_toLeftOf="@id/txt_nickname"
+                    app:layout_constraintRight_toRightOf="@id/txt_nickname"
+                    app:layout_constraintTop_toTopOf="@id/list_interest" />
+
                 <TextView
                     android:id="@+id/text_introduce"
                     android:layout_width="0dp"
@@ -236,7 +266,7 @@
                     android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="@id/txt_nickname"
                     app:layout_constraintRight_toRightOf="@id/txt_nickname"
-                    app:layout_constraintTop_toBottomOf="@id/text_interest" />
+                    app:layout_constraintTop_toBottomOf="@id/list_interest" />
 
                 <EditText
                     android:id="@+id/edit_text_introduce"
