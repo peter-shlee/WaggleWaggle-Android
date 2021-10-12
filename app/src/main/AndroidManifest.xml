@@ -26,7 +26,7 @@
         <activity
             android:name=".presentation.main.MainActivity"
             android:theme="@style/noAnimeTheme" />
-        <activity android:name=".presentation.main.CreateWorldActivity" />
+        <activity android:name=".presentation.main.create_world.CreateWorldActivity" />
         <activity android:name=".presentation.profile.ProfileActivity" />
         <activity android:name=".presentation.setting.EditProfileActivity" />
         <activity android:name=".presentation.auth.sign_up.SignUpActivity" />

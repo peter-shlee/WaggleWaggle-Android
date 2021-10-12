@@ -20,8 +20,7 @@ class EditProfileViewModel @Inject constructor(
     private val getLanguageListUseCase: GetLanguageListUseCase,
     private val getCountryListUseCase: GetCountryListUseCase,
     getInterestListUseCase: GetInterestListUseCase
-) :
-    SelectInterestsViewModel(application, networkUtil, getInterestListUseCase) {
+) : SelectInterestsViewModel(application, networkUtil, getInterestListUseCase) {
 
     val showSelectInterestsDialogEvent = SingleLiveEvent<Unit>()
     val navigateToPrevPageEvent = SingleLiveEvent<Unit>()

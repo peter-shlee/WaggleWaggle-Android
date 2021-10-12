@@ -1,4 +1,4 @@
-package com.somasoma.wagglewaggle.presentation.main
+package com.somasoma.wagglewaggle.presentation.main.map_info
 
 import android.os.Bundle
 import android.view.LayoutInflater

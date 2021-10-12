@@ -21,7 +21,6 @@ class EditProfileActivity : AppCompatActivity() {
 
     private val viewModel: EditProfileViewModel by viewModels()
     private lateinit var binding: ActivityEditProfileBinding
-
     private val adapter = SelectedInterestListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -3,9 +3,11 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
-            type="com.somasoma.wagglewaggle.presentation.main.CreateWorldViewModel" />
+            type="com.somasoma.wagglewaggle.presentation.main.create_world.CreateWorldViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,7 +15,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.main.CreateWorldActivity">
+        tools:context=".presentation.main.create_world.CreateWorldActivity">
 
         <LinearLayout
             android:id="@+id/btn_back"
@@ -22,7 +24,7 @@
             android:layout_marginStart="17dp"
             android:layout_marginLeft="17dp"
             android:layout_marginTop="26dp"
-            android:onClick="@{() -> viewModel.onBackButtonClicked()}"
+            android:onClick="@{() -> viewModel.onClickBackButton()}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -122,9 +124,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintLeft_toLeftOf="@id/txt_world_title"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_map" />
+                    app:layout_constraintTop_toBottomOf="@id/txt_map"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/map_list_item" />
 
 
                 <TextView
@@ -145,6 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:onClick="@{() -> viewModel.onClickSelectInterest()}"
                     app:layout_constraintBottom_toBottomOf="@id/text_keyword"
                     app:layout_constraintLeft_toRightOf="@id/text_keyword"
                     app:layout_constraintRight_toRightOf="@id/txt_world_title"
@@ -169,11 +176,27 @@
                     android:id="@+id/list_keyword"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="9dp"
+                    android:minHeight="20dp"
+                    android:visibility="@{viewModel.selectedInterests.empty ? View.INVISIBLE : View.VISIBLE}"
                     app:layout_constraintBottom_toTopOf="@id/space"
                     app:layout_constraintLeft_toLeftOf="@id/txt_world_title"
                     app:layout_constraintRight_toRightOf="@id/txt_world_title"
-                    app:layout_constraintTop_toBottomOf="@id/text_keyword" />
+                    app:layout_constraintTop_toBottomOf="@id/text_keyword"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/interest_item_view" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="9dp"
+                    android:text="관심사를 선택해 주세요."
+                    android:textColor="@color/point_red"
+                    android:textSize="12dp"
+                    android:visibility="@{viewModel.selectedInterests.empty ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintLeft_toLeftOf="@id/txt_world_title"
+                    app:layout_constraintRight_toRightOf="@id/txt_world_title"
+                    app:layout_constraintTop_toTopOf="@id/list_keyword" />
 
                 <Space
                     android:id="@+id/space"
