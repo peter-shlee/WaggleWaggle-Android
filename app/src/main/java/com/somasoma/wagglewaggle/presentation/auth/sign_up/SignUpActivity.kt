@@ -1,5 +1,6 @@
 package com.somasoma.wagglewaggle.presentation.auth.sign_up
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -14,6 +15,7 @@ import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.databinding.ActivitySignUpBinding
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectInterestsDialogFragment
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectedInterestListAdapter
+import com.somasoma.wagglewaggle.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,6 +47,8 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun observe() {
+        viewModel.navigateToPrevPageEvent.observe(this) { navigateToPrevPage() }
+        viewModel.navigateToMainEvent.observe(this) { navigateToMain() }
         viewModel.showSelectInterestsDialogEvent.observe(this) { showSelectInterestsDialog() }
         viewModel.selectedInterests.observe(this) { onSelectedInterestsChanged(it) }
         viewModel.languages.observe(this) { onLanguagesLoaded(it) }
@@ -112,6 +116,18 @@ class SignUpActivity : AppCompatActivity() {
     ) {
         spinner.adapter = ArrayAdapter(this, R.layout.spinner_item, strings)
         spinner.onItemSelectedListener = listener
+    }
+
+    private fun navigateToPrevPage() {
+        finish()
+    }
+
+    private fun navigateToMain() {
+        val navigateIntent = Intent(this, MainActivity::class.java)
+        navigateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        navigateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        navigateIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(navigateIntent)
     }
 
 }

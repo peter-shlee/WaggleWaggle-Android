@@ -4,12 +4,10 @@ import android.app.Application
 import com.firebase.ui.auth.AuthUI
 import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForAuthAPI
 import com.somasoma.wagglewaggle.data.model.dto.auth.FirebaseRequest
-import com.somasoma.wagglewaggle.data.model.dto.auth.FirebaseResponse
 import com.somasoma.wagglewaggle.data.model.dto.auth.RefreshRequest
-import com.somasoma.wagglewaggle.data.model.dto.auth.RefreshResponse
+import com.somasoma.wagglewaggle.data.model.dto.auth.SignUpRequest
 import com.somasoma.wagglewaggle.data.service.AuthService
 import com.somasoma.wagglewaggle.domain.repository.AuthRepository
-import retrofit2.Response
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -52,9 +50,12 @@ class AuthRepositoryImpl @Inject constructor(
             }
     }
 
-    override suspend fun postFirebase(firebaseRequest: FirebaseRequest): Response<FirebaseResponse?> =
+    override suspend fun postFirebase(firebaseRequest: FirebaseRequest) =
         publicAuthService.postFirebase(firebaseRequest)
 
-    override suspend fun postRefresh(refreshRequest: RefreshRequest): Response<RefreshResponse?> =
+    override suspend fun postRefresh(refreshRequest: RefreshRequest) =
         authService.postRefresh(refreshRequest)
+
+    override suspend fun postSignUp(signUpRequest: SignUpRequest) =
+        publicAuthService.postSignUp(signUpRequest)
 }

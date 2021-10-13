@@ -1,9 +1,6 @@
 package com.somasoma.wagglewaggle.domain.repository
 
-import com.somasoma.wagglewaggle.data.model.dto.auth.FirebaseRequest
-import com.somasoma.wagglewaggle.data.model.dto.auth.FirebaseResponse
-import com.somasoma.wagglewaggle.data.model.dto.auth.RefreshRequest
-import com.somasoma.wagglewaggle.data.model.dto.auth.RefreshResponse
+import com.somasoma.wagglewaggle.data.model.dto.auth.*
 import retrofit2.Response
 
 interface AuthRepository {
@@ -12,4 +9,5 @@ interface AuthRepository {
 
     suspend fun postFirebase(firebaseRequest: FirebaseRequest): Response<FirebaseResponse?>
     suspend fun postRefresh(refreshRequest: RefreshRequest): Response<RefreshResponse?>
+    suspend fun postSignUp(signUpRequest: SignUpRequest): Response<SignUpResponse?>
 }

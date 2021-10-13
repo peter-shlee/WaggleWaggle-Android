@@ -36,41 +36,39 @@ class NetworkUtil @Inject constructor(
             sharedPreferenceHelper.getLong(PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN)
 
         if (currentTime >= authTokenExpiredIn - (MINUTES_BEFORE_TOKEN_EXPIRES * MINUTE_IN_SECONDS)) { // 토큰 재발급 후 apiCall 호출
-            scope.launch {
-                try {
-                    val response = withContext(Dispatchers.IO) {
-                        postRefreshUseCase.postRefresh(
-                            RefreshRequest(
-                                sharedPreferenceHelper.getString(PreferenceConstant.ACCESS_TOKEN)
-                                    ?: "",
-                                sharedPreferenceHelper.getString(PreferenceConstant.REFRESH_TOKEN)
-                                    ?: ""
-                            )
+            apiCall(
+                postRefreshUseCase::postRefresh,
+                RefreshRequest(
+                    sharedPreferenceHelper.getString(PreferenceConstant.ACCESS_TOKEN)
+                        ?: "",
+                    sharedPreferenceHelper.getString(PreferenceConstant.REFRESH_TOKEN)
+                        ?: ""
+                ), scope
+            ) {
+                onSuccessCallback = {
+                    it?.accessToken?.let { newToken ->
+                        sharedPreferenceHelper.putString(
+                            PreferenceConstant.ACCESS_TOKEN,
+                            newToken
                         )
                     }
 
-                    if (response.isSuccessful) {
-                        response.body()?.accessToken?.let { newToken ->
-                            sharedPreferenceHelper.putString(
-                                PreferenceConstant.ACCESS_TOKEN,
-                                newToken
-                            )
-
-                        }
-
-                        response.body()?.accessTokenExpiresIn?.let { newTokenExpiredIn ->
-                            sharedPreferenceHelper.putLong(
-                                PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN,
-                                newTokenExpiredIn
-                            )
-                        }
-
-                        apiCall(useCase, request, scope, setApiCallback)
-                    } else { // refresh token 만료
-                        signOut()
+                    it?.accessTokenExpiresIn?.let { newTokenExpiredIn ->
+                        sharedPreferenceHelper.putLong(
+                            PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN,
+                            newTokenExpiredIn
+                        )
                     }
-                } catch (exception: Exception) {
-                    Timber.e(exception.message.toString())
+
+                    apiCall(useCase, request, scope, setApiCallback)
+                }
+
+                onErrorCallback = {
+                    signOut()
+                }
+
+                onNetworkErrorCallback = {
+
                 }
             }
         } else {
