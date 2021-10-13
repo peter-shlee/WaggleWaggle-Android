@@ -67,29 +67,28 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun onClickRegisterButton() {
-        selectedCountry?.let { selectedCountry ->
-            selectedLanguage?.let { selectedLanguage ->
-                networkUtil.publicRestApiCall(
-                    postSignUpUseCase::postSignUp, SignUpRequest(
-                        firebaseAuthToken,
-                        nickname,
-                        selectedCountry,
-                        selectedLanguage,
-                        ""
-                    ), viewModelScope
-                ) {
-                    onSuccessCallback = {
-                        navigateToMainEvent.call()
-                    }
+        val selectedCountry = this.selectedCountry ?: return
+        val selectedLanguage = this.selectedLanguage ?: return
 
-                    onErrorCallback = {
+        networkUtil.publicRestApiCall(
+            postSignUpUseCase::postSignUp, SignUpRequest(
+                firebaseAuthToken,
+                nickname,
+                selectedCountry,
+                selectedLanguage,
+                ""
+            ), viewModelScope
+        ) {
+            onSuccessCallback = {
+                navigateToMainEvent.call()
+            }
 
-                    }
+            onErrorCallback = {
 
-                    onNetworkErrorCallback = {
+            }
 
-                    }
-                }
+            onNetworkErrorCallback = {
+
             }
         }
     }
