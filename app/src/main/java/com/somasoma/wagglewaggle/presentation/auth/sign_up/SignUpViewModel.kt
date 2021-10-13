@@ -4,9 +4,12 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.somasoma.wagglewaggle.core.InputState
 import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.SingleLiveEvent
+import com.somasoma.wagglewaggle.data.model.dto.auth.SignUpRequest
+import com.somasoma.wagglewaggle.domain.usecase.auth.PostSignUpUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetCountryListUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetInterestListUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetLanguageListUseCase
@@ -21,6 +24,7 @@ class SignUpViewModel @Inject constructor(
     private val networkUtil: NetworkUtil,
     private val getLanguageListUseCase: GetLanguageListUseCase,
     private val getCountryListUseCase: GetCountryListUseCase,
+    private val postSignUpUseCase: PostSignUpUseCase,
     getInterestListUseCase: GetInterestListUseCase
 ) : SelectInterestsViewModel(application, networkUtil, getInterestListUseCase) {
     companion object {
@@ -41,8 +45,11 @@ class SignUpViewModel @Inject constructor(
     private var nickname: String = ""
     val showSelectInterestsDialogEvent = SingleLiveEvent<Unit>()
     val navigateToPrevPageEvent = SingleLiveEvent<Unit>()
+    val navigateToMainEvent = SingleLiveEvent<Unit>()
+    private var firebaseAuthToken = ""
 
     init {
+        getFirebaseAuthToken()
         getLanguageList()
         getCountryList()
     }
@@ -57,6 +64,34 @@ class SignUpViewModel @Inject constructor(
 
     fun onClickCheckNicknameDuplicatedButton() {
         _nicknameInputState.value = InputState.POSITIVE
+    }
+
+    fun onClickRegisterButton() {
+        selectedCountry?.let { selectedCountry ->
+            selectedLanguage?.let { selectedLanguage ->
+                networkUtil.publicRestApiCall(
+                    postSignUpUseCase::postSignUp, SignUpRequest(
+                        firebaseAuthToken,
+                        nickname,
+                        selectedCountry,
+                        selectedLanguage,
+                        ""
+                    ), viewModelScope
+                ) {
+                    onSuccessCallback = {
+                        navigateToMainEvent.call()
+                    }
+
+                    onErrorCallback = {
+
+                    }
+
+                    onNetworkErrorCallback = {
+
+                    }
+                }
+            }
+        }
     }
 
     fun onNicknameChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -103,6 +138,16 @@ class SignUpViewModel @Inject constructor(
 
             onErrorCallback = {
 
+            }
+        }
+    }
+
+    private fun getFirebaseAuthToken() {
+        FirebaseAuth.getInstance().currentUser?.getIdToken(false)?.addOnCompleteListener {
+            if (it.isSuccessful) {
+                it.result?.token?.let { token ->
+                    firebaseAuthToken = token
+                }
             }
         }
     }
