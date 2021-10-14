@@ -7,19 +7,20 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.databinding.ActivitySignUpBinding
+import com.somasoma.wagglewaggle.presentation.base.BaseActivity
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectInterestsDialogFragment
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectedInterestListAdapter
 import com.somasoma.wagglewaggle.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
-class SignUpActivity : AppCompatActivity() {
+class SignUpActivity : BaseActivity() {
 
     private val viewModel: SignUpViewModel by viewModels()
     private lateinit var binding: ActivitySignUpBinding
@@ -68,6 +69,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun onLanguagesLoaded(languages: List<String?>) {
+        Timber.d(languages.toString())
         val languageSpinnerListener = getLanguageSpinnerListener(languages)
         initSpinner(binding.dropdownLanguage, languages, languageSpinnerListener)
     }
@@ -89,6 +91,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
     private fun onNationsLoaded(nations: List<String?>) {
+        Timber.d(nations.toString())
         val nationSpinnerListener = getNationSpinnerListener(nations)
         initSpinner(binding.dropdownNation, nations, nationSpinnerListener)
     }
