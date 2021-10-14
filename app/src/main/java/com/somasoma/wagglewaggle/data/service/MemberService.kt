@@ -6,6 +6,9 @@ import retrofit2.http.*
 
 interface MemberService {
 
+    @GET("member/me")
+    suspend fun getMe(): Response<Member?>
+
     @GET("member/{memberId}")
     suspend fun getMember(@Path("memberId") memberId: Long): Response<Member?>
 
@@ -19,7 +22,7 @@ interface MemberService {
     suspend fun deleteMember(@Path("memberID") memberId: Long = -1L): Response<DeleteMemberResponse?>
 
     @PUT("member/edit-member")
-    suspend fun putEditMember(member: Member): Response<Unit?>
+    suspend fun putEditMember(@Body member: Member): Response<Unit?>
 
 
     @GET("member/basics/country-list")

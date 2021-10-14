@@ -4,6 +4,7 @@ import com.somasoma.wagglewaggle.data.model.dto.member.*
 import retrofit2.Response
 
 interface MemberRepository {
+    suspend fun getMe(): Response<Member?>
     suspend fun getMember(memberId: Long): Response<Member?>
     suspend fun getOnline(): Response<OnlineResponse?>
     suspend fun deleteLogout(): Response<LogoutResponse?>

@@ -4,20 +4,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.databinding.ActivityEditProfileBinding
+import com.somasoma.wagglewaggle.presentation.base.BaseActivity
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectInterestsDialogFragment
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectedInterestListAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class EditProfileActivity : AppCompatActivity() {
+class EditProfileActivity : BaseActivity() {
 
     private val viewModel: EditProfileViewModel by viewModels()
     private lateinit var binding: ActivityEditProfileBinding
@@ -27,6 +27,7 @@ class EditProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initBinding()
         observe()
+        repeatOnStart { collect() }
     }
 
     private fun initBinding() {
@@ -43,12 +44,16 @@ class EditProfileActivity : AppCompatActivity() {
         binding.listInterest.layoutManager = layoutManager
     }
 
+    private suspend fun collect() {
+        viewModel.eventFlow.collect { handleEvent(it) }
+    }
+
     private fun observe() {
-        viewModel.showSelectInterestsDialogEvent.observe(this) { showSelectInterestsDialog() }
-        viewModel.navigateToPrevPageEvent.observe(this) { navigateToPrevPage() }
         viewModel.selectedInterests.observe(this) { onSelectedInterestsChanged(it) }
         viewModel.languages.observe(this) { onLanguagesLoaded(it) }
         viewModel.countries.observe(this) { onNationsLoaded(it) }
+        viewModel.loadedCountry.observe(this) { onSelectedCountryLoaded(it) }
+        viewModel.loadedLanguage.observe(this) { onSelectedLanguageLoaded(it) }
     }
 
     private fun navigateToPrevPage() {
@@ -56,7 +61,8 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun showSelectInterestsDialog() {
-        val editProfileSelectInterestsDialogFragment = EditProfileSelectInterestsDialogFragment.newInstance()
+        val editProfileSelectInterestsDialogFragment =
+            EditProfileSelectInterestsDialogFragment.newInstance()
         editProfileSelectInterestsDialogFragment.show(
             supportFragmentManager,
             SelectInterestsDialogFragment::class.java.simpleName
@@ -68,8 +74,10 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun onLanguagesLoaded(languages: List<String?>) {
-        val languageSpinnerListener = getLanguageSpinnerListener(languages)
-        initSpinner(binding.dropdownLanguage, languages, languageSpinnerListener)
+        binding.dropdownLanguage.adapter = ArrayAdapter(this, R.layout.spinner_item, languages)
+        binding.dropdownLanguage.onItemSelectedListener = getLanguageSpinnerListener(languages)
+        val loadedLanguage = viewModel.loadedLanguage.value ?: return
+        onSelectedLanguageLoaded(loadedLanguage)
     }
 
     private fun getLanguageSpinnerListener(languages: List<String?>) =
@@ -89,8 +97,10 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
     private fun onNationsLoaded(nations: List<String?>) {
-        val nationSpinnerListener = getNationSpinnerListener(nations)
-        initSpinner(binding.dropdownNation, nations, nationSpinnerListener)
+        binding.dropdownNation.adapter = ArrayAdapter(this, R.layout.spinner_item, nations)
+        binding.dropdownNation.onItemSelectedListener = getNationSpinnerListener(nations)
+        val loadedCountry = viewModel.loadedCountry.value ?: return
+        onSelectedCountryLoaded(loadedCountry)
     }
 
     private fun getNationSpinnerListener(nations: List<String?>) =
@@ -109,13 +119,20 @@ class EditProfileActivity : AppCompatActivity() {
             }
         }
 
-    private fun initSpinner(
-        spinner: Spinner,
-        strings: List<String?>,
-        listener: AdapterView.OnItemSelectedListener
-    ) {
-        spinner.adapter = ArrayAdapter(this, R.layout.spinner_item, strings)
-        spinner.onItemSelectedListener = listener
+    private fun onSelectedCountryLoaded(country: String) {
+        binding.dropdownNation.setSelection(
+            viewModel.countries.value?.indexOf(country) ?: 0
+        )
     }
 
+    private fun onSelectedLanguageLoaded(language: String) {
+        binding.dropdownLanguage.setSelection(
+            viewModel.languages.value?.indexOf(language) ?: 0
+        )
+    }
+
+    private fun handleEvent(event: EditProfileViewModel.Event) = when (event) {
+        EditProfileViewModel.Event.NavigateToPrevPage -> navigateToPrevPage()
+        EditProfileViewModel.Event.ShowSelectInterestsDialog -> showSelectInterestsDialog()
+    }
 }
