@@ -10,5 +10,6 @@ data class Member(
     val onlineStatus: String?,
     val entranceStatus: String?,
     val entranceRoom: String?,
-    val friendship: String?
+    val friendship: String?,
+    val interests: List<String?>?
 )

@@ -5,14 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.somasoma.wagglewaggle.core.InputState
-import com.somasoma.wagglewaggle.core.NetworkUtil
-import com.somasoma.wagglewaggle.core.SingleLiveEvent
+import com.somasoma.wagglewaggle.core.*
 import com.somasoma.wagglewaggle.data.model.dto.auth.SignUpRequest
 import com.somasoma.wagglewaggle.domain.usecase.auth.PostSignUpUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetCountryListUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetInterestListUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetLanguageListUseCase
+import com.somasoma.wagglewaggle.domain.usecase.member.GetNicknameCheckUseCase
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectInterestsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.regex.Pattern
@@ -22,9 +21,11 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     application: Application,
     private val networkUtil: NetworkUtil,
+    private val sharedPreferenceHelper: SharedPreferenceHelper,
     private val getLanguageListUseCase: GetLanguageListUseCase,
     private val getCountryListUseCase: GetCountryListUseCase,
     private val postSignUpUseCase: PostSignUpUseCase,
+    private val getNicknameCheckUseCase: GetNicknameCheckUseCase,
     getInterestListUseCase: GetInterestListUseCase
 ) : SelectInterestsViewModel(application, networkUtil, getInterestListUseCase) {
     companion object {
@@ -63,12 +64,34 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun onClickCheckNicknameDuplicatedButton() {
-        _nicknameInputState.value = InputState.POSITIVE
+        networkUtil.publicRestApiCall(
+            getNicknameCheckUseCase::getNicknameCheck,
+            nickname,
+            viewModelScope
+        ) {
+            onSuccessCallback = {
+                if (it?.isValid == true) {
+                    _nicknameInputState.value = InputState.POSITIVE
+                } else {
+                    _nicknameInputState.value = InputState.NEGATIVE
+                    _showDuplicateNicknameText.value = true
+                }
+            }
+
+            onErrorCallback = {
+
+            }
+
+            onNetworkErrorCallback = {
+
+            }
+        }
     }
 
     fun onClickRegisterButton() {
         val selectedCountry = this.selectedCountry ?: return
         val selectedLanguage = this.selectedLanguage ?: return
+        val selectedInterests = this.selectedInterests.value?.toList() ?: return
 
         networkUtil.publicRestApiCall(
             postSignUpUseCase::postSignUp, SignUpRequest(
@@ -76,10 +99,41 @@ class SignUpViewModel @Inject constructor(
                 nickname,
                 selectedCountry,
                 selectedLanguage,
-                ""
+                "",
+                selectedInterests
             ), viewModelScope
         ) {
             onSuccessCallback = {
+                it?.run {
+                    accessToken?.let {
+                        sharedPreferenceHelper.putString(
+                            PreferenceConstant.ACCESS_TOKEN,
+                            accessToken
+                        )
+                    }
+
+                    accessTokenExpiresIn?.let {
+                        sharedPreferenceHelper.putLong(
+                            PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN,
+                            accessTokenExpiresIn
+                        )
+                    }
+
+                    refreshToken?.let {
+                        sharedPreferenceHelper.putString(
+                            PreferenceConstant.REFRESH_TOKEN,
+                            refreshToken
+                        )
+                    }
+
+                    memberId?.let {
+                        sharedPreferenceHelper.putLong(
+                            PreferenceConstant.MEMBER_ID,
+                            memberId
+                        )
+                    }
+                }
+
                 navigateToMainEvent.call()
             }
 
@@ -114,7 +168,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     private fun getCountryList() {
-        networkUtil.restApiCall(getCountryListUseCase::getCountryList, Unit, viewModelScope) {
+        networkUtil.publicRestApiCall(getCountryListUseCase::getCountryList, Unit, viewModelScope) {
             onSuccessCallback = {
                 it?.countries?.let {
                     _countries.value = it
@@ -128,7 +182,11 @@ class SignUpViewModel @Inject constructor(
     }
 
     private fun getLanguageList() {
-        networkUtil.restApiCall(getLanguageListUseCase::getLanguageList, Unit, viewModelScope) {
+        networkUtil.publicRestApiCall(
+            getLanguageListUseCase::getLanguageList,
+            Unit,
+            viewModelScope
+        ) {
             onSuccessCallback = {
                 it?.languages?.let {
                     _languages.value = it

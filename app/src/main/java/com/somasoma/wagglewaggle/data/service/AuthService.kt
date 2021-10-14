@@ -6,12 +6,12 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthService {
-    @POST("test/auth/firebase")
+    @POST("auth/firebase-token")
     suspend fun postFirebase(@Body firebaseRequest: FirebaseRequest): Response<FirebaseResponse?>
 
-    @POST("test/auth/refresh")
+    @POST("auth/refresh")
     suspend fun postRefresh(@Body refreshRequest: RefreshRequest): Response<RefreshResponse?>
 
-    @POST("/auth/sign-up")
+    @POST("auth/sign-up")
     suspend fun postSignUp(@Body signUpRequest: SignUpRequest): Response<SignUpResponse?>
 }

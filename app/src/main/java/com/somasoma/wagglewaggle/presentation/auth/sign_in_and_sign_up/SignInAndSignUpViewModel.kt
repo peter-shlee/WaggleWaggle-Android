@@ -6,11 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.PreferenceConstant
 import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
-import com.somasoma.wagglewaggle.core.SingleLiveEvent
 import com.somasoma.wagglewaggle.data.model.dto.auth.FirebaseRequest
 import com.somasoma.wagglewaggle.domain.usecase.auth.PostFirebaseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,19 +22,12 @@ class SignInAndSignUpViewModel @Inject constructor(
     private val postFirebaseUseCase: PostFirebaseUseCase
 ) : AndroidViewModel(application) {
 
-    private val compositeDisposable = CompositeDisposable()
-    val navigateToSignUpEvent = SingleLiveEvent<Unit>()
-    val navigateToMainEvent = SingleLiveEvent<Unit>()
-    internal val navigateToSignInPageEvent = SingleLiveEvent<Unit>()
+    private val _eventFlow = MutableSharedFlow<Event>()
+    val eventFlow: SharedFlow<Event> = _eventFlow
     var firebaseUserToken = ""
 
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.dispose()
-    }
-
     fun onClickSignInButton() {
-        navigateToSignInPageEvent.call()
+        event(Event.NavigateToFirebaseSignIn)
     }
 
     fun getAccessToken() {
@@ -46,32 +40,39 @@ class SignInAndSignUpViewModel @Inject constructor(
         ) {
             onSuccessCallback = {
                 it?.run {
-                    accessToken?.let {
-                        sharedPreferenceHelper.putString(
-                            PreferenceConstant.ACCESS_TOKEN,
-                            accessToken
-                        )
-                    }
-
-                    accessTokenExpiresIn?.let {
-                        sharedPreferenceHelper.putLong(
-                            PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN,
-                            accessTokenExpiresIn
-                        )
-                    }
-
-                    refreshToken?.let {
-                        sharedPreferenceHelper.putString(
-                            PreferenceConstant.REFRESH_TOKEN,
-                            refreshToken
-                        )
-                    }
-
                     isNewMember?.let {
                         if (isNewMember == "y") {
-                            navigateToSignUpEvent.call()
+                            event(Event.NavigateToSignUp)
                         } else {
-                            navigateToMainEvent.call()
+                            accessToken?.let {
+                                sharedPreferenceHelper.putString(
+                                    PreferenceConstant.ACCESS_TOKEN,
+                                    accessToken
+                                )
+                            }
+
+                            accessTokenExpiresIn?.let {
+                                sharedPreferenceHelper.putLong(
+                                    PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN,
+                                    accessTokenExpiresIn
+                                )
+                            }
+
+                            refreshToken?.let {
+                                sharedPreferenceHelper.putString(
+                                    PreferenceConstant.REFRESH_TOKEN,
+                                    refreshToken
+                                )
+                            }
+
+                            memberId?.let {
+                                sharedPreferenceHelper.putLong(
+                                    PreferenceConstant.MEMBER_ID,
+                                    memberId
+                                )
+                            }
+
+                            event(Event.NavigateToMain)
                         }
                     }
                 }
@@ -89,5 +90,17 @@ class SignInAndSignUpViewModel @Inject constructor(
 
             }
         }
+    }
+
+    private fun event(event: Event) {
+        viewModelScope.launch {
+            _eventFlow.emit(event)
+        }
+    }
+
+    sealed class Event{
+        object NavigateToFirebaseSignIn : Event()
+        object NavigateToMain : Event()
+        object NavigateToSignUp : Event()
     }
 }

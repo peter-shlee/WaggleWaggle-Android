@@ -44,13 +44,25 @@ class RetrofitModule {
     @Provides
     @Singleton
     @ForMemberAPI
-    fun provideMemberRetrofit(@ForAccessHttp accessHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
+    fun provideMemberRetrofit(
+        @ForAccessHttp accessHttpClient: OkHttpClient,
+        @ForPublicHttp publicHttpClient: OkHttpClient
+    ): Pair<Retrofit, Retrofit> {
+        val retrofit = Retrofit.Builder()
             .baseUrl(API_SERVER_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(accessHttpClient)
             .build()
+
+        val publicRetrofit = Retrofit.Builder()
+            .baseUrl(API_SERVER_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(publicHttpClient)
+            .build()
+
+        return retrofit to publicRetrofit
     }
 
     @Provides

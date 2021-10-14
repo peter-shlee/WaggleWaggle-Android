@@ -11,4 +11,5 @@ interface MemberRepository {
     suspend fun deleteLogout(): Response<LogoutResponse>
     suspend fun deleteMember(): Response<DeleteMemberResponse>
     suspend fun putEditMember(member: Member): Response<Unit>
+    suspend fun getNicknameCheck(nickname: String): Response<NicknameCheckResponse>
 }

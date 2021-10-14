@@ -31,7 +31,7 @@ open class SelectInterestsViewModel @Inject constructor(
     }
 
     private fun getInterestList() {
-        networkUtil.restApiCall(getInterestListUseCase::getInterestList, Unit, viewModelScope) {
+        networkUtil.publicRestApiCall(getInterestListUseCase::getInterestList, Unit, viewModelScope) {
             onSuccessCallback = {
                 it?.interests?.let {
                     val tmpInterestSet = mutableSetOf<String>()
