@@ -5,28 +5,32 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface MemberService {
+
+    @GET("member/{memberId}")
+    suspend fun getMember(@Path("memberId") memberId: Long): Response<Member?>
+
     @GET("member/online")
-    suspend fun getOnline(): Response<OnlineResponse>
+    suspend fun getOnline(): Response<OnlineResponse?>
 
     @DELETE("member/logout")
-    suspend fun deleteLogout(): Response<LogoutResponse>
+    suspend fun deleteLogout(): Response<LogoutResponse?>
 
     @DELETE("member/{memberID}")
-    suspend fun deleteMember(@Path("memberID") memberId: Int = -1): Response<DeleteMemberResponse>
+    suspend fun deleteMember(@Path("memberID") memberId: Long = -1L): Response<DeleteMemberResponse?>
 
     @PUT("member/edit-member")
-    suspend fun putEditMember(member: Member): Response<Unit>
+    suspend fun putEditMember(member: Member): Response<Unit?>
 
 
     @GET("member/basics/country-list")
-    suspend fun getCountryList(): Response<CountryListResponse>
+    suspend fun getCountryList(): Response<CountryListResponse?>
 
     @GET("member/basics/language-list")
-    suspend fun getLanguageList(): Response<LanguageListResponse>
+    suspend fun getLanguageList(): Response<LanguageListResponse?>
 
     @GET("member/basics/interest-list")
-    suspend fun getInterestList(): Response<InterestListResponse>
+    suspend fun getInterestList(): Response<InterestListResponse?>
 
     @GET("member/basics/nickname-check")
-    suspend fun getNicknameCheck(@Query("nickname") nickname: String): Response<NicknameCheckResponse>
+    suspend fun getNicknameCheck(@Query("nickname") nickname: String): Response<NicknameCheckResponse?>
 }

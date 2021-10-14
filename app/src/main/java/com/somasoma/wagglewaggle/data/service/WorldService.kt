@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface WorldService {
     @GET("world/world-room/list")
-    suspend fun getWorldList(): Response<WorldListResponse>
+    suspend fun getWorldList(): Response<WorldListResponse?>
 }
