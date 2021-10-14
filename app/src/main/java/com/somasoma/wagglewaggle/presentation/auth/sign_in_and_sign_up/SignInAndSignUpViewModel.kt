@@ -7,6 +7,7 @@ import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.PreferenceConstant
 import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
 import com.somasoma.wagglewaggle.data.model.dto.auth.FirebaseRequest
+import com.somasoma.wagglewaggle.data.model.dto.auth.FirebaseResponse
 import com.somasoma.wagglewaggle.domain.usecase.auth.PostFirebaseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -40,40 +41,11 @@ class SignInAndSignUpViewModel @Inject constructor(
         ) {
             onSuccessCallback = {
                 it?.run {
-                    isNewMember?.let {
-                        if (isNewMember == "y") {
-                            event(Event.NavigateToSignUp)
-                        } else {
-                            accessToken?.let {
-                                sharedPreferenceHelper.putString(
-                                    PreferenceConstant.ACCESS_TOKEN,
-                                    accessToken
-                                )
-                            }
-
-                            accessTokenExpiresIn?.let {
-                                sharedPreferenceHelper.putLong(
-                                    PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN,
-                                    accessTokenExpiresIn
-                                )
-                            }
-
-                            refreshToken?.let {
-                                sharedPreferenceHelper.putString(
-                                    PreferenceConstant.REFRESH_TOKEN,
-                                    refreshToken
-                                )
-                            }
-
-                            memberId?.let {
-                                sharedPreferenceHelper.putLong(
-                                    PreferenceConstant.MEMBER_ID,
-                                    memberId
-                                )
-                            }
-
-                            event(Event.NavigateToMain)
-                        }
+                    if (isNewMember == "y") {
+                        event(Event.NavigateToSignUp)
+                    } else {
+                        saveFirebaseResponse(this)
+                        event(Event.NavigateToMain)
                     }
                 }
             }
@@ -89,6 +61,49 @@ class SignInAndSignUpViewModel @Inject constructor(
             onFinishCallback = {
 
             }
+        }
+    }
+
+    private fun saveFirebaseResponse(firebaseResponse: FirebaseResponse) {
+        saveAccessToken(firebaseResponse)
+        saveAccessTokenExpiredIn(firebaseResponse)
+        saveRefreshToken(firebaseResponse)
+        saveMemberId(firebaseResponse)
+    }
+
+    private fun saveAccessToken(firebaseResponse: FirebaseResponse) {
+        firebaseResponse.accessToken?.let {
+            sharedPreferenceHelper.putString(
+                PreferenceConstant.ACCESS_TOKEN,
+                it
+            )
+        }
+    }
+
+    private fun saveAccessTokenExpiredIn(firebaseResponse: FirebaseResponse) {
+        firebaseResponse.accessTokenExpiresIn?.let {
+            sharedPreferenceHelper.putLong(
+                PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN,
+                it
+            )
+        }
+    }
+
+    private fun saveRefreshToken(firebaseResponse: FirebaseResponse) {
+        firebaseResponse.refreshToken?.let {
+            sharedPreferenceHelper.putString(
+                PreferenceConstant.REFRESH_TOKEN,
+                it
+            )
+        }
+    }
+
+    private fun saveMemberId(firebaseResponse: FirebaseResponse) {
+        firebaseResponse.memberId?.let {
+            sharedPreferenceHelper.putLong(
+                PreferenceConstant.MEMBER_ID,
+                it
+            )
         }
     }
 
