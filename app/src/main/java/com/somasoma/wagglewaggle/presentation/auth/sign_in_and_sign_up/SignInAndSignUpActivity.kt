@@ -3,7 +3,6 @@ package com.somasoma.wagglewaggle.presentation.auth.sign_in_and_sign_up
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -13,12 +12,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.databinding.ActivitySignInAndSignUpBinding
 import com.somasoma.wagglewaggle.presentation.auth.sign_up.SignUpActivity
+import com.somasoma.wagglewaggle.presentation.base.BaseActivity
 import com.somasoma.wagglewaggle.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 
 @AndroidEntryPoint
-class SignInAndSignUpActivity : AppCompatActivity() {
+class SignInAndSignUpActivity : BaseActivity() {
 
     private val viewModel: SignInAndSignUpViewModel by viewModels()
 
@@ -36,13 +37,19 @@ class SignInAndSignUpActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        observe()
+        repeatOnStart { observe() }
     }
 
-    private fun observe() {
-        viewModel.navigateToSignInPageEvent.observe(this) { navigateToFireBaseAuthSignIn() }
-        viewModel.navigateToMainEvent.observe(this) { navigateToMainActivity() }
-        viewModel.navigateToSignUpEvent.observe(this) { navigateToSignUpActivity() }
+    private suspend fun observe() {
+        viewModel.eventFlow.collect {
+            handleEvent(it)
+        }
+    }
+
+    private fun handleEvent(event: SignInAndSignUpViewModel.Event) = when (event) {
+        is SignInAndSignUpViewModel.Event.NavigateToFirebaseSignIn -> navigateToFireBaseAuthSignIn()
+        is SignInAndSignUpViewModel.Event.NavigateToMain -> navigateToMainActivity()
+        is SignInAndSignUpViewModel.Event.NavigateToSignUp -> navigateToSignUpActivity()
     }
 
     private fun navigateToFireBaseAuthSignIn() {

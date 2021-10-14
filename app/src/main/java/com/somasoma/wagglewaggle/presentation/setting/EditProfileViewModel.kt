@@ -65,6 +65,10 @@ class EditProfileViewModel @Inject constructor(
     }
 
     fun onClickSaveButton() {
+        val selectedCountry = this.selectedCountry ?: return
+        val selectedLanguage = this.selectedLanguage ?: return
+        val selectedInterests = this.selectedInterests.value?.toList() ?: return
+
         networkUtil.restApiCall(
             putEditMemberUseCase::putEditMember, Member(
                 null,
@@ -76,7 +80,8 @@ class EditProfileViewModel @Inject constructor(
                 null,
                 null,
                 null,
-                null
+                null,
+                selectedInterests
             ), viewModelScope
         ) {
 

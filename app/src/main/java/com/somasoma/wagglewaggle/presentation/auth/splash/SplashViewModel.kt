@@ -6,11 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.PreferenceConstant
 import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
-import com.somasoma.wagglewaggle.core.SingleLiveEvent
 import com.somasoma.wagglewaggle.data.model.dto.auth.FirebaseRequest
+import com.somasoma.wagglewaggle.data.model.dto.auth.FirebaseResponse
 import com.somasoma.wagglewaggle.domain.usecase.auth.PostFirebaseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,16 +23,9 @@ class SplashViewModel @Inject constructor(
     private val postFirebaseUseCase: PostFirebaseUseCase
 ) : AndroidViewModel(application) {
 
-    val navigateToSignInAndSignUpEvent = SingleLiveEvent<Unit>()
-    val navigateToMainEvent = SingleLiveEvent<Unit>()
+    private val _eventFlow = MutableSharedFlow<Event>()
+    val eventFlow: SharedFlow<Event> = _eventFlow
     var firebaseUserToken: String = ""
-    private val compositeDisposable = CompositeDisposable()
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.dispose()
-    }
-
 
     fun getAccessToken() {
         networkUtil.publicRestApiCall(
@@ -41,51 +36,82 @@ class SplashViewModel @Inject constructor(
             viewModelScope
         ) {
             onSuccessCallback = {
+
                 it?.run {
-                    accessToken?.let {
-                        sharedPreferenceHelper.putString(
-                            PreferenceConstant.ACCESS_TOKEN,
-                            accessToken
-                        )
-                    }
-
-                    accessTokenExpiresIn?.let {
-                        sharedPreferenceHelper.putLong(
-                            PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN,
-                            accessTokenExpiresIn
-                        )
-                    }
-
-                    refreshToken?.let {
-                        sharedPreferenceHelper.putString(
-                            PreferenceConstant.REFRESH_TOKEN,
-                            refreshToken
-                        )
-                    }
-
-                    isNewMember?.let {
-                        if (isNewMember == "y") {
-                            navigateToSignInAndSignUpEvent.call()
-                        } else {
-                            navigateToMainEvent.call()
-                        }
+                    if (isNewMember == "y") {
+                        event(Event.NavigateToSignInAndSignUp)
+                    } else {
+                        saveFirebaseResponse(this)
+                        event(Event.NavigateToMain)
                     }
                 }
-
-
             }
 
             onErrorCallback = {
-
+                event(Event.NavigateToSignInAndSignUp)
             }
 
             onNetworkErrorCallback = {
-
+                event(Event.NavigateToSignInAndSignUp)
             }
 
             onFinishCallback = {
 
             }
         }
+    }
+
+    private fun saveFirebaseResponse(firebaseResponse: FirebaseResponse) {
+        saveAccessToken(firebaseResponse)
+        saveAccessTokenExpiredIn(firebaseResponse)
+        saveRefreshToken(firebaseResponse)
+        saveMemberId(firebaseResponse)
+    }
+
+    private fun saveAccessToken(firebaseResponse: FirebaseResponse) {
+        firebaseResponse.accessToken?.let {
+            sharedPreferenceHelper.putString(
+                PreferenceConstant.ACCESS_TOKEN,
+                it
+            )
+        }
+    }
+
+    private fun saveAccessTokenExpiredIn(firebaseResponse: FirebaseResponse) {
+        firebaseResponse.accessTokenExpiresIn?.let {
+            sharedPreferenceHelper.putLong(
+                PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN,
+                it
+            )
+        }
+    }
+
+    private fun saveRefreshToken(firebaseResponse: FirebaseResponse) {
+        firebaseResponse.refreshToken?.let {
+            sharedPreferenceHelper.putString(
+                PreferenceConstant.REFRESH_TOKEN,
+                it
+            )
+        }
+    }
+
+    private fun saveMemberId(firebaseResponse: FirebaseResponse) {
+        firebaseResponse.memberId?.let {
+            sharedPreferenceHelper.putLong(
+                PreferenceConstant.MEMBER_ID,
+                it
+            )
+        }
+    }
+
+    private fun event(event: Event) {
+        viewModelScope.launch {
+            _eventFlow.emit(event)
+        }
+    }
+
+    sealed class Event {
+        object NavigateToMain : Event()
+        object NavigateToSignInAndSignUp : Event()
     }
 }

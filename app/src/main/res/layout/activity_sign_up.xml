@@ -308,6 +308,7 @@
                     android:backgroundTint="@{btnRegister.enabled ? @color/point_blue : @color/gray1}"
                     android:text="가입하기"
                     android:textColor="@color/white"
+                    android:onClick="@{() -> viewModel.onClickRegisterButton()}"
                     app:backgroundTint="@null"
                     android:enabled="@{!viewModel.selectedInterests.empty &amp;&amp; viewModel.nicknameInputState == InputState.POSITIVE ? true : false}"
                     app:layout_constraintBottom_toBottomOf="parent"

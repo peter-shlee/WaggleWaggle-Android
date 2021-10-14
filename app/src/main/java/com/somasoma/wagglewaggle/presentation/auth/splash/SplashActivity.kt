@@ -3,18 +3,18 @@ package com.somasoma.wagglewaggle.presentation.auth.splash
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.databinding.ActivitySplashBinding
 import com.somasoma.wagglewaggle.presentation.auth.sign_in_and_sign_up.SignInAndSignUpActivity
+import com.somasoma.wagglewaggle.presentation.base.BaseActivity
 import com.somasoma.wagglewaggle.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity() {
 
     private val viewModel: SplashViewModel by viewModels()
     private lateinit var binding: ActivitySplashBinding
@@ -25,28 +25,37 @@ class SplashActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
         binding.lifecycleOwner = this
 
-        observe()
+        repeatOnStart { observe() }
     }
 
     override fun onStart() {
         super.onStart()
 
-        FirebaseAuth.getInstance().currentUser?.getIdToken(false)?.addOnCompleteListener(
-            OnCompleteListener {
-                if (it.isSuccessful) {
-                    it.result?.token?.let { token ->
-                        viewModel.firebaseUserToken = token
-                        viewModel.getAccessToken()
-                    }
-                } else {
-                    navigateToSignInAndSignUp()
+        FirebaseAuth.getInstance().currentUser?.getIdToken(false)?.addOnCompleteListener {
+            if (it.isSuccessful) {
+                it.result?.token?.let { token ->
+                    viewModel.firebaseUserToken = token
+                    viewModel.getAccessToken()
                 }
-            }) ?: navigateToSignInAndSignUp()
+            } else {
+                navigateToSignInAndSignUp()
+            }
+        } ?: navigateToSignInAndSignUp()
     }
 
-    private fun observe() {
-        viewModel.navigateToMainEvent.observe(this) { navigateToMain() }
-        viewModel.navigateToSignInAndSignUpEvent.observe(this) { navigateToSignInAndSignUp() }
+    private suspend fun observe() {
+        viewModel.eventFlow.collect { handleEvent(it) }
+    }
+
+    private fun handleEvent(event: SplashViewModel.Event) {
+        when (event) {
+            is SplashViewModel.Event.NavigateToMain -> {
+                navigateToMain()
+            }
+            is SplashViewModel.Event.NavigateToSignInAndSignUp -> {
+                navigateToSignInAndSignUp()
+            }
+        }
     }
 
     private fun navigateToSignInAndSignUp() {

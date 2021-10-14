@@ -2,21 +2,9 @@ package com.somasoma.wagglewaggle.data.service
 
 import com.somasoma.wagglewaggle.data.model.dto.member.*
 import retrofit2.Response
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.PUT
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface MemberService {
-    @GET("member/country-list")
-    suspend fun getCountryList(): Response<CountryListResponse>
-
-    @GET("member/language-list")
-    suspend fun getLanguageList(): Response<LanguageListResponse>
-
-    @GET("member/interest-list")
-    suspend fun getInterestList(): Response<InterestListResponse>
-
     @GET("member/online")
     suspend fun getOnline(): Response<OnlineResponse>
 
@@ -28,4 +16,17 @@ interface MemberService {
 
     @PUT("member/edit-member")
     suspend fun putEditMember(member: Member): Response<Unit>
+
+
+    @GET("member/basics/country-list")
+    suspend fun getCountryList(): Response<CountryListResponse>
+
+    @GET("member/basics/language-list")
+    suspend fun getLanguageList(): Response<LanguageListResponse>
+
+    @GET("member/basics/interest-list")
+    suspend fun getInterestList(): Response<InterestListResponse>
+
+    @GET("member/basics/nickname-check")
+    suspend fun getNicknameCheck(@Query("nickname") nickname: String): Response<NicknameCheckResponse>
 }
