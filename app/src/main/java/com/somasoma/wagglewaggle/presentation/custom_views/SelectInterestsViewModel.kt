@@ -2,11 +2,11 @@ package com.somasoma.wagglewaggle.presentation.custom_views
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.domain.usecase.member.GetInterestListUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 open class SelectInterestsViewModel @Inject constructor(
@@ -16,10 +16,10 @@ open class SelectInterestsViewModel @Inject constructor(
 ) :
     AndroidViewModel(application) {
 
-    private val _interests = MutableLiveData<Set<String>>()
-    val interests: LiveData<Set<String>> = _interests
-    private val _selectedInterests = MutableLiveData<MutableSet<String>>()
-    var selectedInterests: LiveData<MutableSet<String>> = _selectedInterests
+    private val _interests = MutableStateFlow<Set<String>>(setOf())
+    val interests: StateFlow<Set<String>> = _interests
+    private val _selectedInterests = MutableStateFlow<MutableSet<String>>(mutableSetOf())
+    var selectedInterests: StateFlow<MutableSet<String>> = _selectedInterests
 
     init {
         getInterestList()

@@ -17,6 +17,7 @@ import com.somasoma.wagglewaggle.presentation.custom_views.SelectInterestsDialog
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectedInterestListAdapter
 import com.somasoma.wagglewaggle.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -30,7 +31,7 @@ class SignUpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBinding()
-        observe()
+        collect()
     }
 
     private fun initBinding() {
@@ -47,13 +48,17 @@ class SignUpActivity : BaseActivity() {
         binding.listInterest.layoutManager = layoutManager
     }
 
-    private fun observe() {
-        viewModel.navigateToPrevPageEvent.observe(this) { navigateToPrevPage() }
-        viewModel.navigateToMainEvent.observe(this) { navigateToMain() }
-        viewModel.showSelectInterestsDialogEvent.observe(this) { showSelectInterestsDialog() }
-        viewModel.selectedInterests.observe(this) { onSelectedInterestsChanged(it) }
-        viewModel.languages.observe(this) { onLanguagesLoaded(it) }
-        viewModel.countries.observe(this) { onNationsLoaded(it) }
+    private fun collect() {
+        repeatOnStart { viewModel.eventFlow.collect { handleEvent(it) } }
+        repeatOnStart { viewModel.selectedInterests.collect { onSelectedInterestsChanged(it) } }
+        repeatOnStart { viewModel.languages.collect { onLanguagesLoaded(it) } }
+        repeatOnStart { viewModel.countries.collect { onNationsLoaded(it) } }
+    }
+
+    private fun handleEvent(event: SignUpViewModel.Event) = when(event) {
+        SignUpViewModel.Event.NavigateToMainPage -> navigateToMain()
+        SignUpViewModel.Event.NavigateToPrevPage -> navigateToPrevPage()
+        SignUpViewModel.Event.ShowSelectInterestsDialog -> showSelectInterestsDialog()
     }
 
     private fun showSelectInterestsDialog() {

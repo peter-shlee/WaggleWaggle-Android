@@ -2,27 +2,41 @@ package com.somasoma.wagglewaggle.presentation.follower_following
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.somasoma.wagglewaggle.core.SingleLiveEvent
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class FollowerFollowingViewModel @Inject constructor(application: Application) :
     AndroidViewModel(application) {
 
-    val navigateToMainEvent = SingleLiveEvent<Unit>()
-    val navigateToCreateWorldEvent = SingleLiveEvent<Unit>()
-    val navigateToSettingEvent = SingleLiveEvent<Unit>()
+    private val _eventFlow = MutableSharedFlow<Event>()
+    val eventFlow: SharedFlow<Event> = _eventFlow
 
     fun onClickCreateRoomButton() {
-        navigateToCreateWorldEvent.call()
+        event(Event.NavigateToCreateWorld)
     }
 
     fun onClickHomeButton() {
-        navigateToMainEvent.call()
+        event(Event.NavigateToMain)
     }
 
     fun onClickSettingButton() {
-        navigateToSettingEvent.call()
+        event(Event.NavigateToSetting)
+    }
+
+    private fun event(event:Event) {
+        viewModelScope.launch {
+            _eventFlow.emit(event)
+        }
+    }
+
+    sealed class Event {
+        object NavigateToMain: Event()
+        object NavigateToCreateWorld: Event()
+        object NavigateToSetting: Event()
     }
 }

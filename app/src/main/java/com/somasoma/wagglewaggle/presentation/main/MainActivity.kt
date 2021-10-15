@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.WindowInsets
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
 import com.somasoma.wagglewaggle.R
@@ -13,13 +12,15 @@ import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
 import com.somasoma.wagglewaggle.databinding.ActivityMainBinding
+import com.somasoma.wagglewaggle.presentation.base.BaseActivity
 import com.somasoma.wagglewaggle.presentation.follower_following.FollowerFollowingActivity
 import com.somasoma.wagglewaggle.presentation.main.create_world.CreateWorldActivity
 import com.somasoma.wagglewaggle.presentation.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     companion object {
         private const val BACKGROUND_SEMICIRCLE_HEIGHT_IN_DP = 295
         private const val BACKGROUND_SEMICIRCLE_HORIZONTAL_MARGIN_IN_DP = 24
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         initViewModel()
         initBinding()
-        observe()
+        collect()
     }
 
     private fun initBinding() {
@@ -61,16 +62,20 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun observe() {
-        viewModel.navigateToSettingEvent.observe(this) { navigateToSettingActivity() }
-        viewModel.navigateToCreateWorld.observe(this) { navigateToCreateWorldActivity() }
-        viewModel.navigateToFollowerFollowing.observe(this) { navigateToFollowerFollowingActivity() }
-        viewModel.avatars.observe(this) { onAvatarListLoaded(it) }
-        viewModel.worlds.observe(this) { onWorldListLoaded(it) }
-        viewModel.onlineUsers.observe(this) { onOnlineUserListLoaded(it) }
-        viewModel.scrollToNextAvatarEvent.observe(this) { scrollToNextAvatar() }
-        viewModel.scrollToPrevAvatarEvent.observe(this) { scrollToPrevAvatar() }
-        viewModel.selectedAvatar.observe(this) { onSelectedAvatarLoaded(it) }
+    private fun collect() {
+        repeatOnStart { viewModel.eventFlow.collect { handleEvent(it) } }
+        repeatOnStart { viewModel.avatars.collect { onAvatarListLoaded(it) } }
+        repeatOnStart { viewModel.worlds.collect { onWorldListLoaded(it) } }
+        repeatOnStart { viewModel.onlineUsers.collect { onOnlineUserListLoaded(it) } }
+        repeatOnStart { viewModel.selectedAvatar.collect { onSelectedAvatarLoaded(it) } }
+    }
+
+    private fun handleEvent(event: MainViewModel.Event) = when (event) {
+        MainViewModel.Event.NavigateToCreateWorld -> navigateToCreateWorldActivity()
+        MainViewModel.Event.NavigateToFollowerFollowing -> navigateToFollowerFollowingActivity()
+        MainViewModel.Event.NavigateToSetting -> navigateToSettingActivity()
+        MainViewModel.Event.ScrollToPrevAvatar -> scrollToPrevAvatar()
+        MainViewModel.Event.ScrollToNextAvatar -> scrollToNextAvatar()
     }
 
     private fun onAvatarListLoaded(avatarList: List<Avatar>) {

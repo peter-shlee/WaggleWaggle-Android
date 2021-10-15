@@ -1,8 +1,6 @@
 package com.somasoma.wagglewaggle.presentation.setting
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.InputState
 import com.somasoma.wagglewaggle.core.NetworkUtil
@@ -38,11 +36,11 @@ class EditProfileViewModel @Inject constructor(
         private val nicknamePattern = Pattern.compile(NICKNAME_REGEX)
     }
 
-    private val _countries = MutableLiveData<List<String?>>(listOf())
-    val countries: LiveData<List<String?>> = _countries
+    private val _countries = MutableStateFlow<List<String?>>(listOf())
+    val countries: StateFlow<List<String?>> = _countries
 
-    private val _languages = MutableLiveData<List<String?>>(listOf())
-    val languages: LiveData<List<String?>> = _languages
+    private val _languages = MutableStateFlow<List<String?>>(listOf())
+    val languages: StateFlow<List<String?>> = _languages
 
     private val _nicknameInputState = MutableStateFlow(InputState.DISABLED)
     val nicknameInputState: StateFlow<InputState> = _nicknameInputState
@@ -56,11 +54,11 @@ class EditProfileViewModel @Inject constructor(
     private val _loadedNickname = MutableStateFlow("")
     val loadedNickname: StateFlow<String> = _loadedNickname
 
-    private val _loadedLanguage = MutableLiveData<String>()
-    val loadedLanguage: LiveData<String> = _loadedLanguage
+    private val _loadedLanguage = MutableStateFlow("")
+    val loadedLanguage: StateFlow<String> = _loadedLanguage
 
-    private val _loadedCountry = MutableLiveData<String>()
-    val loadedCountry: LiveData<String> = _loadedCountry
+    private val _loadedCountry = MutableStateFlow("")
+    val loadedCountry: StateFlow<String> = _loadedCountry
 
     private val _loadedIntroduceMySelf = MutableStateFlow("")
     val loadedIntroduceMySelf: StateFlow<String> = _loadedIntroduceMySelf

@@ -2,8 +2,11 @@ package com.somasoma.wagglewaggle.presentation.custom_views
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.somasoma.wagglewaggle.core.SingleLiveEvent
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -12,7 +15,8 @@ class SelectInterestsDialogViewModel @Inject constructor(
 ) :
     AndroidViewModel(application) {
 
-    val closeDialogEvent = SingleLiveEvent<Unit>()
+    private val _eventFlow = MutableSharedFlow<Event>()
+    val eventFlow: SharedFlow<Event> = _eventFlow
     private val interests = mutableSetOf<String>()
     private val selectedInterests = mutableSetOf<String>()
 
@@ -39,7 +43,7 @@ class SelectInterestsDialogViewModel @Inject constructor(
     }
 
     fun onClickOkayButton() {
-        closeDialogEvent.call()
+        event(Event.CloseDialog)
     }
 
     fun onInterestKeywordClicked(interestKeyword: String, isSelected: Boolean) {
@@ -48,5 +52,15 @@ class SelectInterestsDialogViewModel @Inject constructor(
         } else {
             selectedInterests.add(interestKeyword)
         }
+    }
+
+    private fun event(event: Event) {
+        viewModelScope.launch {
+            _eventFlow.emit(event)
+        }
+    }
+
+    sealed class Event{
+        object CloseDialog: Event()
     }
 }

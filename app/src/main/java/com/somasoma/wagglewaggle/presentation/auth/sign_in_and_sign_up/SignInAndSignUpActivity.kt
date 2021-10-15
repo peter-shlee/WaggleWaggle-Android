@@ -37,13 +37,11 @@ class SignInAndSignUpActivity : BaseActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        repeatOnStart { observe() }
+        collect()
     }
 
-    private suspend fun observe() {
-        viewModel.eventFlow.collect {
-            handleEvent(it)
-        }
+    private fun collect() {
+        repeatOnStart { viewModel.eventFlow.collect { handleEvent(it) } }
     }
 
     private fun handleEvent(event: SignInAndSignUpViewModel.Event) = when (event) {
