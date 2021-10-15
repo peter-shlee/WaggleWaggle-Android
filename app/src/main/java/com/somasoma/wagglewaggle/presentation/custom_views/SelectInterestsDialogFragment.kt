@@ -40,7 +40,7 @@ open class SelectInterestsDialogFragment : BottomSheetDialogFragment() {
             val selectInterestsViewModel: SelectInterestsViewModel by activityViewModels()
             setViewModel(selectInterestsViewModel)
         }
-        observe()
+        collect()
     }
 
     override fun onCreateView(
@@ -95,7 +95,7 @@ open class SelectInterestsDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun observe() {
+    private fun collect() {
         repeatOnStart {
             activityViewModel?.selectedInterests?.collect {
                 viewModel.setSelectedInterests(

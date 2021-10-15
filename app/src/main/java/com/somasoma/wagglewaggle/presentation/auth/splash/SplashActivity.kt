@@ -25,7 +25,7 @@ class SplashActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
         binding.lifecycleOwner = this
 
-        repeatOnStart { observe() }
+        collect()
     }
 
     override fun onStart() {
@@ -43,8 +43,8 @@ class SplashActivity : BaseActivity() {
         } ?: navigateToSignInAndSignUp()
     }
 
-    private suspend fun observe() {
-        viewModel.eventFlow.collect { handleEvent(it) }
+    private fun collect() {
+        repeatOnStart { viewModel.eventFlow.collect { handleEvent(it) } }
     }
 
     private fun handleEvent(event: SplashViewModel.Event) {

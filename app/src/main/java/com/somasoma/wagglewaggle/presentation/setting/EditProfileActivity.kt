@@ -26,7 +26,6 @@ class EditProfileActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBinding()
-        observe()
         collect()
     }
 
@@ -51,9 +50,6 @@ class EditProfileActivity : BaseActivity() {
         repeatOnStart { viewModel.loadedCountry.collect { onSelectedCountryLoaded(it) } }
         repeatOnStart { viewModel.loadedLanguage.collect { onSelectedLanguageLoaded(it) } }
         repeatOnStart { viewModel.selectedInterests.collect() { onSelectedInterestsChanged(it) } }
-    }
-
-    private fun observe() {
     }
 
     private fun navigateToPrevPage() {

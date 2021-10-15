@@ -24,10 +24,10 @@ class SettingActivity : BaseActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        observe()
+        collect()
     }
 
-    private fun observe() {
+    private fun collect() {
         repeatOnStart { viewModel.eventFlow.collect { handleEvent(it) } }
     }
 
