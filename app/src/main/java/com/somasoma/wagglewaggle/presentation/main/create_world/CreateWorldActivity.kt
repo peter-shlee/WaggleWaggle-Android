@@ -2,19 +2,20 @@ package com.somasoma.wagglewaggle.presentation.main.create_world
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.data.WorldMap
 import com.somasoma.wagglewaggle.databinding.ActivityCreateWorldBinding
+import com.somasoma.wagglewaggle.presentation.base.BaseActivity
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectInterestsDialogFragment
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectedInterestListAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class CreateWorldActivity : AppCompatActivity() {
+class CreateWorldActivity : BaseActivity() {
 
     private val viewModel: CreateWorldViewModel by viewModels()
     private lateinit var binding: ActivityCreateWorldBinding
@@ -31,7 +32,7 @@ class CreateWorldActivity : AppCompatActivity() {
         binding.listMap.adapter = mapListAdapter
         setLayoutManager()
 
-        observe()
+        collect()
     }
 
     private fun setLayoutManager() {
@@ -40,11 +41,15 @@ class CreateWorldActivity : AppCompatActivity() {
         binding.listKeyword.layoutManager = layoutManager
     }
 
-    private fun observe() {
-        viewModel.navigatePrevPageEvent.observe(this) { navigateToPrevPage() }
-        viewModel.showSelectInterestsDialogEvent.observe(this) { showSelectInterestsDialog() }
-        viewModel.selectedInterests.observe(this) { onSelectedInterestsChanged(it) }
-        viewModel.maps.observe(this) { onMapListLoaded(it) }
+    private fun collect() {
+        repeatOnStart { viewModel.eventFlow.collect { handleEvent(it) } }
+        repeatOnStart { viewModel.selectedInterests.collect { onSelectedInterestsChanged(it) } }
+        repeatOnStart { viewModel.maps.collect { onMapListLoaded(it) } }
+    }
+
+    private fun handleEvent(event: CreateWorldViewModel.Event) = when(event) {
+        CreateWorldViewModel.Event.NavigateToPrevPage -> navigateToPrevPage()
+        CreateWorldViewModel.Event.ShowSelectInterestsDialog -> showSelectInterestsDialog()
     }
 
     private fun navigateToPrevPage() {

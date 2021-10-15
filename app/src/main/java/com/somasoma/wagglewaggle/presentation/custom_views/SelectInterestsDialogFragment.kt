@@ -8,12 +8,18 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.databinding.FragmentSetInterestsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 open class SelectInterestsDialogFragment : BottomSheetDialogFragment() {
@@ -90,12 +96,24 @@ open class SelectInterestsDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun observe() {
-        activityViewModel?.selectedInterests?.observe(this) { viewModel.setSelectedInterests(it) }
-        activityViewModel?.interests?.observe(this) {
-            viewModel.setInterests(it)
-            onInterestsLoaded(it)
+        repeatOnStart {
+            activityViewModel?.selectedInterests?.collect {
+                viewModel.setSelectedInterests(
+                    it
+                )
+            }
         }
-        viewModel.closeDialogEvent.observe(this) { dismiss() }
+        repeatOnStart {
+            activityViewModel?.interests?.collect {
+                viewModel.setInterests(it)
+                onInterestsLoaded(it)
+            }
+        }
+        repeatOnStart { viewModel.eventFlow.collect { handleEvent(it) } }
+    }
+
+    private fun handleEvent(event: SelectInterestsDialogViewModel.Event) = when (event) {
+        SelectInterestsDialogViewModel.Event.CloseDialog -> dismiss()
     }
 
     private fun onInterestsLoaded(interestsSet: Set<String>) {
@@ -104,5 +122,11 @@ open class SelectInterestsDialogFragment : BottomSheetDialogFragment() {
 
     private fun onInterestKeywordClicked(interestKeyword: String, isSelected: Boolean) {
         viewModel.onInterestKeywordClicked(interestKeyword, isSelected)
+    }
+
+    fun repeatOnStart(block: suspend CoroutineScope.() -> Unit) {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED, block)
+        }
     }
 }

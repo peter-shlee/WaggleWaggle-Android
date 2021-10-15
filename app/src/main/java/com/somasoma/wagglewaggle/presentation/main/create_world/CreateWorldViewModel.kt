@@ -1,15 +1,18 @@
 package com.somasoma.wagglewaggle.presentation.main.create_world
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.InputState
 import com.somasoma.wagglewaggle.core.NetworkUtil
-import com.somasoma.wagglewaggle.core.SingleLiveEvent
 import com.somasoma.wagglewaggle.data.WorldMap
 import com.somasoma.wagglewaggle.domain.usecase.member.GetInterestListUseCase
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectInterestsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 import javax.inject.Inject
 
@@ -24,12 +27,12 @@ class CreateWorldViewModel @Inject constructor(
         private val worldNamePattern = Pattern.compile(WORLD_NAME_REGEX)
     }
 
-    val showSelectInterestsDialogEvent = SingleLiveEvent<Unit>()
-    val navigatePrevPageEvent = SingleLiveEvent<Unit>()
-    private val _maps = MutableLiveData<List<WorldMap>>()
-    val maps: LiveData<List<WorldMap>> = _maps
-    private val _worldNameInputState = MutableLiveData(InputState.ENABLED)
-    val worldNameInputState: LiveData<InputState> = _worldNameInputState
+    private val _eventFlow = MutableSharedFlow<Event>()
+    val eventFlow: SharedFlow<Event> = _eventFlow
+    private val _maps = MutableStateFlow<List<WorldMap>>(listOf())
+    val maps: StateFlow<List<WorldMap>> = _maps
+    private val _worldNameInputState = MutableStateFlow(InputState.ENABLED)
+    val worldNameInputState: StateFlow<InputState> = _worldNameInputState
     private var worldName: String = ""
 
     init {
@@ -56,14 +59,25 @@ class CreateWorldViewModel @Inject constructor(
     }
 
     fun onClickBackButton() {
-        navigatePrevPageEvent.call()
+        event(Event.NavigateToPrevPage)
     }
 
     fun onClickSelectInterest() {
-        showSelectInterestsDialogEvent.call()
+        event(Event.ShowSelectInterestsDialog)
     }
 
     fun onClickCreateButton() {
 
+    }
+
+    fun event(event: Event) {
+        viewModelScope.launch {
+            _eventFlow.emit(event)
+        }
+    }
+
+    sealed class Event{
+        object NavigateToPrevPage: Event()
+        object ShowSelectInterestsDialog: Event()
     }
 }
