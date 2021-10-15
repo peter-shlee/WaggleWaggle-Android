@@ -102,7 +102,7 @@
                     android:layout_height="0dp"
                     android:background="@drawable/round_button_background"
                     android:backgroundTint="@{btnCheckNickname.enabled ? @color/point_blue : @color/gray1}"
-                    android:enabled="@{viewModel.nicknameInputState == InputState.ENABLED ? true : false}"
+                    android:enabled="@{viewModel.newNickname.equals(viewModel.loadedNickname) ? false : viewModel.nicknameInputState == InputState.ENABLED ? true : false}"
                     android:onClick="@{() -> viewModel.onClickCheckNicknameDuplicatedButton()}"
                     android:text="중복확인"
                     android:textColor="@color/white"
