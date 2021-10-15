@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.onlineUsers.observe(this) { onOnlineUserListLoaded(it) }
         viewModel.scrollToNextAvatarEvent.observe(this) { scrollToNextAvatar() }
         viewModel.scrollToPrevAvatarEvent.observe(this) { scrollToPrevAvatar() }
+        viewModel.selectedAvatar.observe(this) { onSelectedAvatarLoaded(it) }
     }
 
     private fun onAvatarListLoaded(avatarList: List<Avatar>) {
@@ -82,6 +83,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun onOnlineUserListLoaded(onlineUsers: List<Member>) {
         onlineUserListAdapter.submitList(onlineUsers)
+    }
+
+    private fun onSelectedAvatarLoaded(avatar: Avatar) {
+        binding.viewpagerSelectCharacter.currentItem = viewModel.avatars.value?.indexOf(avatar) ?: 0
     }
 
     private fun scrollToNextAvatar() {
