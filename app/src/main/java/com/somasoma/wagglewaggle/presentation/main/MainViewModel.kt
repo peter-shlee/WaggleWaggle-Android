@@ -2,8 +2,6 @@ package com.somasoma.wagglewaggle.presentation.main
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.*
 import com.somasoma.wagglewaggle.data.Avatar
@@ -15,6 +13,11 @@ import com.somasoma.wagglewaggle.domain.usecase.member.GetOnlineUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.PutEditMemberUseCase
 import com.somasoma.wagglewaggle.domain.usecase.world.GetWorldListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -32,19 +35,16 @@ class MainViewModel @Inject constructor(
     var backgroundSemicircleHeight: Int = 0
     var topBarHeight: Int = 0
 
-    val navigateToSettingEvent = SingleLiveEvent<Unit>()
-    val navigateToFollowerFollowing = SingleLiveEvent<Unit>()
-    val navigateToCreateWorld = SingleLiveEvent<Unit>()
-    val scrollToPrevAvatarEvent = SingleLiveEvent<Unit>()
-    val scrollToNextAvatarEvent = SingleLiveEvent<Unit>()
-    private val _avatars = MutableLiveData<List<Avatar>>()
-    val avatars: LiveData<List<Avatar>> = _avatars
-    private val _worlds = MutableLiveData<List<WorldRoom>>()
-    val worlds: LiveData<List<WorldRoom>> = _worlds
-    private val _onlineUsers = MutableLiveData<List<Member>>()
-    val onlineUsers: LiveData<List<Member>> = _onlineUsers
-    private val _selectedAvatar = MutableLiveData<Avatar>()
-    val selectedAvatar: LiveData<Avatar> = _selectedAvatar
+    private val _eventFlow = MutableSharedFlow<Event>()
+    val eventFlow: SharedFlow<Event> = _eventFlow
+    private val _avatars = MutableStateFlow<List<Avatar>>(listOf())
+    val avatars: StateFlow<List<Avatar>> = _avatars
+    private val _worlds = MutableStateFlow<List<WorldRoom>>(listOf())
+    val worlds: StateFlow<List<WorldRoom>> = _worlds
+    private val _onlineUsers = MutableStateFlow<List<Member>>(listOf())
+    val onlineUsers: StateFlow<List<Member>> = _onlineUsers
+    private val _selectedAvatar = MutableStateFlow(DEFAULT_AVATAR)
+    val selectedAvatar: StateFlow<Avatar> = _selectedAvatar
 
     init {
         makeAvatars()
@@ -214,22 +214,36 @@ class MainViewModel @Inject constructor(
     }
 
     fun onClickPrevAvatarButton() {
-        scrollToPrevAvatarEvent.call()
+        event(Event.ScrollToPrevAvatar)
     }
 
     fun onClickNextAvatarButton() {
-        scrollToNextAvatarEvent.call()
+        event(Event.ScrollToNextAvatar)
     }
 
     fun onClickSettingButton() {
-        navigateToSettingEvent.call()
+        event(Event.NavigateToSetting)
     }
 
     fun onClickFollowButton() {
-        navigateToFollowerFollowing.call()
+        event(Event.NavigateToFollowerFollowing)
     }
 
     fun onClickCreateWorldButton() {
-        navigateToCreateWorld.call()
+        event(Event.NavigateToCreateWorld)
+    }
+
+    fun event(event:Event) {
+        viewModelScope.launch {
+            _eventFlow.emit(event)
+        }
+    }
+
+    sealed class Event {
+        object NavigateToSetting : Event()
+        object NavigateToFollowerFollowing : Event()
+        object NavigateToCreateWorld : Event()
+        object ScrollToPrevAvatar : Event()
+        object ScrollToNextAvatar : Event()
     }
 }
