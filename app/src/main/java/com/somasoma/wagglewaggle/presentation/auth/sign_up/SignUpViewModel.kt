@@ -1,11 +1,12 @@
 package com.somasoma.wagglewaggle.presentation.auth.sign_up
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.somasoma.wagglewaggle.core.*
+import com.somasoma.wagglewaggle.core.InputState
+import com.somasoma.wagglewaggle.core.NetworkUtil
+import com.somasoma.wagglewaggle.core.PreferenceConstant
+import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
 import com.somasoma.wagglewaggle.data.model.dto.auth.SignUpRequest
 import com.somasoma.wagglewaggle.domain.usecase.auth.PostSignUpUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetCountryListUseCase
@@ -14,6 +15,11 @@ import com.somasoma.wagglewaggle.domain.usecase.member.GetLanguageListUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetNicknameCheckUseCase
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectInterestsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 import javax.inject.Inject
 
@@ -33,20 +39,20 @@ class SignUpViewModel @Inject constructor(
         private val nicknamePattern = Pattern.compile(NICKNAME_REGEX)
     }
 
-    private val _countries = MutableLiveData<List<String?>>()
-    var countries: LiveData<List<String?>> = _countries
-    private val _languages = MutableLiveData<List<String?>>()
-    var languages: LiveData<List<String?>> = _languages
+    private val _eventFlow = MutableSharedFlow<Event>()
+    val eventFlow: SharedFlow<Event> = _eventFlow
+    private val _countries = MutableStateFlow<List<String?>>(listOf())
+    var countries: StateFlow<List<String?>> = _countries
+    private val _languages = MutableStateFlow<List<String?>>(listOf())
+    var languages: StateFlow<List<String?>> = _languages
+    private val _nicknameInputState = MutableStateFlow(InputState.DISABLED)
+    var nicknameInputState: StateFlow<InputState> = _nicknameInputState
+    private val _showDuplicateNicknameText = MutableStateFlow(false)
+    var showDuplicateNicknameText: StateFlow<Boolean> = _showDuplicateNicknameText
+
     var selectedLanguage: String? = null
     var selectedCountry: String? = null
-    private val _nicknameInputState = MutableLiveData(InputState.DISABLED)
-    var nicknameInputState: LiveData<InputState> = _nicknameInputState
-    private val _showDuplicateNicknameText = MutableLiveData(false)
-    var showDuplicateNicknameText: LiveData<Boolean> = _showDuplicateNicknameText
     private var nickname: String = ""
-    val showSelectInterestsDialogEvent = SingleLiveEvent<Unit>()
-    val navigateToPrevPageEvent = SingleLiveEvent<Unit>()
-    val navigateToMainEvent = SingleLiveEvent<Unit>()
     private var firebaseAuthToken = ""
 
     init {
@@ -56,11 +62,11 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun onClickBackButton() {
-        navigateToPrevPageEvent.call()
+        event(Event.NavigateToPrevPage)
     }
 
     fun onClickSelectInterestButton() {
-        showSelectInterestsDialogEvent.call()
+        event(Event.ShowSelectInterestsDialog)
     }
 
     fun onClickCheckNicknameDuplicatedButton() {
@@ -134,7 +140,7 @@ class SignUpViewModel @Inject constructor(
                     }
                 }
 
-                navigateToMainEvent.call()
+                event(Event.NavigateToMainPage)
             }
 
             onErrorCallback = {
@@ -207,5 +213,17 @@ class SignUpViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun event(event: Event) {
+        viewModelScope.launch {
+            _eventFlow.emit(event)
+        }
+    }
+
+    sealed class Event {
+        object NavigateToPrevPage : Event()
+        object NavigateToMainPage : Event()
+        object ShowSelectInterestsDialog : Event()
     }
 }
