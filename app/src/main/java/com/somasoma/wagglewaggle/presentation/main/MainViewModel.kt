@@ -5,10 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.somasoma.wagglewaggle.core.NetworkUtil
-import com.somasoma.wagglewaggle.core.PreferenceConstant
-import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
-import com.somasoma.wagglewaggle.core.SingleLiveEvent
+import com.somasoma.wagglewaggle.core.*
 import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.data.model.dto.member.OnlineResponse
@@ -31,10 +28,6 @@ class MainViewModel @Inject constructor(
     private val getOnlineUseCase: GetOnlineUseCase,
     private val putEditMemberUseCase: PutEditMemberUseCase
 ) : AndroidViewModel(application) {
-    companion object {
-        private val DEFAULT_AVATAR = Avatar.MALE1
-    }
-
     var backgroundSemicircleRadius: Int = 0
     var backgroundSemicircleHeight: Int = 0
     var topBarHeight: Int = 0
@@ -238,28 +231,5 @@ class MainViewModel @Inject constructor(
 
     fun onClickCreateWorldButton() {
         navigateToCreateWorld.call()
-    }
-
-    private fun string2Avatar(avatarString: String?) = when (avatarString) {
-        "FEMALE1" -> Avatar.FEMALE1
-        "FEMALE2" -> Avatar.FEMALE2
-        "FEMALE3" -> Avatar.FEMALE3
-        "FEMALE4" -> Avatar.FEMALE4
-        "MALE1" -> Avatar.MALE1
-        "MALE2" -> Avatar.MALE2
-        "MALE3" -> Avatar.MALE3
-        "MALE4" -> Avatar.MALE4
-        else -> DEFAULT_AVATAR
-    }
-
-    private fun avatar2String(avatar: Avatar) = when(avatar) {
-        Avatar.FEMALE1 -> "FEMALE1"
-        Avatar.FEMALE2 -> "FEMALE2"
-        Avatar.FEMALE3 -> "FEMALE3"
-        Avatar.FEMALE4 -> "FEMALE4"
-        Avatar.MALE1 -> "MALE1"
-        Avatar.MALE2 -> "MALE2"
-        Avatar.MALE3 -> "MALE3"
-        Avatar.MALE4 -> "MALE4"
     }
 }

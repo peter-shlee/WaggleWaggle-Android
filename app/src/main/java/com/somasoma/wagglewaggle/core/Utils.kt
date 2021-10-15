@@ -5,6 +5,8 @@ import android.util.TypedValue
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.data.Avatar
 
+val DEFAULT_AVATAR = Avatar.MALE1
+
 fun dp2Px(context: Context, dp: Float) =
     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.resources.displayMetrics)
         .toInt()
@@ -29,4 +31,27 @@ fun getProfileAvatarResourceId(avatar: Avatar) = when (avatar) {
     Avatar.MALE2 -> R.drawable.male2_profile
     Avatar.MALE3 -> R.drawable.male3_profile
     Avatar.MALE4 -> R.drawable.male4_wave_profile
+}
+
+fun string2Avatar(avatarString: String?) = when (avatarString) {
+    "FEMALE1" -> Avatar.FEMALE1
+    "FEMALE2" -> Avatar.FEMALE2
+    "FEMALE3" -> Avatar.FEMALE3
+    "FEMALE4" -> Avatar.FEMALE4
+    "MALE1" -> Avatar.MALE1
+    "MALE2" -> Avatar.MALE2
+    "MALE3" -> Avatar.MALE3
+    "MALE4" -> Avatar.MALE4
+    else -> DEFAULT_AVATAR
+}
+
+fun avatar2String(avatar: Avatar) = when(avatar) {
+    Avatar.FEMALE1 -> "FEMALE1"
+    Avatar.FEMALE2 -> "FEMALE2"
+    Avatar.FEMALE3 -> "FEMALE3"
+    Avatar.FEMALE4 -> "FEMALE4"
+    Avatar.MALE1 -> "MALE1"
+    Avatar.MALE2 -> "MALE2"
+    Avatar.MALE3 -> "MALE3"
+    Avatar.MALE4 -> "MALE4"
 }
