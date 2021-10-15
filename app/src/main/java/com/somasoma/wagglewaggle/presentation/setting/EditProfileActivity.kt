@@ -27,7 +27,7 @@ class EditProfileActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         initBinding()
         observe()
-        repeatOnStart { collect() }
+        collect()
     }
 
     private fun initBinding() {
@@ -44,16 +44,16 @@ class EditProfileActivity : BaseActivity() {
         binding.listInterest.layoutManager = layoutManager
     }
 
-    private suspend fun collect() {
-        viewModel.eventFlow.collect { handleEvent(it) }
+    private fun collect() {
+        repeatOnStart { viewModel.eventFlow.collect { handleEvent(it) } }
+        repeatOnStart { viewModel.languages.collect { onLanguagesLoaded(it) } }
+        repeatOnStart { viewModel.countries.collect { onNationsLoaded(it) } }
+        repeatOnStart { viewModel.loadedCountry.collect { onSelectedCountryLoaded(it) } }
+        repeatOnStart { viewModel.loadedLanguage.collect { onSelectedLanguageLoaded(it) } }
+        repeatOnStart { viewModel.selectedInterests.collect() { onSelectedInterestsChanged(it) } }
     }
 
     private fun observe() {
-        viewModel.selectedInterests.observe(this) { onSelectedInterestsChanged(it) }
-        viewModel.languages.observe(this) { onLanguagesLoaded(it) }
-        viewModel.countries.observe(this) { onNationsLoaded(it) }
-        viewModel.loadedCountry.observe(this) { onSelectedCountryLoaded(it) }
-        viewModel.loadedLanguage.observe(this) { onSelectedLanguageLoaded(it) }
     }
 
     private fun navigateToPrevPage() {
