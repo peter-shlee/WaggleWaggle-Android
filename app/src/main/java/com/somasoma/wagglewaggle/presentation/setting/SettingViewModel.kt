@@ -6,12 +6,14 @@ import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.PreferenceConstant
 import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
-import com.somasoma.wagglewaggle.core.SingleLiveEvent
 import com.somasoma.wagglewaggle.domain.usecase.DeleteAccountUseCase
 import com.somasoma.wagglewaggle.domain.usecase.SignOutUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.DeleteLogoutUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.DeleteMemberUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,16 +28,15 @@ class SettingViewModel @Inject constructor(
 ) :
     AndroidViewModel(application) {
 
-    val navigateToPrevPageEvent = SingleLiveEvent<Unit>()
-    val navigateToEditProfileEvent = SingleLiveEvent<Unit>()
-    val navigateToSignInAndSignUpEvent = SingleLiveEvent<Unit>()
+    private val _eventFlow = MutableSharedFlow<Event>()
+    val eventFlow: SharedFlow<Event> = _eventFlow
 
     fun onClickBackButton() {
-        navigateToPrevPageEvent.call()
+        event(Event.NavigateToPrevPage)
     }
 
     fun onClickEditProfile() {
-        navigateToEditProfileEvent.call()
+        event(Event.NavigateToEditProfile)
     }
 
     fun onClickSignOut() {
@@ -46,9 +47,9 @@ class SettingViewModel @Inject constructor(
                 sharedPreferenceHelper.remove(PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN)
 
                 signOutUseCase.signOut({
-                    navigateToSignInAndSignUpEvent.call()
+                    event(Event.NavigateToSignInAndSignUp)
                 }) {
-                    navigateToSignInAndSignUpEvent.call()
+                    event(Event.NavigateToSignInAndSignUp)
                 }
             }
 
@@ -70,7 +71,7 @@ class SettingViewModel @Inject constructor(
                     sharedPreferenceHelper.remove(PreferenceConstant.ACCESS_TOKEN)
                     sharedPreferenceHelper.remove(PreferenceConstant.ACCESS_TOKEN_EXPIRED_IN)
                     deleteAccountUseCase.deleteAccount({
-                        navigateToSignInAndSignUpEvent.call()
+                        event(Event.NavigateToSignInAndSignUp)
                     }, {})
                 }
             }
@@ -83,5 +84,17 @@ class SettingViewModel @Inject constructor(
 
             }
         }
+    }
+
+    private fun event(event: Event) {
+        viewModelScope.launch {
+            _eventFlow.emit(event)
+        }
+    }
+
+    sealed class Event{
+        object NavigateToPrevPage: Event()
+        object NavigateToEditProfile: Event()
+        object NavigateToSignInAndSignUp: Event()
     }
 }
