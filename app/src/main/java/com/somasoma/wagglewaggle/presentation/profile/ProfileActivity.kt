@@ -8,6 +8,7 @@ import com.somasoma.wagglewaggle.databinding.ActivityProfileBinding
 import com.somasoma.wagglewaggle.presentation.base.BaseActivity
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import timber.log.Timber
 
 class ProfileActivity : BaseActivity() {
     companion object {
@@ -23,6 +24,7 @@ class ProfileActivity : BaseActivity() {
         val stringMember = intent.getStringExtra(MEMBER)
         if (!stringMember.isNullOrBlank()) {
             viewModel.member = Json.decodeFromString(stringMember)
+            Timber.d(viewModel.member.toString())
         }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_profile)
     }

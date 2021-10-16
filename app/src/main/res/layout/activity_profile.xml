@@ -3,6 +3,12 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.somasoma.wagglewaggle.presentation.profile.ProfileViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -43,13 +49,12 @@
             app:layout_constraintLeft_toRightOf="@id/btn_back"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageView
             android:id="@+id/img_profile"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="27dp"
-            android:src="@drawable/ic_my_profile_default"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt_title" />
 
@@ -59,6 +64,7 @@
             android:layout_marginLeft="42dp"
             android:layout_marginTop="35dp"
             android:background="@null"
+            android:visibility="invisible"
             android:src="@drawable/ic_profile_edit_y"
             app:layout_constraintLeft_toLeftOf="@id/img_profile"
             app:layout_constraintTop_toTopOf="@id/img_profile" />
@@ -82,6 +88,7 @@
             android:textColor="@color/text_color_primary"
             android:textSize="18dp"
             android:textStyle="bold"
+            android:text="@{viewModel.member.nickName}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/txt_follower"
             app:layout_constraintTop_toBottomOf="@id/img_profile"
@@ -166,6 +173,7 @@
             android:paddingVertical="11dp"
             android:textColor="@color/text_color_hint"
             android:textSize="12dp"
+            android:text="@{viewModel.member.introduction}"
             app:layout_constraintTop_toBottomOf="@id/txt_nickname"
             tools:text="안녕 여러분!! 저는 제이슨이라고 해요!\n우리 같이 친하게 진해요 💛" />
 
@@ -198,6 +206,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingHorizontal="30dp"
+            android:visibility="@{viewModel.member.entranceStatus.equals(`true`) ? View.VISIBLE : View.GONE}"
             app:layout_constraintTop_toBottomOf="@id/btn_follow">
 
             <TextView
@@ -205,6 +214,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_color_primary"
                 android:textSize="16dp"
+                android:text="@{viewModel.member.entranceRoom}"
                 tools:text="00" />
 
             <TextView
@@ -214,7 +224,7 @@
                 android:textColor="@color/text_color_primary"
                 android:textSize="16dp" />
 
-            <Space
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
@@ -248,7 +258,7 @@
                 android:textColor="@color/text_color_primary"
                 android:textSize="16dp" />
 
-            <Space
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
@@ -303,6 +313,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_color_primary"
                 android:textSize="16dp"
+                android:text="@{viewModel.member.country}"
                 tools:text="대한민국" />
 
         </LinearLayout>
@@ -327,6 +338,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_color_primary"
                 android:textSize="16dp"
+                android:text="@{viewModel.member.language}"
                 tools:text="한국어" />
 
         </LinearLayout>

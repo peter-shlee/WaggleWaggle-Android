@@ -34,7 +34,7 @@ class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
     private val avatarSelectViewPagerAdapter = AvatarSelectPagerAdapter()
     private val worldListAdapter = WorldListAdapter()
-    private val onlineUserListAdapter = OnlineUserListAdapter(viewModel.onlineUserClickListener)
+    private lateinit var onlineUserListAdapter: OnlineUserListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +50,7 @@ class MainActivity : BaseActivity() {
         binding.viewModel = viewModel
         binding.listWorld.adapter = worldListAdapter
         binding.listWorld.isNestedScrollingEnabled = false
+        onlineUserListAdapter =  OnlineUserListAdapter(viewModel.onlineUserClickListener)
         binding.listOnline.adapter = onlineUserListAdapter
         initAvatarSelectViewPager()
     }
