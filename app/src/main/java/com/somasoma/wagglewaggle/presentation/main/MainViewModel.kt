@@ -45,6 +45,12 @@ class MainViewModel @Inject constructor(
     val onlineUsers: StateFlow<List<Member>> = _onlineUsers
     private val _selectedAvatar = MutableStateFlow(DEFAULT_AVATAR)
     val selectedAvatar: StateFlow<Avatar> = _selectedAvatar
+    val onlineUserClickListener = object : OnlineUserClickListener {
+        override fun onClick(member: Member) {
+            event(Event.NavigateToProfile(member))
+        }
+
+    }
 
     init {
         makeAvatars()
@@ -243,6 +249,7 @@ class MainViewModel @Inject constructor(
         object NavigateToSetting : Event()
         object NavigateToFollowerFollowing : Event()
         object NavigateToCreateWorld : Event()
+        class NavigateToProfile(val member: Member) : Event()
         object ScrollToPrevAvatar : Event()
         object ScrollToNextAvatar : Event()
     }

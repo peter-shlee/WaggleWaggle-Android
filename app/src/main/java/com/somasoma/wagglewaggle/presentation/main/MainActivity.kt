@@ -15,22 +15,26 @@ import com.somasoma.wagglewaggle.databinding.ActivityMainBinding
 import com.somasoma.wagglewaggle.presentation.base.BaseActivity
 import com.somasoma.wagglewaggle.presentation.follower_following.FollowerFollowingActivity
 import com.somasoma.wagglewaggle.presentation.main.create_world.CreateWorldActivity
+import com.somasoma.wagglewaggle.presentation.profile.ProfileActivity
 import com.somasoma.wagglewaggle.presentation.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
     companion object {
         private const val BACKGROUND_SEMICIRCLE_HEIGHT_IN_DP = 295
         private const val BACKGROUND_SEMICIRCLE_HORIZONTAL_MARGIN_IN_DP = 24
+        private const val MEMBER = "member"
     }
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
     private val avatarSelectViewPagerAdapter = AvatarSelectPagerAdapter()
     private val worldListAdapter = WorldListAdapter()
-    private val onlineUserListAdapter = OnlineUserListAdapter()
+    private val onlineUserListAdapter = OnlineUserListAdapter(viewModel.onlineUserClickListener)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +78,7 @@ class MainActivity : BaseActivity() {
         MainViewModel.Event.NavigateToCreateWorld -> navigateToCreateWorldActivity()
         MainViewModel.Event.NavigateToFollowerFollowing -> navigateToFollowerFollowingActivity()
         MainViewModel.Event.NavigateToSetting -> navigateToSettingActivity()
+        is MainViewModel.Event.NavigateToProfile -> navigateToProfileActivity(event.member)
         MainViewModel.Event.ScrollToPrevAvatar -> scrollToPrevAvatar()
         MainViewModel.Event.ScrollToNextAvatar -> scrollToNextAvatar()
     }
@@ -117,6 +122,12 @@ class MainActivity : BaseActivity() {
 
     private fun navigateToCreateWorldActivity() {
         val navigateIntent = Intent(this, CreateWorldActivity::class.java)
+        startActivity(navigateIntent)
+    }
+
+    private fun navigateToProfileActivity(member: Member) {
+        val navigateIntent = Intent(this, ProfileActivity::class.java)
+        navigateIntent.putExtra(MEMBER, Json.encodeToString(member))
         startActivity(navigateIntent)
     }
 
