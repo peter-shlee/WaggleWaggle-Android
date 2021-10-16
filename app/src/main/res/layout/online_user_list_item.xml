@@ -15,6 +15,10 @@
             name="profileImageBackgroundColor"
             type="com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor" />
 
+        <variable
+            name="onClickListener"
+            type="com.somasoma.wagglewaggle.presentation.main.OnlineUserClickListener" />
+
         <import type="com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor" />
     </data>
 
@@ -26,7 +30,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:onClick="@{() -> onClickListener.onClick(member)}">
 
         <com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageView
             android:layout_width="55dp"

@@ -10,7 +10,7 @@ import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.databinding.OnlineUserListItemBinding
 import com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor
 
-class OnlineUserListAdapter :
+class OnlineUserListAdapter(private val onlineUserClickListener: OnlineUserClickListener) :
     ListAdapter<Member, OnlineUserListAdapter.ViewHolder>(MemberDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -18,7 +18,7 @@ class OnlineUserListAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onlineUserClickListener)
     }
 
     class ViewHolder private constructor(val binding: OnlineUserListItemBinding) :
@@ -31,10 +31,11 @@ class OnlineUserListAdapter :
             }
         }
 
-        fun bind(member: Member) {
+        fun bind(member: Member, onlineUserClickListener: OnlineUserClickListener) {
             binding.member = member
             binding.avatar = stringToAvatar(member.avatar)
             binding.profileImageBackgroundColor = getBackgroundColor(member.id ?: 0)
+            binding.onClickListener = onlineUserClickListener
         }
 
         private fun stringToAvatar(avatarName: String?) = when (avatarName) {
@@ -62,4 +63,8 @@ class MemberDiffCallback : DiffUtil.ItemCallback<Member>() {
     override fun areContentsTheSame(oldItem: Member, newItem: Member): Boolean {
         return oldItem == newItem
     }
+}
+
+interface OnlineUserClickListener {
+    fun onClick(member: Member)
 }
