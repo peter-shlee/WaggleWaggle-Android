@@ -10,7 +10,7 @@ interface MemberService {
     suspend fun getMe(): Response<Member?>
 
     @GET("member/{memberId}")
-    suspend fun getMember(@Path("memberId") memberId: Long): Response<Member?>
+    suspend fun getMember(@Path("memberId") memberId: Int): Response<Member?>
 
     @GET("member/online")
     suspend fun getOnline(): Response<OnlineResponse?>
@@ -19,7 +19,7 @@ interface MemberService {
     suspend fun deleteLogout(): Response<LogoutResponse?>
 
     @DELETE("member/{memberID}")
-    suspend fun deleteMember(@Path("memberID") memberId: Long = -1L): Response<DeleteMemberResponse?>
+    suspend fun deleteMember(@Path("memberID") memberId: Int = -1): Response<DeleteMemberResponse?>
 
     @PUT("member/edit-member")
     suspend fun putEditMember(@Body member: Member): Response<Unit?>

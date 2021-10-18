@@ -15,7 +15,7 @@ class MemberRepositoryImpl @Inject constructor(
     private val publicMemberService = retrofits.second.create(MemberService::class.java)
 
     override suspend fun getMe() = memberService.getMe()
-    override suspend fun getMember(memberId: Long) = memberService.getMember(memberId)
+    override suspend fun getMember(memberId: Int) = memberService.getMember(memberId)
     override suspend fun getOnline() = memberService.getOnline()
     override suspend fun deleteLogout() = memberService.deleteLogout()
     override suspend fun deleteMember() = memberService.deleteMember()

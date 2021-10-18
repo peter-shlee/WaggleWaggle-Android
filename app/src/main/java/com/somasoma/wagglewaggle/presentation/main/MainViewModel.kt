@@ -43,13 +43,13 @@ class MainViewModel @Inject constructor(
     val worlds: StateFlow<List<WorldRoom>> = _worlds
     private val _onlineUsers = MutableStateFlow<List<Member>>(listOf())
     val onlineUsers: StateFlow<List<Member>> = _onlineUsers
-    private val _selectedAvatar = MutableStateFlow(DEFAULT_AVATAR)
-    val selectedAvatar: StateFlow<Avatar> = _selectedAvatar
+    private val _loadedSelectedAvatar = MutableStateFlow(DEFAULT_AVATAR)
+    val loadedSelectedAvatar: StateFlow<Avatar> = _loadedSelectedAvatar
+    var isAvatarSelectedByUser = false
     val onlineUserClickListener = object : OnlineUserClickListener {
         override fun onClick(member: Member) {
             event(Event.NavigateToProfile(member))
         }
-
     }
 
     init {
@@ -82,19 +82,19 @@ class MainViewModel @Inject constructor(
     private fun getMember() {
         networkUtil.restApiCall(
             getMemberUseCase::getMember,
-            sharedPreferenceHelper.getLong(PreferenceConstant.MEMBER_ID),
+            sharedPreferenceHelper.getInt(PreferenceConstant.MEMBER_ID),
             viewModelScope
         ) {
             onSuccessCallback = {
-                _selectedAvatar.value = string2Avatar(it?.avatar)
+                _loadedSelectedAvatar.value = string2Avatar(it?.avatar)
             }
 
             onErrorCallback = {
-                _selectedAvatar.value = DEFAULT_AVATAR
+                _loadedSelectedAvatar.value = DEFAULT_AVATAR
             }
 
             onNetworkErrorCallback = {
-                _selectedAvatar.value = DEFAULT_AVATAR
+                _loadedSelectedAvatar.value = DEFAULT_AVATAR
             }
         }
     }
@@ -189,8 +189,8 @@ class MainViewModel @Inject constructor(
     }
 
     fun onAvatarSelected(index: Int) {
-        val selectedAvatar = avatars.value?.get(index) ?: return
-        Timber.d(selectedAvatar.toString())
+        if (!isAvatarSelectedByUser) return
+        isAvatarSelectedByUser = false
 
         networkUtil.restApiCall(
             putEditMemberUseCase::putEditMember,
@@ -200,7 +200,7 @@ class MainViewModel @Inject constructor(
                 null,
                 null,
                 null,
-                avatar2String(selectedAvatar),
+                avatar2String(avatars.value[index]),
                 null,
                 null,
                 null,
@@ -220,10 +220,12 @@ class MainViewModel @Inject constructor(
     }
 
     fun onClickPrevAvatarButton() {
+        isAvatarSelectedByUser = true
         event(Event.ScrollToPrevAvatar)
     }
 
     fun onClickNextAvatarButton() {
+        isAvatarSelectedByUser = true
         event(Event.ScrollToNextAvatar)
     }
 

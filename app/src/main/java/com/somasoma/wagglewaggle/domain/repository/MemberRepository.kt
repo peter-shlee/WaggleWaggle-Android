@@ -5,7 +5,7 @@ import retrofit2.Response
 
 interface MemberRepository {
     suspend fun getMe(): Response<Member?>
-    suspend fun getMember(memberId: Long): Response<Member?>
+    suspend fun getMember(memberId: Int): Response<Member?>
     suspend fun getOnline(): Response<OnlineResponse?>
     suspend fun deleteLogout(): Response<LogoutResponse?>
     suspend fun deleteMember(): Response<DeleteMemberResponse?>

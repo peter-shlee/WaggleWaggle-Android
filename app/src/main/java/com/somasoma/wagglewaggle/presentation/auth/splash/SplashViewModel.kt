@@ -97,7 +97,7 @@ class SplashViewModel @Inject constructor(
 
     private fun saveMemberId(firebaseResponse: FirebaseResponse) {
         firebaseResponse.memberId?.let {
-            sharedPreferenceHelper.putLong(
+            sharedPreferenceHelper.putInt(
                 PreferenceConstant.MEMBER_ID,
                 it
             )
