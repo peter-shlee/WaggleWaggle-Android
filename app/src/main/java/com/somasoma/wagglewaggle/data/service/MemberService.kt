@@ -10,19 +10,31 @@ interface MemberService {
     suspend fun getMe(): Response<Member?>
 
     @GET("member/{memberId}")
-    suspend fun getMember(@Path("memberId") memberId: Long): Response<Member?>
+    suspend fun getMember(@Path("memberId") memberId: Int): Response<Member?>
 
     @GET("member/online")
     suspend fun getOnline(): Response<OnlineResponse?>
+
+    @GET("member/{memberId}/following")
+    suspend fun getFollowing(@Path("memberId") memberId: Int): Response<FollowingResponse?>
+
+    @GET("member/{memberId}/follower")
+    suspend fun getFollower(@Path("memberId") memberId: Int): Response<FollowerResponse?>
 
     @DELETE("member/logout")
     suspend fun deleteLogout(): Response<LogoutResponse?>
 
     @DELETE("member/{memberID}")
-    suspend fun deleteMember(@Path("memberID") memberId: Long = -1L): Response<DeleteMemberResponse?>
+    suspend fun deleteMember(@Path("memberID") memberId: Int = -1): Response<DeleteMemberResponse?>
 
     @PUT("member/edit-member")
     suspend fun putEditMember(@Body member: Member): Response<Unit?>
+
+    @POST("member/{memberId}/follow")
+    suspend fun postFollow(@Path("memberId") memberId: Int): Response<FollowResponse?>
+
+    @DELETE("member/{memberId}/unfollow")
+    suspend fun deleteUnfollow(@Path("memberId") memberId: Int): Response<UnfollowResponse?>
 
 
     @GET("member/basics/country-list")

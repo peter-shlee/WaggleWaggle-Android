@@ -133,7 +133,7 @@ class SignUpViewModel @Inject constructor(
                     }
 
                     memberId?.let {
-                        sharedPreferenceHelper.putLong(
+                        sharedPreferenceHelper.putInt(
                             PreferenceConstant.MEMBER_ID,
                             memberId
                         )

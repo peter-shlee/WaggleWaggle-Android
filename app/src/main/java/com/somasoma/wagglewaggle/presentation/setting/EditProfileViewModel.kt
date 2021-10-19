@@ -205,7 +205,7 @@ class EditProfileViewModel @Inject constructor(
     private fun getMember() {
         networkUtil.restApiCall(
             getMemberUseCase::getMember,
-            sharedPreferenceHelper.getLong(PreferenceConstant.MEMBER_ID),
+            sharedPreferenceHelper.getInt(PreferenceConstant.MEMBER_ID),
             viewModelScope
         ) {
             onSuccessCallback = {

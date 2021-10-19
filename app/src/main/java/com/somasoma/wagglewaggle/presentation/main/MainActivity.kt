@@ -21,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
@@ -35,6 +36,7 @@ class MainActivity : BaseActivity() {
     private val avatarSelectViewPagerAdapter = AvatarSelectPagerAdapter()
     private val worldListAdapter = WorldListAdapter()
     private lateinit var onlineUserListAdapter: OnlineUserListAdapter
+    private var selectedAvatarBeforeStopped: Avatar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +74,7 @@ class MainActivity : BaseActivity() {
         repeatOnStart { viewModel.avatars.collect { onAvatarListLoaded(it) } }
         repeatOnStart { viewModel.worlds.collect { onWorldListLoaded(it) } }
         repeatOnStart { viewModel.onlineUsers.collect { onOnlineUserListLoaded(it) } }
-        repeatOnStart { viewModel.selectedAvatar.collect { onSelectedAvatarLoaded(it) } }
+        repeatOnStart { viewModel.loadedSelectedAvatar.collect { onSelectedAvatarLoaded(it) } }
     }
 
     private fun handleEvent(event: MainViewModel.Event) = when (event) {
@@ -97,7 +99,8 @@ class MainActivity : BaseActivity() {
     }
 
     private fun onSelectedAvatarLoaded(avatar: Avatar) {
-        binding.viewpagerSelectCharacter.currentItem = viewModel.avatars.value?.indexOf(avatar) ?: 0
+        Timber.d(avatar.toString())
+        binding.viewpagerSelectCharacter.currentItem = viewModel.avatars.value.indexOf(avatar)
     }
 
     private fun scrollToNextAvatar() {

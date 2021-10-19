@@ -15,11 +15,15 @@ class MemberRepositoryImpl @Inject constructor(
     private val publicMemberService = retrofits.second.create(MemberService::class.java)
 
     override suspend fun getMe() = memberService.getMe()
-    override suspend fun getMember(memberId: Long) = memberService.getMember(memberId)
+    override suspend fun getMember(memberId: Int) = memberService.getMember(memberId)
     override suspend fun getOnline() = memberService.getOnline()
+    override suspend fun getFollowing(memberId: Int) = memberService.getFollowing(memberId)
+    override suspend fun getFollower(memberId: Int) = memberService.getFollower(memberId)
     override suspend fun deleteLogout() = memberService.deleteLogout()
     override suspend fun deleteMember() = memberService.deleteMember()
     override suspend fun putEditMember(member: Member) = memberService.putEditMember(member)
+    override suspend fun postFollow(memberId: Int) = memberService.postFollow(memberId)
+    override suspend fun deleteUnfollow(memberId: Int) = memberService.deleteUnfollow(memberId)
 
     override suspend fun getCountryList() = publicMemberService.getCountryList()
     override suspend fun getLanguageList() = publicMemberService.getLanguageList()

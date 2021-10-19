@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.somasoma.wagglewaggle.data.Avatar
+import com.somasoma.wagglewaggle.core.getProfileBackgroundColor
+import com.somasoma.wagglewaggle.core.string2Avatar
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.databinding.OnlineUserListItemBinding
-import com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor
 
 class OnlineUserListAdapter(private val onlineUserClickListener: OnlineUserClickListener) :
     ListAdapter<Member, OnlineUserListAdapter.ViewHolder>(MemberDiffCallback()) {
@@ -33,25 +33,10 @@ class OnlineUserListAdapter(private val onlineUserClickListener: OnlineUserClick
 
         fun bind(member: Member, onlineUserClickListener: OnlineUserClickListener) {
             binding.member = member
-            binding.avatar = stringToAvatar(member.avatar)
-            binding.profileImageBackgroundColor = getBackgroundColor(member.id ?: 0)
+            binding.avatar = string2Avatar(member.avatar)
+            binding.profileImageBackgroundColor = getProfileBackgroundColor(member.id ?: 0)
             binding.onClickListener = onlineUserClickListener
         }
-
-        private fun stringToAvatar(avatarName: String?) = when (avatarName) {
-            "female1" -> Avatar.FEMALE1
-            "female2" -> Avatar.FEMALE2
-            "female3" -> Avatar.FEMALE3
-            "female4" -> Avatar.FEMALE4
-            "male1" -> Avatar.MALE1
-            "male2" -> Avatar.MALE2
-            "male3" -> Avatar.MALE3
-            "male4" -> Avatar.MALE4
-            else -> Avatar.MALE1
-        }
-
-        private fun getBackgroundColor(memberId: Int): ProfileImageBackgroundColor =
-            ProfileImageBackgroundColor.values()[memberId.mod(ProfileImageBackgroundColor.values().size)]
     }
 }
 
