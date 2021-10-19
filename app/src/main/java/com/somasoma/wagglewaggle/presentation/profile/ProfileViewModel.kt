@@ -3,11 +3,9 @@ package com.somasoma.wagglewaggle.presentation.profile
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.somasoma.wagglewaggle.core.DEFAULT_AVATAR
-import com.somasoma.wagglewaggle.core.NetworkUtil
-import com.somasoma.wagglewaggle.core.getProfileBackgroundColor
-import com.somasoma.wagglewaggle.core.string2Avatar
+import com.somasoma.wagglewaggle.core.*
 import com.somasoma.wagglewaggle.data.Avatar
+import com.somasoma.wagglewaggle.data.Friendship
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.domain.usecase.member.GetFollowerUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetFollowingUseCase
@@ -31,6 +29,7 @@ class ProfileViewModel @Inject constructor(
             field = value
             _avatar.value = string2Avatar(value.avatar)
             _profileBackgroundColor.value = getProfileBackgroundColor(value.id ?: 0)
+            _friendship.value = string2Friendship(value.friendship)
             getFollower(value.id ?: return)
             getFollowing(value.id)
         }
@@ -44,6 +43,8 @@ class ProfileViewModel @Inject constructor(
     val numOfFollowers: StateFlow<Int> = _numOfFollowers
     private val _numOfFollowings = MutableStateFlow(0)
     val numOfFollowings: StateFlow<Int> = _numOfFollowings
+    private val _friendship = MutableStateFlow(Friendship.BLOCK)
+    val friendship: StateFlow<Friendship> = _friendship
 
     fun onClickBackButton() {
         event(Event.NavigateToPrevPage)

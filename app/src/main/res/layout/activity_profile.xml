@@ -5,6 +5,8 @@
 
         <import type="android.view.View" />
 
+        <import type="com.somasoma.wagglewaggle.data.Friendship" />
+
         <variable
             name="viewModel"
             type="com.somasoma.wagglewaggle.presentation.profile.ProfileViewModel" />
@@ -188,8 +190,8 @@
             android:layout_height="44dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/round_button_background"
-            android:backgroundTint="@color/point_blue"
-            android:text="팔로우"
+            android:backgroundTint="@{viewModel.friendship == Friendship.NONE ? @color/point_blue : @color/gray1, default = @color/gray1}"
+            android:text="@{viewModel.friendship == Friendship.FOLLOW ? `팔로우 취소` : `팔로우`, default = `팔로우`}"
             android:textColor="@color/white"
             app:backgroundTint="@null"
             app:layout_constraintLeft_toLeftOf="@id/txt_introduce"

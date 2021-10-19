@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.TypedValue
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.data.Avatar
+import com.somasoma.wagglewaggle.data.Friendship
 import com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor
 
 val DEFAULT_AVATAR = Avatar.MALE1
@@ -67,3 +68,19 @@ fun avatar2String(avatar: Avatar) = when(avatar) {
 
 fun getProfileBackgroundColor(memberId: Int): ProfileImageBackgroundColor =
     ProfileImageBackgroundColor.values()[memberId.mod(ProfileImageBackgroundColor.values().size)]
+
+fun string2Friendship(friendshipString: String?) = when (friendshipString) {
+    "NONE" -> Friendship.NONE
+    "FOLLOW" -> Friendship.FOLLOW
+    "BLOCK" -> Friendship.BLOCK
+    "none" -> Friendship.NONE
+    "follow" -> Friendship.FOLLOW
+    "block" -> Friendship.BLOCK
+    else -> Friendship.NONE
+}
+
+fun friendship2String(friendship: Friendship) = when (friendship) {
+    Friendship.NONE -> "NONE"
+    Friendship.BLOCK -> "BLOCK"
+    Friendship.FOLLOW -> "FOLLOW"
+}
