@@ -38,6 +38,10 @@ class SignUpActivity : BaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        initInterestListRecyclerView()
+    }
+
+    private fun initInterestListRecyclerView() {
         binding.listInterest.adapter = adapter
         setLayoutManager()
     }

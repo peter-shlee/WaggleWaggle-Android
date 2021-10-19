@@ -10,6 +10,7 @@ import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.domain.usecase.member.GetFollowerUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetFollowingUseCase
 import com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class ProfileViewModel @Inject constructor(
     application: Application,
     private val networkUtil: NetworkUtil,
