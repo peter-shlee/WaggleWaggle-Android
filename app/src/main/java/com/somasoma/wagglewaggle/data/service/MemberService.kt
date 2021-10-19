@@ -30,6 +30,12 @@ interface MemberService {
     @PUT("member/edit-member")
     suspend fun putEditMember(@Body member: Member): Response<Unit?>
 
+    @POST("member/{memberId}/follow")
+    suspend fun postFollow(@Path("memberId") memberId: Int): Response<FollowResponse?>
+
+    @DELETE("member/{memberId}/unfollow")
+    suspend fun deleteUnfollow(@Path("memberId") memberId: Int): Response<UnfollowResponse?>
+
 
     @GET("member/basics/country-list")
     suspend fun getCountryList(): Response<CountryListResponse?>

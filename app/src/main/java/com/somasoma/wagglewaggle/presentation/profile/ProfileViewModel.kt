@@ -6,9 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.*
 import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.data.Friendship
+import com.somasoma.wagglewaggle.data.model.dto.member.FollowResponse
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
+import com.somasoma.wagglewaggle.data.model.dto.member.UnfollowResponse
+import com.somasoma.wagglewaggle.domain.usecase.member.DeleteUnfollowUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetFollowerUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetFollowingUseCase
+import com.somasoma.wagglewaggle.domain.usecase.member.PostFollowUseCase
 import com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,7 +27,9 @@ class ProfileViewModel @Inject constructor(
     application: Application,
     private val networkUtil: NetworkUtil,
     private val getFollowerUseCase: GetFollowerUseCase,
-    private val getFollowingUseCase: GetFollowingUseCase
+    private val getFollowingUseCase: GetFollowingUseCase,
+    private val postFollowUseCase: PostFollowUseCase,
+    private val deleteUnfollowUseCase: DeleteUnfollowUseCase
 ) :
     AndroidViewModel(application) {
     var member: Member = Member()
@@ -53,6 +59,40 @@ class ProfileViewModel @Inject constructor(
 
     fun onClickBackButton() {
         event(Event.NavigateToPrevPage)
+    }
+
+    fun onClickFollowButton() {
+        when(friendship.value) {
+            Friendship.FOLLOW -> {
+                deleteUnfollow()
+            }
+            Friendship.NONE -> {
+                postFollow()
+            }
+            Friendship.BLOCK -> {
+
+            }
+        }
+    }
+
+    private fun postFollow() {
+        networkUtil.restApiCall(postFollowUseCase::postFollow, member.id?:return, viewModelScope) {
+            onSuccessCallback = {
+                if (it?.status == FollowResponse.OK) {
+                    _friendship.value = Friendship.FOLLOW
+                }
+            }
+        }
+    }
+
+    private fun deleteUnfollow() {
+        networkUtil.restApiCall(deleteUnfollowUseCase::deleteUnfollow, member.id?:return, viewModelScope) {
+            onSuccessCallback = {
+                if (it?.status == UnfollowResponse.OK) {
+                    _friendship.value = Friendship.NONE
+                }
+            }
+        }
     }
 
     private fun event(event: Event) {
