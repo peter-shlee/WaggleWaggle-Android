@@ -32,6 +32,7 @@ class ProfileViewModel @Inject constructor(
             _avatar.value = string2Avatar(value.avatar)
             _profileBackgroundColor.value = getProfileBackgroundColor(value.id ?: 0)
             _friendship.value = string2Friendship(value.friendship)
+            value.interests?.let { _interests.value = it }
             getFollower(value.id ?: return)
             getFollowing(value.id)
         }
@@ -47,6 +48,8 @@ class ProfileViewModel @Inject constructor(
     val numOfFollowings: StateFlow<Int> = _numOfFollowings
     private val _friendship = MutableStateFlow(Friendship.BLOCK)
     val friendship: StateFlow<Friendship> = _friendship
+    private val _interests = MutableStateFlow<List<String?>>(listOf())
+    val interests: StateFlow<List<String?>> = _interests
 
     fun onClickBackButton() {
         event(Event.NavigateToPrevPage)

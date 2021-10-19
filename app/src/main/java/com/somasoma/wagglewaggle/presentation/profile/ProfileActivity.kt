@@ -8,6 +8,7 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.databinding.ActivityProfileBinding
 import com.somasoma.wagglewaggle.presentation.base.BaseActivity
+import com.somasoma.wagglewaggle.presentation.custom_views.SelectedInterestListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.serialization.decodeFromString
@@ -22,22 +23,35 @@ class ProfileActivity : BaseActivity() {
 
     private val viewModel: ProfileViewModel by viewModels()
     private lateinit var binding: ActivityProfileBinding
+    private val adapter = SelectedInterestListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        initViewModel()
+        initBinding()
+
+        collect()
+    }
+
+    private fun initBinding() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_profile)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        initInterestsListRecyclerView()
+    }
+
+    private fun initInterestsListRecyclerView() {
+        binding.listInterest.adapter = adapter
+        setLayoutManager()
+    }
+
+    private fun initViewModel() {
         val stringMember = intent.getStringExtra(MEMBER)
         if (!stringMember.isNullOrBlank()) {
             viewModel.member = Json.decodeFromString(stringMember)
             Timber.d(viewModel.member.toString())
         }
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_profile)
-        binding.lifecycleOwner = this
-        binding.viewModel = viewModel
-        binding.listInterest.adapter
-        setLayoutManager()
-
-        collect()
     }
 
     private fun setLayoutManager() {
@@ -48,6 +62,11 @@ class ProfileActivity : BaseActivity() {
 
     private fun collect() {
         repeatOnStart { viewModel.eventFlow.collect { handleEvent(it) } }
+        repeatOnStart { viewModel.interests.collect { onInterestsLoaded(it) } }
+    }
+
+    private fun onInterestsLoaded(interests: List<String?>) {
+        adapter.submitList(interests)
     }
 
     private fun handleEvent(event: ProfileViewModel.Event) = when (event) {
