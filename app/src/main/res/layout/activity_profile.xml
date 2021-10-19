@@ -52,345 +52,371 @@
             app:layout_constraintLeft_toRightOf="@id/btn_back"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageView
-            android:id="@+id/img_profile"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="27dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_title"
-            app:avatar="@{viewModel.avatar}"
-            app:backgroundColor="@{viewModel.profileBackgroundColor}"/>
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="42dp"
-            android:layout_marginTop="35dp"
-            android:background="@null"
-            android:visibility="invisible"
-            android:src="@drawable/ic_profile_edit_y"
-            app:layout_constraintLeft_toLeftOf="@id/img_profile"
-            app:layout_constraintTop_toTopOf="@id/img_profile" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
-            android:background="@null"
-            android:src="@drawable/ic_profile_dot"
-            app:layout_constraintBottom_toBottomOf="@id/img_profile"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/img_profile" />
-
-        <TextView
-            android:id="@+id/txt_nickname"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/text_color_primary"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:text="@{viewModel.member.nickName}"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/txt_follower"
-            app:layout_constraintTop_toBottomOf="@id/img_profile"
-            tools:text="와글와글" />
-
-        <TextView
-            android:id="@+id/txt_follower"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="2dp"
-            android:text="팔로워"
-            android:textColor="@color/text_color_hint"
-            android:textSize="12dp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="@id/txt_nickname"
-            app:layout_constraintLeft_toRightOf="@id/txt_nickname"
-            app:layout_constraintRight_toLeftOf="@id/txt_follower_count"
-            app:layout_constraintTop_toTopOf="@id/txt_nickname" />
-
-        <TextView
-            android:id="@+id/txt_follower_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:textColor="@color/point_blue"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:text="@{String.valueOf(viewModel.numOfFollowers)}"
-            app:layout_constraintBottom_toBottomOf="@id/txt_nickname"
-            app:layout_constraintLeft_toRightOf="@id/txt_follower"
-            app:layout_constraintRight_toLeftOf="@id/border_follow"
-            app:layout_constraintTop_toTopOf="@id/txt_nickname"
-            tools:text="12" />
-
-        <TextView
-            android:id="@+id/border_follow"
-            android:layout_width="1px"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:backgroundTint="@color/gray4"
-            app:layout_constraintBottom_toBottomOf="@id/txt_nickname"
-            app:layout_constraintLeft_toRightOf="@id/txt_follower_count"
-            app:layout_constraintRight_toLeftOf="@id/txt_following"
-            app:layout_constraintTop_toTopOf="@id/txt_nickname" />
-
-        <TextView
-            android:id="@+id/txt_following"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="2dp"
-            android:text="팔로잉"
-            android:textColor="@color/text_color_hint"
-            android:textSize="12dp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toBottomOf="@id/txt_nickname"
-            app:layout_constraintLeft_toRightOf="@id/border_follow"
-            app:layout_constraintRight_toLeftOf="@id/txt_following_count"
-            app:layout_constraintTop_toTopOf="@id/txt_nickname" />
-
-        <TextView
-            android:id="@+id/txt_following_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="40dp"
-            android:textColor="@color/point_blue"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:text="@{String.valueOf(viewModel.numOfFollowings)}"
-            app:layout_constraintBottom_toBottomOf="@id/txt_nickname"
-            app:layout_constraintLeft_toRightOf="@id/txt_following"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/txt_nickname"
-            tools:text="27" />
-
-        <TextView
-            android:id="@+id/txt_introduce"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="87dp"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/multi_line_text_background"
-            android:gravity="top"
-            android:paddingHorizontal="13dp"
-            android:paddingVertical="11dp"
-            android:textColor="@color/text_color_hint"
-            android:textSize="12dp"
-            android:text="@{viewModel.member.introduction}"
-            app:layout_constraintTop_toBottomOf="@id/txt_nickname"
-            tools:text="안녕 여러분!! 저는 제이슨이라고 해요!\n우리 같이 친하게 진해요 💛" />
-
-        <Button
-            android:id="@+id/btn_follow"
-            android:layout_width="0dp"
-            android:layout_height="37dp"
-            android:layout_marginTop="12dp"
-            android:background="@{viewModel.friendship == Friendship.FOLLOW ? @drawable/round_border_positive_background : @drawable/round_positive_button_background, default = @drawable/round_positive_button_background}"
-            android:text="@{viewModel.friendship == Friendship.FOLLOW ? `팔로잉` : `팔로우`, default = `팔로우`}"
-            android:textColor="@{viewModel.friendship == Friendship.FOLLOW ? @color/point_blue : @color/white, default = @color/white}"
-            android:onClick="@{() -> viewModel.onClickFollowButton()}"
-            app:backgroundTint="@null"
-            app:layout_constraintLeft_toLeftOf="@id/txt_introduce"
-            app:layout_constraintRight_toRightOf="@id/txt_introduce"
-            app:layout_constraintTop_toBottomOf="@id/txt_introduce" />
-
-        <TextView
-            android:id="@+id/space"
-            android:layout_width="0dp"
-            android:layout_height="28dp"
-            app:layout_constraintBottom_toTopOf="@id/connecting"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintVertical_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_follow" />
+            app:layout_constraintTop_toBottomOf="@id/btn_back">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="28dp"
-            android:background="@color/gray2"
-            android:visibility="@{viewModel.member.entranceStatus.equals(`true`) ? View.VISIBLE : View.GONE}"
-            app:layout_constraintTop_toBottomOf="@id/space" />
-
-        <LinearLayout
-            android:id="@+id/connecting"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="30dp"
-            android:visibility="@{viewModel.member.entranceStatus.equals(`true`) ? View.VISIBLE : View.GONE}"
-            app:layout_constraintTop_toBottomOf="@id/space">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_color_primary"
-                android:textSize="16dp"
-                android:text="@{viewModel.member.entranceRoom}"
-                tools:text="00" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="에 접속중"
-                android:textColor="@color/text_color_primary"
-                android:textSize="16dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_profile_airplane_solid_b" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/gray2"
-            app:layout_constraintTop_toBottomOf="@id/connecting" />
-
-        <LinearLayout
-            android:id="@+id/conversation_time"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="30dp"
-            app:layout_constraintTop_toBottomOf="@id/connecting">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="다른 사람과 대화를 나눈 시간"
-                android:textColor="@color/text_color_primary"
-                android:textSize="16dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/gray3"
-                android:textSize="12dp"
-                tools:text="12" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="h "
-                android:textColor="@color/gray3"
-                android:textSize="12dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/gray3"
-                android:textSize="12dp"
-                tools:text="30" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="m"
-                android:textColor="@color/gray3"
-                android:textSize="12dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/gray2"
-            app:layout_constraintTop_toBottomOf="@id/conversation_time" />
-
-        <LinearLayout
-            android:id="@+id/nation"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="30dp"
-            app:layout_constraintTop_toBottomOf="@id/conversation_time">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_color_primary"
-                android:textSize="16dp"
-                android:text="@{viewModel.member.country}"
-                tools:text="대한민국" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/gray2"
-            app:layout_constraintTop_toBottomOf="@id/nation" />
-
-        <LinearLayout
-            android:id="@+id/language"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="30dp"
-            app:layout_constraintTop_toBottomOf="@id/nation">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_color_primary"
-                android:textSize="16dp"
-                android:text="@{viewModel.member.language}"
-                tools:text="한국어" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/gray2"
-            app:layout_constraintTop_toBottomOf="@id/language" />
-
-        <LinearLayout
-            android:id="@+id/interest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:paddingHorizontal="30dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/language">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="관심사"
-                android:textColor="@color/text_color_primary"
-                android:textSize="16dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list_interest"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
-                tools:itemCount="3"
-                tools:listitem="@layout/interest_item_view" />
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageView
+                        android:id="@+id/img_profile"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginTop="27dp"
+                        app:avatar="@{viewModel.avatar}"
+                        app:backgroundColor="@{viewModel.profileBackgroundColor}"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="42dp"
+                        android:layout_marginTop="35dp"
+                        android:background="@null"
+                        android:src="@drawable/ic_profile_edit_y"
+                        android:visibility="invisible"
+                        app:layout_constraintLeft_toLeftOf="@id/img_profile"
+                        app:layout_constraintTop_toTopOf="@id/img_profile" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="30dp"
+                        android:background="@null"
+                        android:src="@drawable/ic_profile_dot"
+                        app:layout_constraintBottom_toBottomOf="@id/img_profile"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/img_profile" />
+
+                    <TextView
+                        android:id="@+id/txt_nickname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@{viewModel.member.nickName}"
+                        android:textColor="@color/text_color_primary"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/txt_follower"
+                        app:layout_constraintTop_toBottomOf="@id/img_profile"
+                        tools:text="와글와글" />
+
+                    <TextView
+                        android:id="@+id/txt_follower"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:text="팔로워"
+                        android:textColor="@color/text_color_hint"
+                        android:textSize="12dp"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="@id/txt_nickname"
+                        app:layout_constraintLeft_toRightOf="@id/txt_nickname"
+                        app:layout_constraintRight_toLeftOf="@id/txt_follower_count"
+                        app:layout_constraintTop_toTopOf="@id/txt_nickname" />
+
+                    <TextView
+                        android:id="@+id/txt_follower_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:text="@{String.valueOf(viewModel.numOfFollowers)}"
+                        android:textColor="@color/point_blue"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/txt_nickname"
+                        app:layout_constraintLeft_toRightOf="@id/txt_follower"
+                        app:layout_constraintRight_toLeftOf="@id/border_follow"
+                        app:layout_constraintTop_toTopOf="@id/txt_nickname"
+                        tools:text="12" />
+
+                    <TextView
+                        android:id="@+id/border_follow"
+                        android:layout_width="1px"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:backgroundTint="@color/gray4"
+                        app:layout_constraintBottom_toBottomOf="@id/txt_nickname"
+                        app:layout_constraintLeft_toRightOf="@id/txt_follower_count"
+                        app:layout_constraintRight_toLeftOf="@id/txt_following"
+                        app:layout_constraintTop_toTopOf="@id/txt_nickname" />
+
+                    <TextView
+                        android:id="@+id/txt_following"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:text="팔로잉"
+                        android:textColor="@color/text_color_hint"
+                        android:textSize="12dp"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="@id/txt_nickname"
+                        app:layout_constraintLeft_toRightOf="@id/border_follow"
+                        app:layout_constraintRight_toLeftOf="@id/txt_following_count"
+                        app:layout_constraintTop_toTopOf="@id/txt_nickname" />
+
+                    <TextView
+                        android:id="@+id/txt_following_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="40dp"
+                        android:text="@{String.valueOf(viewModel.numOfFollowings)}"
+                        android:textColor="@color/point_blue"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/txt_nickname"
+                        app:layout_constraintLeft_toRightOf="@id/txt_following"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/txt_nickname"
+                        tools:text="27" />
+
+                    <TextView
+                        android:id="@+id/txt_introduce"
+                        android:layout_width="match_parent"
+                        android:layout_height="87dp"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/multi_line_text_background"
+                        android:gravity="top"
+                        android:paddingHorizontal="13dp"
+                        android:paddingVertical="11dp"
+                        android:text="@{viewModel.member.introduction}"
+                        android:textColor="@color/text_color_hint"
+                        android:textSize="12dp"
+                        app:layout_constraintTop_toBottomOf="@id/txt_nickname"
+                        tools:text="안녕 여러분!! 저는 제이슨이라고 해요!\n우리 같이 친하게 진해요 💛" />
+
+                    <Button
+                        android:id="@+id/btn_follow"
+                        android:layout_width="0dp"
+                        android:layout_height="37dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@{viewModel.friendship == Friendship.FOLLOW ? @drawable/round_border_positive_background : @drawable/round_positive_button_background, default = @drawable/round_positive_button_background}"
+                        android:onClick="@{() -> viewModel.onClickFollowButton()}"
+                        android:text="@{viewModel.friendship == Friendship.FOLLOW ? `팔로잉` : `팔로우`, default = `팔로우`}"
+                        android:textColor="@{viewModel.friendship == Friendship.FOLLOW ? @color/point_blue : @color/white, default = @color/white}"
+                        app:backgroundTint="@null"
+                        app:layout_constraintLeft_toLeftOf="@id/txt_introduce"
+                        app:layout_constraintRight_toRightOf="@id/txt_introduce"
+                        app:layout_constraintTop_toBottomOf="@id/txt_introduce" />
+
+                    <TextView
+                        android:id="@+id/space"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        app:layout_constraintBottom_toTopOf="@id/connecting"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btn_follow" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="28dp"
+                        android:background="@color/gray2"
+                        android:visibility="@{viewModel.member.entranceStatus.equals(`true`) ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintTop_toBottomOf="@id/space" />
+
+                    <LinearLayout
+                        android:id="@+id/connecting"
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="30dp"
+                        android:visibility="@{viewModel.member.entranceStatus.equals(`true`) ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintTop_toBottomOf="@id/space">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.member.entranceRoom}"
+                            android:textColor="@color/text_color_primary"
+                            android:textSize="16dp"
+                            tools:text="00" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="에 접속중"
+                            android:textColor="@color/text_color_primary"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_profile_airplane_solid_b" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/gray2"
+                        app:layout_constraintTop_toBottomOf="@id/connecting" />
+
+                    <LinearLayout
+                        android:id="@+id/conversation_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="30dp"
+                        app:layout_constraintTop_toBottomOf="@id/connecting">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="다른 사람과 대화를 나눈 시간"
+                            android:textColor="@color/text_color_primary"
+                            android:textSize="16dp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/gray3"
+                            android:textSize="12dp"
+                            tools:text="12" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="h "
+                            android:textColor="@color/gray3"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/gray3"
+                            android:textSize="12dp"
+                            tools:text="30" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="m"
+                            android:textColor="@color/gray3"
+                            android:textSize="12dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/gray2"
+                        app:layout_constraintTop_toBottomOf="@id/conversation_time" />
+
+                    <LinearLayout
+                        android:id="@+id/nation"
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="30dp"
+                        app:layout_constraintTop_toBottomOf="@id/conversation_time">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.member.country}"
+                            android:textColor="@color/text_color_primary"
+                            android:textSize="16dp"
+                            tools:text="대한민국" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/gray2"
+                        app:layout_constraintTop_toBottomOf="@id/nation" />
+
+                    <LinearLayout
+                        android:id="@+id/language"
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="30dp"
+                        app:layout_constraintTop_toBottomOf="@id/nation">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.member.language}"
+                            android:textColor="@color/text_color_primary"
+                            android:textSize="16dp"
+                            tools:text="한국어" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/gray2"
+                        app:layout_constraintTop_toBottomOf="@id/language" />
+
+                    <LinearLayout
+                        android:id="@+id/interest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="30dp"
+                        app:layout_constraintTop_toBottomOf="@id/language">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="관심사"
+                            android:textColor="@color/text_color_primary"
+                            android:textSize="16dp" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/list_interest"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="11dp"
+                            tools:itemCount="3"
+                            tools:listitem="@layout/interest_item_view" />
+
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
