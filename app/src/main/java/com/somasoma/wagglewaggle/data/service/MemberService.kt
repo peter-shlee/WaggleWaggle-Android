@@ -15,6 +15,12 @@ interface MemberService {
     @GET("member/online")
     suspend fun getOnline(): Response<OnlineResponse?>
 
+    @GET("member/{memberId}/following")
+    suspend fun getFollowing(@Path("memberId") memberId: Int): Response<FollowingResponse?>
+
+    @GET("member/{memberId}/follower")
+    suspend fun getFollower(@Path("memberId") memberId: Int): Response<FollowerResponse?>
+
     @DELETE("member/logout")
     suspend fun deleteLogout(): Response<LogoutResponse?>
 

@@ -7,6 +7,8 @@ interface MemberRepository {
     suspend fun getMe(): Response<Member?>
     suspend fun getMember(memberId: Int): Response<Member?>
     suspend fun getOnline(): Response<OnlineResponse?>
+    suspend fun getFollowing(memberId: Int): Response<FollowingResponse?>
+    suspend fun getFollower(memberId: Int): Response<FollowerResponse?>
     suspend fun deleteLogout(): Response<LogoutResponse?>
     suspend fun deleteMember(): Response<DeleteMemberResponse?>
     suspend fun putEditMember(member: Member): Response<Unit?>
