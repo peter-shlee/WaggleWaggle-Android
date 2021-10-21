@@ -4,8 +4,11 @@ import android.app.Application
 import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.InputState
 import com.somasoma.wagglewaggle.core.NetworkUtil
+import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
 import com.somasoma.wagglewaggle.data.WorldMap
+import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
 import com.somasoma.wagglewaggle.domain.usecase.member.GetInterestListUseCase
+import com.somasoma.wagglewaggle.domain.usecase.world.PostNewWorldUseCase
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectInterestsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,8 +22,10 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateWorldViewModel @Inject constructor(
     application: Application,
+    private val sharedPreferenceHelper: SharedPreferenceHelper,
     private val networkUtil: NetworkUtil,
-    getInterestListUseCase: GetInterestListUseCase
+    getInterestListUseCase: GetInterestListUseCase,
+    private val postNewWorldUseCase: PostNewWorldUseCase
 ) : SelectInterestsViewModel(application, networkUtil, getInterestListUseCase) {
     companion object {
         private const val WORLD_NAME_REGEX = "[A-Za-z|가-힣|ㄱ-ㅎ|ㅏ-ㅣ\\d\\s]{1,20}\$"
@@ -67,7 +72,22 @@ class CreateWorldViewModel @Inject constructor(
     }
 
     fun onClickCreateButton() {
-
+        networkUtil.restApiCall(
+            postNewWorldUseCase::postNewWorld, WorldRoom(
+                null,
+                worldName,
+                null,
+                null,
+                null,
+                null,
+                selectedInterests.value.toList(),
+                null
+            ), viewModelScope
+        ) {
+            onSuccessCallback = {
+                event(Event.NavigateToPrevPage)
+            }
+        }
     }
 
     fun event(event: Event) {

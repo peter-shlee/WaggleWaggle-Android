@@ -1,11 +1,14 @@
 package com.somasoma.wagglewaggle.presentation.profile
 
 import android.os.Bundle
+import android.widget.PopupMenu
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.somasoma.wagglewaggle.R
+import com.somasoma.wagglewaggle.core.string2Friendship
+import com.somasoma.wagglewaggle.data.Friendship
 import com.somasoma.wagglewaggle.databinding.ActivityProfileBinding
 import com.somasoma.wagglewaggle.presentation.base.BaseActivity
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectedInterestListAdapter
@@ -71,6 +74,26 @@ class ProfileActivity : BaseActivity() {
 
     private fun handleEvent(event: ProfileViewModel.Event) = when (event) {
         ProfileViewModel.Event.NavigateToPrevPage -> navigateToPrevPage()
+        ProfileViewModel.Event.OnMenuClicked -> onClickMenu()
+    }
+
+    private fun onClickMenu() {
+        val popupMenu = initPopupMenu()
+        popupMenu.show()
+    }
+
+    private fun initPopupMenu(): PopupMenu {
+        val popupMenu = PopupMenu(this, binding.btnMenu)
+        if (string2Friendship(viewModel.member.friendship) == Friendship.BLOCK) {
+            popupMenu.menuInflater.inflate(R.menu.unblock, popupMenu.menu)
+        } else {
+            popupMenu.menuInflater.inflate(R.menu.block, popupMenu.menu)
+        }
+        popupMenu.setOnMenuItemClickListener {
+            viewModel.onClickMenuItem(it)
+            true
+        }
+        return popupMenu
     }
 
     private fun navigateToPrevPage() {
