@@ -13,7 +13,9 @@ interface MemberRepository {
     suspend fun deleteMember(): Response<DeleteMemberResponse?>
     suspend fun putEditMember(member: Member): Response<Unit?>
     suspend fun postFollow(memberId: Int): Response<FollowResponse?>
+    suspend fun postBlock(memberId: Int): Response<BlockResponse?>
     suspend fun deleteUnfollow(memberId: Int): Response<UnfollowResponse?>
+    suspend fun deleteUnblock(memberId: Int): Response<UnblockResponse?>
     suspend fun getCountryList(): Response<CountryListResponse?>
     suspend fun getLanguageList(): Response<LanguageListResponse?>
     suspend fun getInterestList(): Response<InterestListResponse?>

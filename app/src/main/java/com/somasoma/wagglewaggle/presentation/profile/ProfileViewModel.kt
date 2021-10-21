@@ -1,18 +1,14 @@
 package com.somasoma.wagglewaggle.presentation.profile
 
 import android.app.Application
+import android.view.MenuItem
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.*
 import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.data.Friendship
-import com.somasoma.wagglewaggle.data.model.dto.member.FollowResponse
-import com.somasoma.wagglewaggle.data.model.dto.member.Member
-import com.somasoma.wagglewaggle.data.model.dto.member.UnfollowResponse
-import com.somasoma.wagglewaggle.domain.usecase.member.DeleteUnfollowUseCase
-import com.somasoma.wagglewaggle.domain.usecase.member.GetFollowerUseCase
-import com.somasoma.wagglewaggle.domain.usecase.member.GetFollowingUseCase
-import com.somasoma.wagglewaggle.domain.usecase.member.PostFollowUseCase
+import com.somasoma.wagglewaggle.data.model.dto.member.*
+import com.somasoma.wagglewaggle.domain.usecase.member.*
 import com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -26,10 +22,13 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     application: Application,
     private val networkUtil: NetworkUtil,
+    private val getMemberUseCase: GetMemberUseCase,
     private val getFollowerUseCase: GetFollowerUseCase,
     private val getFollowingUseCase: GetFollowingUseCase,
     private val postFollowUseCase: PostFollowUseCase,
-    private val deleteUnfollowUseCase: DeleteUnfollowUseCase
+    private val deleteUnfollowUseCase: DeleteUnfollowUseCase,
+    private val postBlockUseCase: PostBlockUseCase,
+    private val deleteUnblockUseCase: DeleteUnblockUseCase
 ) :
     AndroidViewModel(application) {
     var member: Member = Member()
@@ -75,8 +74,66 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun onClickMenu() {
+        event(Event.OnMenuClicked)
+    }
+
+    fun onClickMenuItem(menuItem: MenuItem) {
+        val id = member.id ?: return
+
+        if (string2Friendship(member.friendship) == Friendship.BLOCK) {
+            networkUtil.restApiCall(
+                deleteUnblockUseCase::deleteUnblock,
+                id,
+                viewModelScope
+            ) {
+                onSuccessCallback = {
+                    if (it?.status == UnblockResponse.OK) {
+                        getMember(id)
+                    }
+                }
+
+                onErrorCallback = {}
+
+                onNetworkErrorCallback = {}
+            }
+        } else {
+            networkUtil.restApiCall(
+                postBlockUseCase::postBlock,
+                id,
+                viewModelScope
+            ) {
+                onSuccessCallback = {
+                    if (it?.status == BlockResponse.OK) {
+                        member = Member(
+                            member.id,
+                            member.nickName,
+                            member.country,
+                            member.language,
+                            member.introduction,
+                            member.avatar,
+                            member.onlineStatus,
+                            member.entranceStatus,
+                            member.entranceRoom,
+                            friendship2String(Friendship.BLOCK),
+                            member.interests
+                        )
+                    }
+                }
+
+                onErrorCallback = {}
+
+                onNetworkErrorCallback = {}
+            }
+        }
+    }
+
     private fun postFollow() {
-        networkUtil.restApiCall(postFollowUseCase::postFollow, member.id?:return, viewModelScope) {
+        networkUtil.restApiCall(
+            postFollowUseCase::postFollow,
+            member.id ?: return,
+            viewModelScope
+        ) {
             onSuccessCallback = {
                 if (it?.status == FollowResponse.OK) {
                     _friendship.value = Friendship.FOLLOW
@@ -93,16 +150,6 @@ class ProfileViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    private fun event(event: Event) {
-        viewModelScope.launch {
-            _eventFlow.emit(event)
-        }
-    }
-
-    sealed class Event {
-        object NavigateToPrevPage : Event()
     }
 
     private fun getFollower(memberId: Int) {
@@ -123,5 +170,30 @@ class ProfileViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun getMember(memberId: Int) {
+        networkUtil.restApiCall(getMemberUseCase::getMember, memberId, viewModelScope) {
+            onSuccessCallback = {
+                it?.let {
+                    member = it
+                }
+            }
+
+            onErrorCallback = {}
+
+            onNetworkErrorCallback = {}
+        }
+    }
+
+    private fun event(event: Event) {
+        viewModelScope.launch {
+            _eventFlow.emit(event)
+        }
+    }
+
+    sealed class Event {
+        object NavigateToPrevPage : Event()
+        object OnMenuClicked : Event()
     }
 }

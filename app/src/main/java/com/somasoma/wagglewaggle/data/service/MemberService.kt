@@ -33,8 +33,14 @@ interface MemberService {
     @POST("member/{memberId}/follow")
     suspend fun postFollow(@Path("memberId") memberId: Int): Response<FollowResponse?>
 
+    @POST("member/{memberId}/block")
+    suspend fun postBlock(@Path("memberId") memberId: Int): Response<BlockResponse?>
+
     @DELETE("member/{memberId}/unfollow")
     suspend fun deleteUnfollow(@Path("memberId") memberId: Int): Response<UnfollowResponse?>
+
+    @DELETE("member/{memberId}/unblock")
+    suspend fun deleteUnblock(@Path("memberId") memberId: Int): Response<UnblockResponse?>
 
 
     @GET("member/basics/country-list")
