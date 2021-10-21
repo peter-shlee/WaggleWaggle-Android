@@ -7,9 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.*
 import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.data.Friendship
-import com.somasoma.wagglewaggle.data.model.dto.member.FollowResponse
-import com.somasoma.wagglewaggle.data.model.dto.member.Member
-import com.somasoma.wagglewaggle.data.model.dto.member.UnfollowResponse
+import com.somasoma.wagglewaggle.data.model.dto.member.*
 import com.somasoma.wagglewaggle.domain.usecase.member.*
 import com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -90,7 +88,9 @@ class ProfileViewModel @Inject constructor(
                 viewModelScope
             ) {
                 onSuccessCallback = {
-                    getMember(id)
+                    if (it?.status == UnblockResponse.OK) {
+                        getMember(id)
+                    }
                 }
 
                 onErrorCallback = {}
@@ -104,19 +104,21 @@ class ProfileViewModel @Inject constructor(
                 viewModelScope
             ) {
                 onSuccessCallback = {
-                    member = Member(
-                        member.id,
-                        member.nickName,
-                        member.country,
-                        member.language,
-                        member.introduction,
-                        member.avatar,
-                        member.onlineStatus,
-                        member.entranceStatus,
-                        member.entranceRoom,
-                        friendship2String(Friendship.BLOCK),
-                        member.interests
-                    )
+                    if (it?.status == BlockResponse.OK) {
+                        member = Member(
+                            member.id,
+                            member.nickName,
+                            member.country,
+                            member.language,
+                            member.introduction,
+                            member.avatar,
+                            member.onlineStatus,
+                            member.entranceStatus,
+                            member.entranceRoom,
+                            friendship2String(Friendship.BLOCK),
+                            member.interests
+                        )
+                    }
                 }
 
                 onErrorCallback = {}
