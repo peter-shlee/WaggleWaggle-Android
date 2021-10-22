@@ -54,6 +54,9 @@ class MainViewModel @Inject constructor(
 
     init {
         makeAvatars()
+    }
+
+    fun loadData() {
         getOnlineUsers()
         getWorlds()
         getMember()
@@ -103,13 +106,13 @@ class MainViewModel @Inject constructor(
     private fun makeOnlineUserList(onlineResponse: OnlineResponse?): MutableList<Member> {
         val tmpOnlineUsers = mutableListOf<Member>()
 
-        addFollowingOnlineMembersToList(onlineResponse, tmpOnlineUsers)
-        addNotFollowingOnlineMembersToList(onlineResponse, tmpOnlineUsers)
+//        addFollowingOnlineMembersToList(onlineResponse, tmpOnlineUsers)
+        addOnlineMembersToList(onlineResponse, tmpOnlineUsers)
 
         return tmpOnlineUsers
     }
 
-    private fun addNotFollowingOnlineMembersToList(
+    private fun addOnlineMembersToList(
         onlineResponse: OnlineResponse?,
         tmpOnlineUsers: MutableList<Member>
     ) {
