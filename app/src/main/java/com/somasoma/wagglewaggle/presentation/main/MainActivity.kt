@@ -46,6 +46,12 @@ class MainActivity : BaseActivity() {
         collect()
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        viewModel.loadData()
+    }
+
     private fun initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
