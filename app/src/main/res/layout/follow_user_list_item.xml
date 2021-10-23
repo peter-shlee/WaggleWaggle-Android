@@ -135,11 +135,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:clickable="@{true}"
             android:src="@{btnEnter.clickable == true ? @drawable/airplane_button : @drawable/ic_home_airplane_g}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-        <!--        android:clickable="@{worldRoom.people == maxUserCount ? false : true}"-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
