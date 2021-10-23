@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="member"
+            type="com.somasoma.wagglewaggle.data.model.dto.member.Member" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginRight="22dp">
+
+        <com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageView
+            android:id="@+id/img_profile"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_nickname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.5dp"
+            android:maxLines="1"
+            android:text="@{member.nickName}"
+            android:textColor="@color/text_color_primary"
+            android:textSize="14dp"
+            app:layout_constraintLeft_toRightOf="@id/img_profile"
+            app:layout_constraintRight_toLeftOf="@id/btn_enter"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="찰스" />
+
+        <TextView
+            android:id="@+id/txt_nation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:maxLines="1"
+            android:text="@{member.country}"
+            android:textColor="@color/text_color_hint"
+            android:textSize="12dp"
+            app:layout_constraintLeft_toLeftOf="@id/txt_nickname"
+            app:layout_constraintTop_toBottomOf="@id/txt_nickname"
+            tools:text="대한민국" />
+
+        <TextView
+            android:id="@+id/txt_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" - "
+            android:textColor="@color/text_color_hint"
+            android:textSize="12dp"
+            app:layout_constraintLeft_toRightOf="@id/txt_nation"
+            app:layout_constraintTop_toTopOf="@id/txt_nation" />
+
+        <TextView
+            android:id="@+id/txt_language"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="@{member.language}"
+            android:textColor="@color/text_color_hint"
+            android:textSize="12dp"
+            app:layout_constraintLeft_toRightOf="@id/txt_separator"
+            app:layout_constraintRight_toRightOf="@id/txt_nickname"
+            app:layout_constraintTop_toTopOf="@id/txt_nation"
+            tools:text="한국어" />
+
+        <TextView
+            android:id="@+id/txt_world_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:maxLines="1"
+            android:textColor="@color/point_blue"
+            android:textSize="10dp"
+            app:layout_constraintLeft_toLeftOf="@id/txt_nickname"
+            app:layout_constraintTop_toBottomOf="@id/txt_nation"
+            tools:text="놀러오세요!" />
+
+        <TextView
+            android:id="@+id/txt_separator2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" - "
+            android:textColor="@color/point_blue"
+            android:textSize="10dp"
+            app:layout_constraintLeft_toRightOf="@id/txt_world_title"
+            app:layout_constraintTop_toBottomOf="@id/txt_nation" />
+
+        <TextView
+            android:id="@+id/txt_current_user_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textColor="@color/point_blue"
+            android:textSize="10dp"
+            app:layout_constraintLeft_toRightOf="@id/txt_separator2"
+            app:layout_constraintTop_toTopOf="@id/txt_world_title"
+            tools:text="3" />
+
+        <TextView
+            android:id="@+id/txt_slash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/"
+            android:textColor="@color/point_blue"
+            android:textSize="10dp"
+            app:layout_constraintLeft_toRightOf="@id/txt_current_user_count"
+            app:layout_constraintTop_toTopOf="@id/txt_world_title" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="20"
+            android:textColor="@color/point_blue"
+            android:textSize="10dp"
+            app:layout_constraintLeft_toRightOf="@id/txt_slash"
+            app:layout_constraintRight_toRightOf="@id/txt_nickname"
+            app:layout_constraintTop_toTopOf="@id/txt_world_title" />
+
+        <ImageButton
+            android:id="@+id/btn_enter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@{btnEnter.clickable == true ? @drawable/airplane_button : @drawable/ic_home_airplane_g}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!--        android:clickable="@{worldRoom.people == maxUserCount ? false : true}"-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
