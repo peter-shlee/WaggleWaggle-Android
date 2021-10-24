@@ -3,6 +3,24 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="onClickListener"
+            type="com.somasoma.wagglewaggle.presentation.main.MemberClickListener" />
+
+        <variable
+            name="avatar"
+            type="com.somasoma.wagglewaggle.data.Avatar" />
+
+        <variable
+            name="profileImageBackgroundColor"
+            type="com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor" />
+
+        <variable
+            name="worldRoom"
+            type="com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom" />
+
         <variable
             name="member"
             type="com.somasoma.wagglewaggle.data.model.dto.member.Member" />
@@ -16,12 +34,15 @@
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginEnd="22dp"
+        android:layout_marginVertical="9dp"
         android:layout_marginRight="22dp">
 
         <com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageView
             android:id="@+id/img_profile"
             android:layout_width="55dp"
             android:layout_height="55dp"
+            app:avatar="@{avatar}"
+            app:backgroundColor="@{profileImageBackgroundColor}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -84,6 +105,7 @@
             android:maxLines="1"
             android:textColor="@color/point_blue"
             android:textSize="10dp"
+            android:visibility="@{worldRoom == null ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintLeft_toLeftOf="@id/txt_nickname"
             app:layout_constraintTop_toBottomOf="@id/txt_nation"
             tools:text="놀러오세요!" />
@@ -95,6 +117,7 @@
             android:text=" - "
             android:textColor="@color/point_blue"
             android:textSize="10dp"
+            android:visibility="@{worldRoom == null ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintLeft_toRightOf="@id/txt_world_title"
             app:layout_constraintTop_toBottomOf="@id/txt_nation" />
 
@@ -105,6 +128,7 @@
             android:maxLines="1"
             android:textColor="@color/point_blue"
             android:textSize="10dp"
+            android:visibility="@{worldRoom == null ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintLeft_toRightOf="@id/txt_separator2"
             app:layout_constraintTop_toTopOf="@id/txt_world_title"
             tools:text="3" />
@@ -116,6 +140,7 @@
             android:text="/"
             android:textColor="@color/point_blue"
             android:textSize="10dp"
+            android:visibility="@{worldRoom == null ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintLeft_toRightOf="@id/txt_current_user_count"
             app:layout_constraintTop_toTopOf="@id/txt_world_title" />
 
@@ -126,6 +151,7 @@
             android:text="20"
             android:textColor="@color/point_blue"
             android:textSize="10dp"
+            android:visibility="@{worldRoom == null ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintLeft_toRightOf="@id/txt_slash"
             app:layout_constraintRight_toRightOf="@id/txt_nickname"
             app:layout_constraintTop_toTopOf="@id/txt_world_title" />
@@ -135,7 +161,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:clickable="@{true}"
+            android:visibility="@{worldRoom == null ? View.INVISIBLE : View.VISIBLE}"
+            android:clickable="@{worldRoom.people == 20 ? false : true}"
             android:src="@{btnEnter.clickable == true ? @drawable/airplane_button : @drawable/ic_home_airplane_g}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"

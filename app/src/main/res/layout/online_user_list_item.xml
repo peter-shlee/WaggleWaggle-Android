@@ -17,7 +17,7 @@
 
         <variable
             name="onClickListener"
-            type="com.somasoma.wagglewaggle.presentation.main.OnlineUserClickListener" />
+            type="com.somasoma.wagglewaggle.presentation.main.MemberClickListener" />
 
         <import type="com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor" />
     </data>

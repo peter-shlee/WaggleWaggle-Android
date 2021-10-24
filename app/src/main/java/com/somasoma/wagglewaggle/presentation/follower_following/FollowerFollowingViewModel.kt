@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.PreferenceConstant
 import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
+import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.domain.usecase.member.GetFollowerUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetFollowingUseCase
-import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,6 +33,8 @@ class FollowerFollowingViewModel @Inject constructor(
     val following: StateFlow<List<Member>> = _following
     private val _follower = MutableStateFlow<List<Member>>(listOf())
     val follower: StateFlow<List<Member>> = _follower
+    private val _showFollower = MutableStateFlow(true)
+    val showFollower: StateFlow<Boolean> = _showFollower
 
     init {
         getFollower()
@@ -51,7 +53,19 @@ class FollowerFollowingViewModel @Inject constructor(
         event(Event.NavigateToSetting)
     }
 
-    private fun getFollower() {
+    fun onFollowerTabClicked() {
+        _showFollower.value = true
+    }
+
+    fun onFollowingTabClicked() {
+        _showFollower.value = false
+    }
+
+    fun onFollowItemClicked(member: Member) {
+        event(Event.NavigateToProfile(member))
+    }
+
+    fun getFollower() {
         networkUtil.restApiCall(
             getFollowerUseCase::getFollower,
             sharedPreferenceHelper.getInt(PreferenceConstant.MEMBER_ID),
@@ -71,7 +85,7 @@ class FollowerFollowingViewModel @Inject constructor(
         }
     }
 
-    private fun getFollowing() {
+    fun getFollowing() {
         networkUtil.restApiCall(
             getFollowingUseCase::getFollowing,
             sharedPreferenceHelper.getInt(PreferenceConstant.MEMBER_ID),
@@ -101,5 +115,6 @@ class FollowerFollowingViewModel @Inject constructor(
         object NavigateToMain : Event()
         object NavigateToCreateWorld : Event()
         object NavigateToSetting : Event()
+        class NavigateToProfile(val member: Member): Event()
     }
 }

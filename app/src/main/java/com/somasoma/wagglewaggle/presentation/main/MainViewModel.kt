@@ -46,7 +46,7 @@ class MainViewModel @Inject constructor(
     private val _loadedSelectedAvatar = MutableStateFlow(DEFAULT_AVATAR)
     val loadedSelectedAvatar: StateFlow<Avatar> = _loadedSelectedAvatar
     var isAvatarSelectedByUser = false
-    val onlineUserClickListener = object : OnlineUserClickListener {
+    val onlineUserClickListener = object : MemberClickListener {
         override fun onClick(member: Member) {
             event(Event.NavigateToProfile(member))
         }

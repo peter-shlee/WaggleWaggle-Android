@@ -1,17 +1,17 @@
-package com.somasoma.wagglewaggle.presentation.main
+package com.somasoma.wagglewaggle.presentation.follower_following
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.somasoma.wagglewaggle.core.getProfileBackgroundColor
 import com.somasoma.wagglewaggle.core.string2Avatar
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
-import com.somasoma.wagglewaggle.databinding.OnlineUserListItemBinding
+import com.somasoma.wagglewaggle.databinding.FollowUserListItemBinding
+import com.somasoma.wagglewaggle.presentation.main.MemberClickListener
+import com.somasoma.wagglewaggle.presentation.main.MemberDiffCallback
 
-class OnlineUserListAdapter(private val memberClickListener: MemberClickListener) :
-    ListAdapter<Member, OnlineUserListAdapter.ViewHolder>(MemberDiffCallback()) {
+class FollowListAdapter(private val memberClickListener: MemberClickListener): ListAdapter<Member, FollowListAdapter.ViewHolder>(MemberDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -21,12 +21,12 @@ class OnlineUserListAdapter(private val memberClickListener: MemberClickListener
         holder.bind(getItem(position), memberClickListener)
     }
 
-    class ViewHolder private constructor(val binding: OnlineUserListItemBinding) :
+    class ViewHolder private constructor(val binding: FollowUserListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = OnlineUserListItemBinding.inflate(layoutInflater, parent, false)
+                val binding = FollowUserListItemBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }
         }
@@ -36,20 +36,9 @@ class OnlineUserListAdapter(private val memberClickListener: MemberClickListener
             binding.avatar = string2Avatar(member.avatar)
             binding.profileImageBackgroundColor = getProfileBackgroundColor(member.id ?: 0)
             binding.onClickListener = memberClickListener
+            member.entranceRoom?.let {
+
+            }
         }
     }
-}
-
-class MemberDiffCallback : DiffUtil.ItemCallback<Member>() {
-    override fun areItemsTheSame(oldItem: Member, newItem: Member): Boolean {
-        return oldItem == newItem
-    }
-
-    override fun areContentsTheSame(oldItem: Member, newItem: Member): Boolean {
-        return oldItem == newItem
-    }
-}
-
-interface MemberClickListener {
-    fun onClick(member: Member)
 }
