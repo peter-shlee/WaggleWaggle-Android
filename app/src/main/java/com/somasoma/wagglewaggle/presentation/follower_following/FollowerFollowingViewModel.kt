@@ -36,11 +36,6 @@ class FollowerFollowingViewModel @Inject constructor(
     private val _showFollower = MutableStateFlow(true)
     val showFollower: StateFlow<Boolean> = _showFollower
 
-    init {
-        getFollower()
-        getFollowing()
-    }
-
     fun onClickCreateRoomButton() {
         event(Event.NavigateToCreateWorld)
     }
