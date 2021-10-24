@@ -80,7 +80,7 @@ class FollowerFollowingViewModel @Inject constructor(
                         }
                     }
                 }
-                _following.value = tmpFollower
+                _follower.value = tmpFollower
             }
         }
     }
