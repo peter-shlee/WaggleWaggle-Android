@@ -12,12 +12,18 @@ import com.somasoma.wagglewaggle.presentation.base.BaseActivity
 import com.somasoma.wagglewaggle.presentation.main.MainActivity
 import com.somasoma.wagglewaggle.presentation.main.MemberClickListener
 import com.somasoma.wagglewaggle.presentation.main.create_world.CreateWorldActivity
+import com.somasoma.wagglewaggle.presentation.profile.ProfileActivity
 import com.somasoma.wagglewaggle.presentation.setting.SettingActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 @AndroidEntryPoint
 class FollowerFollowingActivity : BaseActivity() {
+    companion object {
+        private const val MEMBER = "member"
+    }
 
     private val viewModel: FollowerFollowingViewModel by viewModels()
     private lateinit var binding: ActivityFollowerFollowingBinding
@@ -97,6 +103,8 @@ class FollowerFollowingActivity : BaseActivity() {
     }
 
     private fun navigateToProfile(member: Member) {
-
+        val navigateIntent = Intent(this, ProfileActivity::class.java)
+        navigateIntent.putExtra(MEMBER, Json.encodeToString(member))
+        startActivity(navigateIntent)
     }
 }

@@ -35,7 +35,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginEnd="22dp"
         android:layout_marginVertical="9dp"
-        android:layout_marginRight="22dp">
+        android:layout_marginRight="22dp"
+        android:onClick="@{() -> onClickListener.onClick(member)}">
 
         <com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageView
             android:id="@+id/img_profile"
