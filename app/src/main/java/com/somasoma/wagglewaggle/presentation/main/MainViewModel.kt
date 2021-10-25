@@ -106,7 +106,7 @@ class MainViewModel @Inject constructor(
     private fun makeOnlineUserList(onlineResponse: OnlineResponse?): MutableList<Member> {
         val tmpOnlineUsers = mutableListOf<Member>()
 
-//        addFollowingOnlineMembersToList(onlineResponse, tmpOnlineUsers)
+        addFollowingOnlineMembersToList(onlineResponse, tmpOnlineUsers)
         addOnlineMembersToList(onlineResponse, tmpOnlineUsers)
 
         return tmpOnlineUsers
