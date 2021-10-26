@@ -40,9 +40,8 @@ class MapListAdapter : ListAdapter<WorldMap, MapListAdapter.ViewHolder>(WorldMap
         }
 
         private fun getMapImageResourceId(map: WorldMap) = when (map) {
-            WorldMap.JONGMYO -> {
-                R.drawable.map_jongmyo
-            }
+            WorldMap.JONGMYO -> R.drawable.map_jongmyo
+            else -> R.drawable.map_jongmyo
         }
     }
 }

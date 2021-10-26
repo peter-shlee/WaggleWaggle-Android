@@ -5,6 +5,7 @@ import android.util.TypedValue
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.data.Friendship
+import com.somasoma.wagglewaggle.data.WorldMap
 import com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor
 
 val DEFAULT_AVATAR = Avatar.MALE1
@@ -83,4 +84,15 @@ fun friendship2String(friendship: Friendship) = when (friendship) {
     Friendship.NONE -> "NONE"
     Friendship.BLOCK -> "BLOCK"
     Friendship.FOLLOW -> "FOLLOW"
+}
+
+fun worldMap2String(worldMap: WorldMap) = when (worldMap) {
+    WorldMap.JONGMYO -> WorldMap.JONGMYO.text
+    WorldMap.GWANGHWAMUN -> WorldMap.GWANGHWAMUN.text
+}
+
+fun string2WorldMap(string: String?) = when (string?.lowercase()) {
+    WorldMap.JONGMYO.text.lowercase() -> WorldMap.JONGMYO
+    WorldMap.GWANGHWAMUN.text.lowercase() -> WorldMap.GWANGHWAMUN
+    else -> WorldMap.JONGMYO
 }
