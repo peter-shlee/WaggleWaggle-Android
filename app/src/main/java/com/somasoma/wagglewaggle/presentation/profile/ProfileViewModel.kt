@@ -137,6 +137,7 @@ class ProfileViewModel @Inject constructor(
             onSuccessCallback = {
                 if (it?.status == FollowResponse.OK) {
                     _friendship.value = Friendship.FOLLOW
+                    _numOfFollowers.value += 1
                 }
             }
         }
@@ -147,6 +148,9 @@ class ProfileViewModel @Inject constructor(
             onSuccessCallback = {
                 if (it?.status == UnfollowResponse.OK) {
                     _friendship.value = Friendship.NONE
+                    if (_numOfFollowers.value > 0) {
+                        _numOfFollowers.value -= 1
+                    }
                 }
             }
         }
