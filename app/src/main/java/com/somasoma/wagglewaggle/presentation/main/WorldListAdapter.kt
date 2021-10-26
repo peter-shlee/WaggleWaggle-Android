@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.somasoma.wagglewaggle.R
+import com.somasoma.wagglewaggle.core.string2WorldMap
 import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
 import com.somasoma.wagglewaggle.databinding.WorldListItemBinding
 
@@ -40,6 +41,7 @@ class WorldListAdapter :
 
         fun bind(worldRoom: WorldRoom) {
             binding.worldRoom = worldRoom
+            binding.worldMap = string2WorldMap(worldRoom.map).text
             binding.maxUserCount = MAX_USER_COUNT
             adapter.submitList(worldRoom.keywords)
             Glide.with(binding.root)

@@ -8,6 +8,10 @@
             type="com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom" />
 
         <variable
+            name="worldMap"
+            type="String" />
+
+        <variable
             name="maxUserCount"
             type="int" />
     </data>
@@ -50,7 +54,7 @@
                 android:textColor="@color/black"
                 android:textSize="14dp"
                 android:maxLines="1"
-                android:text="@{worldRoom.topic}"
+                android:text="@{worldRoom.name}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/btn_enter"
                 app:layout_constraintTop_toTopOf="parent"
@@ -74,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/point_blue"
                 android:textSize="10dp"
-                android:text="@{String.valueOf(worldRoom.map)}"
+                android:text="@{worldMap}"
                 app:layout_constraintLeft_toLeftOf="@id/txt_world_title"
                 app:layout_constraintRight_toLeftOf="@id/txt_separator"
                 app:layout_constraintTop_toBottomOf="@id/list_keyword"
