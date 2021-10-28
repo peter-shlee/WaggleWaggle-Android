@@ -114,7 +114,7 @@ class ProfileViewModel @Inject constructor(
                             member.avatar,
                             member.onlineStatus,
                             member.entranceStatus,
-                            member.entranceRoom,
+                            member.worldRoomInfo,
                             friendship2String(Friendship.BLOCK),
                             member.interests
                         )

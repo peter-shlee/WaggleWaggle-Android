@@ -27,7 +27,7 @@ interface MemberService {
     @DELETE("member/{memberID}")
     suspend fun deleteMember(@Path("memberID") memberId: Int = -1): Response<DeleteMemberResponse?>
 
-    @PUT("member/edit-member")
+    @PATCH("member/member-info")
     suspend fun putEditMember(@Body member: Member): Response<Unit?>
 
     @POST("member/{memberId}/follow")
