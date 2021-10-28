@@ -36,7 +36,7 @@ class FollowListAdapter(private val memberClickListener: MemberClickListener): L
             binding.avatar = string2Avatar(member.avatar)
             binding.profileImageBackgroundColor = getProfileBackgroundColor(member.id ?: 0)
             binding.onClickListener = memberClickListener
-            member.entranceRoom?.let {
+            member.worldRoomInfo?.let {
 
             }
         }

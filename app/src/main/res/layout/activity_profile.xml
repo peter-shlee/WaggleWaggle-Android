@@ -227,9 +227,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:layout_marginTop="28dp"
                         android:background="@color/gray2"
-                        android:visibility="@{viewModel.member.entranceStatus.equals(`true`) ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{viewModel.member.entranceStatus.equals(`Y`) ? View.VISIBLE : View.GONE}"
                         app:layout_constraintTop_toBottomOf="@id/space" />
 
                     <LinearLayout
@@ -239,13 +238,13 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingHorizontal="30dp"
-                        android:visibility="@{viewModel.member.entranceStatus.equals(`true`) ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{viewModel.member.entranceStatus.equals(`Y`) ? View.VISIBLE : View.GONE}"
                         app:layout_constraintTop_toBottomOf="@id/space">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewModel.member.entranceRoom}"
+                            android:text="@{viewModel.member.worldRoomInfo.name}"
                             android:textColor="@color/text_color_primary"
                             android:textSize="16dp"
                             tools:text="00" />
@@ -282,7 +281,6 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingHorizontal="30dp"
-                        android:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@id/connecting">
 
                         <TextView
@@ -300,6 +298,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{String.valueOf(viewModel.member.conversationTime / 60)}"
                             android:textColor="@color/gray3"
                             android:textSize="12dp"
                             tools:text="12" />
@@ -314,6 +313,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="@{String.valueOf(viewModel.member.conversationTime % 60)}"
                             android:textColor="@color/gray3"
                             android:textSize="12dp"
                             tools:text="30" />

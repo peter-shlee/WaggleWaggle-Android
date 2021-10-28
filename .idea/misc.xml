@@ -64,6 +64,9 @@
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/menu/profile_menu.xml" value="0.7036458333333333" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/menu/unblock.xml" value="0.7036458333333333" />
         <entry key="..\:/Users/shlee/Workspace/speakworld-android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.4430769230769231" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.5755208333333334" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.27988855116514694" />
+        <entry key="app/src/main/res/layout/world_list_item.xml" value="0.5755208333333334" />
       </map>
     </option>
   </component>

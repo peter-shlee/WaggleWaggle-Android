@@ -1,5 +1,6 @@
 package com.somasoma.wagglewaggle.data.model.dto.member
 
+import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -12,7 +13,8 @@ data class Member(
     val avatar: String? = null,
     val onlineStatus: String? = null,
     val entranceStatus: String? = null,
-    val entranceRoom: String? = null,
+    val worldRoomInfo: WorldRoom? = null,
     val friendship: String? = null,
-    val interests: List<String?>? = null
+    val interests: List<String?>? = null,
+    val conversationTime: Int? = null
 )
