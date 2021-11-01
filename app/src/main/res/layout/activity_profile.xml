@@ -261,9 +261,11 @@
                             android:layout_height="0dp"
                             android:layout_weight="1" />
 
-                        <ImageView
+                        <ImageButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:onClick="@{() -> viewModel.onClickEnterButton()}"
                             android:src="@drawable/ic_profile_airplane_solid_b" />
 
                     </LinearLayout>

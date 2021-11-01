@@ -74,6 +74,7 @@ class ProfileActivity : BaseActivity() {
 
     private fun handleEvent(event: ProfileViewModel.Event) = when (event) {
         ProfileViewModel.Event.NavigateToPrevPage -> navigateToPrevPage()
+        ProfileViewModel.Event.NavigateToUnityWorld -> navigateToUnityWorld()
         ProfileViewModel.Event.OnMenuClicked -> onClickMenu()
     }
 
@@ -98,5 +99,10 @@ class ProfileActivity : BaseActivity() {
 
     private fun navigateToPrevPage() {
         finish()
+    }
+
+    private fun navigateToUnityWorld() {
+//        val navigateIntent = Intent(this, com.unity3d.player.UnityPlayerActivity::class.java)
+//        startActivity(navigateIntent)
     }
 }
