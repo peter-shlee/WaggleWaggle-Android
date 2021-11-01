@@ -6,8 +6,12 @@
         <import type="android.view.View" />
 
         <variable
-            name="onClickListener"
+            name="memberClickListener"
             type="com.somasoma.wagglewaggle.presentation.main.MemberClickListener" />
+
+        <variable
+            name="enterButtonClickListener"
+            type="com.somasoma.wagglewaggle.presentation.follower_following.EnterButtonClickListener" />
 
         <variable
             name="avatar"
@@ -32,7 +36,7 @@
         android:layout_marginEnd="22dp"
         android:layout_marginVertical="9dp"
         android:layout_marginRight="22dp"
-        android:onClick="@{() -> onClickListener.onClick(member)}">
+        android:onClick="@{() -> memberClickListener.onClick(member)}">
 
         <com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageView
             android:id="@+id/img_profile"
@@ -160,6 +164,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:onClick="@{() -> enterButtonClickListener.onClick(member.worldRoomInfo)}"
             android:visibility="@{member.worldRoomInfo == null ? View.INVISIBLE : View.VISIBLE}"
             android:clickable="@{member.worldRoomInfo.people == 20 ? false : true}"
             android:src="@{btnEnter.clickable == true ? @drawable/airplane_button : @drawable/ic_home_airplane_g}"

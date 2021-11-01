@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.tabs.TabLayout
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
+import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
 import com.somasoma.wagglewaggle.databinding.ActivityFollowerFollowingBinding
 import com.somasoma.wagglewaggle.presentation.base.BaseActivity
 import com.somasoma.wagglewaggle.presentation.main.MainActivity
@@ -27,13 +28,18 @@ class FollowerFollowingActivity : BaseActivity() {
 
     private val viewModel: FollowerFollowingViewModel by viewModels()
     private lateinit var binding: ActivityFollowerFollowingBinding
-    private val followListItemClickListener = object : MemberClickListener {
+    private val followListMemberClickListener = object : MemberClickListener {
         override fun onClick(member: Member) {
-            viewModel.onFollowItemClicked(member)
+            viewModel.onFollowMemberClicked(member)
         }
     }
-    private val followingListAdapter = FollowListAdapter(followListItemClickListener)
-    private val followerListAdapter = FollowListAdapter(followListItemClickListener)
+    private val followListEnterClickListener = object : EnterButtonClickListener {
+        override fun onClick(worldRoom: WorldRoom) {
+            viewModel.onEnterButtonClicked(worldRoom)
+        }
+    }
+    private val followingListAdapter = FollowListAdapter(followListMemberClickListener, followListEnterClickListener)
+    private val followerListAdapter = FollowListAdapter(followListMemberClickListener, followListEnterClickListener)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +89,7 @@ class FollowerFollowingActivity : BaseActivity() {
         FollowerFollowingViewModel.Event.NavigateToSetting -> navigateToSettingEvent()
         FollowerFollowingViewModel.Event.NavigateToMain -> navigateToMain()
         FollowerFollowingViewModel.Event.NavigateToCreateWorld -> navigateToCreateWorld()
+        FollowerFollowingViewModel.Event.NavigateToUnityWorld -> navigateToUnityWorld()
         is FollowerFollowingViewModel.Event.NavigateToProfile -> navigateToProfile(event.member)
     }
 
@@ -106,5 +113,10 @@ class FollowerFollowingActivity : BaseActivity() {
         val navigateIntent = Intent(this, ProfileActivity::class.java)
         navigateIntent.putExtra(MEMBER, Json.encodeToString(member))
         startActivity(navigateIntent)
+    }
+
+    private fun navigateToUnityWorld() {
+//        val navigateIntent = Intent(this, com.unity3d.player.UnityPlayerActivity::class.java)
+//        startActivity(navigateIntent)
     }
 }
