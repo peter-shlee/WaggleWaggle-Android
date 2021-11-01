@@ -90,8 +90,8 @@ class MainActivity : BaseActivity() {
         MainViewModel.Event.NavigateToCreateWorld -> navigateToCreateWorldActivity()
         MainViewModel.Event.NavigateToFollowerFollowing -> navigateToFollowerFollowingActivity()
         MainViewModel.Event.NavigateToSetting -> navigateToSettingActivity()
+        MainViewModel.Event.NavigateToUnityWorld -> navigateToUnityWorld()
         is MainViewModel.Event.NavigateToProfile -> navigateToProfileActivity(event.member)
-        is MainViewModel.Event.NavigateToUnityWorld -> navigateToUnityWorld(event.worldRoom)
         is MainViewModel.Event.MemberLoaded -> onSelectedAvatarLoaded(string2Avatar(event.member.avatar))
         MainViewModel.Event.ScrollToPrevAvatar -> scrollToPrevAvatar()
         MainViewModel.Event.ScrollToNextAvatar -> scrollToNextAvatar()
@@ -146,7 +146,7 @@ class MainActivity : BaseActivity() {
         startActivity(navigateIntent)
     }
 
-    private fun navigateToUnityWorld(worldRoom: WorldRoom) {
+    private fun navigateToUnityWorld() {
 //        val navigateIntent = Intent(this, com.unity3d.player.UnityPlayerActivity::class.java)
 //        startActivity(navigateIntent)
     }
