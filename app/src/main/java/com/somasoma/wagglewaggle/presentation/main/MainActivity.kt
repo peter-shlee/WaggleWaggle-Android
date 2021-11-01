@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
 import com.somasoma.wagglewaggle.R
 import com.somasoma.wagglewaggle.core.dp2Px
+import com.somasoma.wagglewaggle.core.string2Avatar
 import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
@@ -40,7 +41,6 @@ class MainActivity : BaseActivity() {
         }
     })
     private lateinit var onlineUserListAdapter: OnlineUserListAdapter
-    private var selectedAvatarBeforeStopped: Avatar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +84,6 @@ class MainActivity : BaseActivity() {
         repeatOnStart { viewModel.avatars.collect { onAvatarListLoaded(it) } }
         repeatOnStart { viewModel.worlds.collect { onWorldListLoaded(it) } }
         repeatOnStart { viewModel.onlineUsers.collect { onOnlineUserListLoaded(it) } }
-        repeatOnStart { viewModel.loadedSelectedAvatar.collect { onSelectedAvatarLoaded(it) } }
     }
 
     private fun handleEvent(event: MainViewModel.Event) = when (event) {
@@ -93,6 +92,7 @@ class MainActivity : BaseActivity() {
         MainViewModel.Event.NavigateToSetting -> navigateToSettingActivity()
         is MainViewModel.Event.NavigateToProfile -> navigateToProfileActivity(event.member)
         is MainViewModel.Event.NavigateToUnityWorld -> navigateToUnityWorld(event.worldRoom)
+        is MainViewModel.Event.MemberLoaded -> onSelectedAvatarLoaded(string2Avatar(event.member.avatar))
         MainViewModel.Event.ScrollToPrevAvatar -> scrollToPrevAvatar()
         MainViewModel.Event.ScrollToNextAvatar -> scrollToNextAvatar()
     }

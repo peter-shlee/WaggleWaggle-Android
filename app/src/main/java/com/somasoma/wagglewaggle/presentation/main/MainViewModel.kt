@@ -44,9 +44,14 @@ class MainViewModel @Inject constructor(
     val worlds: StateFlow<List<WorldRoom>> = _worlds
     private val _onlineUsers = MutableStateFlow<List<Member>>(listOf())
     val onlineUsers: StateFlow<List<Member>> = _onlineUsers
-    private val _loadedSelectedAvatar = MutableStateFlow(DEFAULT_AVATAR)
-    val loadedSelectedAvatar: StateFlow<Avatar> = _loadedSelectedAvatar
+    private var selectedAvatar: Avatar = DEFAULT_AVATAR
     private var currentMember: Member? = null
+        set(value) {
+            field = value
+            value?.let {
+                event(Event.MemberLoaded(it))
+            }
+        }
     var isAvatarSelectedByUser = false
     val onlineUserClickListener = object : MemberClickListener {
         override fun onClick(member: Member) {
@@ -75,17 +80,15 @@ class MainViewModel @Inject constructor(
             viewModelScope
         ) {
             onSuccessCallback = {
-                currentMember = it
-                _loadedSelectedAvatar.value = string2Avatar(it?.avatar)
+                it?.let {
+                    currentMember = it
+                    selectedAvatar = string2Avatar(it.avatar)
+                }
             }
 
-            onErrorCallback = {
-                _loadedSelectedAvatar.value = DEFAULT_AVATAR
-            }
+            onErrorCallback = {}
 
-            onNetworkErrorCallback = {
-                _loadedSelectedAvatar.value = DEFAULT_AVATAR
-            }
+            onNetworkErrorCallback = {}
         }
     }
 
@@ -179,33 +182,22 @@ class MainViewModel @Inject constructor(
     }
 
     fun onAvatarSelected(index: Int) {
+        selectedAvatar = avatars.value[index]
+
         if (!isAvatarSelectedByUser) return
         isAvatarSelectedByUser = false
 
         networkUtil.restApiCall(
             putEditMemberUseCase::putEditMember,
             Member(
-                sharedPreferenceHelper.getInt(PreferenceConstant.MEMBER_ID),
-                null,
-                null,
-                null,
-                null,
-                avatar2String(avatars.value[index]),
-                null,
-                null,
-                null,
-                null,
-                null
+                id = sharedPreferenceHelper.getInt(PreferenceConstant.MEMBER_ID),
+                avatar = avatar2String(avatars.value[index])
             ),
             viewModelScope
         ) {
-            onErrorCallback = {
+            onErrorCallback = {}
 
-            }
-
-            onNetworkErrorCallback = {
-
-            }
+            onNetworkErrorCallback = {}
         }
     }
 
@@ -232,12 +224,14 @@ class MainViewModel @Inject constructor(
     }
 
     fun onClickWorldEnterButton(worldRoom: WorldRoom) {
-        setDataForUnity(roomId = worldRoom.id,
-        userId = currentMember?.id,
-        avatar = Avatar.MALE1, // TODO 선택된 아바타 들어가도록 수정
-        language = currentMember?.language,
-        country = currentMember?.country,
-        world = worldRoom.map)
+        setDataForUnity(
+            roomId = worldRoom.id,
+            userId = currentMember?.id,
+            avatar = selectedAvatar,
+            language = currentMember?.language,
+            country = currentMember?.country,
+            world = worldRoom.map
+        )
         event(Event.NavigateToUnityWorld(worldRoom))
     }
 
@@ -252,7 +246,8 @@ class MainViewModel @Inject constructor(
         object NavigateToFollowerFollowing : Event()
         object NavigateToCreateWorld : Event()
         class NavigateToProfile(val member: Member) : Event()
-        class NavigateToUnityWorld(val worldRoom: WorldRoom): Event()
+        class NavigateToUnityWorld(val worldRoom: WorldRoom) : Event()
+        class MemberLoaded(val member: Member) : Event()
         object ScrollToPrevAvatar : Event()
         object ScrollToNextAvatar : Event()
     }

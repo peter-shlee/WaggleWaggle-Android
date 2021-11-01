@@ -1,5 +1,6 @@
 package com.somasoma.wagglewaggle.data
 
+import com.somasoma.wagglewaggle.core.DEFAULT_AVATAR
 import com.somasoma.wagglewaggle.core.avatar2String
 
 enum class DataForUnity {
@@ -23,7 +24,7 @@ fun setDataForUnity(
 ) {
     DataForUnity.INSTANCE.roomId = roomId
     DataForUnity.INSTANCE.userId = userId
-    DataForUnity.INSTANCE.avatar = avatar2String(avatar?:Avatar.MALE1).uppercase()
+    DataForUnity.INSTANCE.avatar = avatar2String(avatar?: DEFAULT_AVATAR).uppercase()
     DataForUnity.INSTANCE.language = language?.uppercase()
     DataForUnity.INSTANCE.country = country?.uppercase()
     DataForUnity.INSTANCE.world = world?.uppercase()
