@@ -43,6 +43,8 @@ class FollowerFollowingViewModel @Inject constructor(
     private var currentMember: Member? = null
 
     init {
+        getFollower()
+        getFollowing()
         getCurrentMember()
     }
 
