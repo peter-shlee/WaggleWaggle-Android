@@ -6,9 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.somasoma.wagglewaggle.core.NetworkUtil
 import com.somasoma.wagglewaggle.core.PreferenceConstant
 import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
+import com.somasoma.wagglewaggle.core.string2Avatar
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
+import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
+import com.somasoma.wagglewaggle.data.setDataForUnity
 import com.somasoma.wagglewaggle.domain.usecase.member.GetFollowerUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetFollowingUseCase
+import com.somasoma.wagglewaggle.domain.usecase.member.GetMemberUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +27,8 @@ class FollowerFollowingViewModel @Inject constructor(
     private val networkUtil: NetworkUtil,
     private val sharedPreferenceHelper: SharedPreferenceHelper,
     private val getFollowerUseCase: GetFollowerUseCase,
-    private val getFollowingUseCase: GetFollowingUseCase
+    private val getFollowingUseCase: GetFollowingUseCase,
+    private val getMemberUseCase: GetMemberUseCase
 ) :
     AndroidViewModel(application) {
 
@@ -35,10 +40,12 @@ class FollowerFollowingViewModel @Inject constructor(
     val follower: StateFlow<List<Member>> = _follower
     private val _showFollower = MutableStateFlow(true)
     val showFollower: StateFlow<Boolean> = _showFollower
+    private var currentMember: Member? = null
 
     init {
         getFollower()
         getFollowing()
+        getCurrentMember()
     }
 
     fun onClickCreateRoomButton() {
@@ -61,8 +68,22 @@ class FollowerFollowingViewModel @Inject constructor(
         _showFollower.value = false
     }
 
-    fun onFollowItemClicked(member: Member) {
+    fun onFollowMemberClicked(member: Member) {
         event(Event.NavigateToProfile(member))
+    }
+
+    fun onEnterButtonClicked(worldRoom: WorldRoom) {
+        currentMember?.run {
+            setDataForUnity(
+                roomId = worldRoom.id,
+                userId = id,
+                avatar = string2Avatar(avatar),
+                language = language,
+                country = country,
+                world = worldRoom.map
+            )
+            event(Event.NavigateToUnityWorld)
+        }
     }
 
     fun getFollower() {
@@ -105,6 +126,18 @@ class FollowerFollowingViewModel @Inject constructor(
         }
     }
 
+    private fun getCurrentMember() {
+        networkUtil.restApiCall(
+            getMemberUseCase::getMember,
+            sharedPreferenceHelper.getInt(PreferenceConstant.MEMBER_ID),
+            viewModelScope,
+        ) {
+            onSuccessCallback = {
+                currentMember = it
+            }
+        }
+    }
+
     private fun event(event: Event) {
         viewModelScope.launch {
             _eventFlow.emit(event)
@@ -115,6 +148,7 @@ class FollowerFollowingViewModel @Inject constructor(
         object NavigateToMain : Event()
         object NavigateToCreateWorld : Event()
         object NavigateToSetting : Event()
+        object NavigateToUnityWorld : Event()
         class NavigateToProfile(val member: Member): Event()
     }
 }
