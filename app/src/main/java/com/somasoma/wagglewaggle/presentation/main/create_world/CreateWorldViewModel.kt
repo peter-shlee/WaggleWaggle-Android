@@ -45,7 +45,8 @@ class CreateWorldViewModel @Inject constructor(
 
     init {
         getMember()
-        _maps.value = WorldMap.values().toList()
+        _maps.value = listOf(WorldMap.JONGMYO)
+//        _maps.value = WorldMap.values().toList()
     }
 
     fun onWorldNameChanged(s: CharSequence, start: Int, before: Int, count: Int) {
