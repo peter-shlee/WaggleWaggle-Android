@@ -11,7 +11,7 @@ import com.somasoma.wagglewaggle.core.string2WorldMap
 import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
 import com.somasoma.wagglewaggle.databinding.WorldListItemBinding
 
-class WorldListAdapter :
+class WorldListAdapter(private val worldListItemEnterButtonClickListener: WorldListItemEnterButtonClickListener) :
     ListAdapter<WorldRoom, WorldListAdapter.ViewHolder>(WorldRoomDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -19,7 +19,7 @@ class WorldListAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), worldListItemEnterButtonClickListener)
     }
 
     class ViewHolder private constructor(
@@ -39,7 +39,8 @@ class WorldListAdapter :
             private const val MAX_USER_COUNT = 20
         }
 
-        fun bind(worldRoom: WorldRoom) {
+        fun bind(worldRoom: WorldRoom, worldListItemEnterButtonClickListener: WorldListItemEnterButtonClickListener) {
+            binding.worldListItemEnterButtonClickListener = worldListItemEnterButtonClickListener
             binding.worldRoom = worldRoom
             binding.worldMap = string2WorldMap(worldRoom.map).text
             binding.maxUserCount = MAX_USER_COUNT
@@ -61,4 +62,8 @@ class WorldRoomDiffCallback : DiffUtil.ItemCallback<WorldRoom>() {
     override fun areContentsTheSame(oldItem: WorldRoom, newItem: WorldRoom): Boolean {
         return oldItem == newItem
     }
+}
+
+interface WorldListItemEnterButtonClickListener {
+    fun onClick(worldRoom: WorldRoom)
 }

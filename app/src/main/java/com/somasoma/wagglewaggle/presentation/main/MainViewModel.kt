@@ -8,6 +8,7 @@ import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.data.model.dto.member.OnlineResponse
 import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
+import com.somasoma.wagglewaggle.data.setDataForUnity
 import com.somasoma.wagglewaggle.domain.usecase.member.GetMemberUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetOnlineUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.PutEditMemberUseCase
@@ -45,6 +46,7 @@ class MainViewModel @Inject constructor(
     val onlineUsers: StateFlow<List<Member>> = _onlineUsers
     private val _loadedSelectedAvatar = MutableStateFlow(DEFAULT_AVATAR)
     val loadedSelectedAvatar: StateFlow<Avatar> = _loadedSelectedAvatar
+    private var currentMember: Member? = null
     var isAvatarSelectedByUser = false
     val onlineUserClickListener = object : MemberClickListener {
         override fun onClick(member: Member) {
@@ -73,6 +75,7 @@ class MainViewModel @Inject constructor(
             viewModelScope
         ) {
             onSuccessCallback = {
+                currentMember = it
                 _loadedSelectedAvatar.value = string2Avatar(it?.avatar)
             }
 
@@ -228,6 +231,16 @@ class MainViewModel @Inject constructor(
         event(Event.NavigateToCreateWorld)
     }
 
+    fun onClickWorldEnterButton(worldRoom: WorldRoom) {
+        setDataForUnity(roomId = worldRoom.id,
+        userId = currentMember?.id,
+        avatar = Avatar.MALE1, // TODO 선택된 아바타 들어가도록 수정
+        language = currentMember?.language,
+        country = currentMember?.country,
+        world = worldRoom.map)
+        event(Event.NavigateToUnityWorld(worldRoom))
+    }
+
     fun event(event:Event) {
         viewModelScope.launch {
             _eventFlow.emit(event)
@@ -239,6 +252,7 @@ class MainViewModel @Inject constructor(
         object NavigateToFollowerFollowing : Event()
         object NavigateToCreateWorld : Event()
         class NavigateToProfile(val member: Member) : Event()
+        class NavigateToUnityWorld(val worldRoom: WorldRoom): Event()
         object ScrollToPrevAvatar : Event()
         object ScrollToNextAvatar : Event()
     }

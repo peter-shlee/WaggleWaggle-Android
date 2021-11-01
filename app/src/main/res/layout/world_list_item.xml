@@ -4,6 +4,10 @@
     <data>
 
         <variable
+            name="worldListItemEnterButtonClickListener"
+            type="com.somasoma.wagglewaggle.presentation.main.WorldListItemEnterButtonClickListener" />
+
+        <variable
             name="worldRoom"
             type="com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom" />
 
@@ -128,6 +132,7 @@
                 android:layout_marginRight="9dp"
                 android:clickable="@{worldRoom.people == maxUserCount ? false : true}"
                 android:background="@null"
+                android:onClick="@{() -> worldListItemEnterButtonClickListener.onClick(worldRoom)}"
                 android:src="@{btnEnter.clickable == true ? @drawable/airplane_button : @drawable/ic_home_airplane_g}"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
