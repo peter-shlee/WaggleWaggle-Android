@@ -8,6 +8,7 @@ import com.somasoma.wagglewaggle.core.*
 import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.data.Friendship
 import com.somasoma.wagglewaggle.data.model.dto.member.*
+import com.somasoma.wagglewaggle.data.setDataForUnity
 import com.somasoma.wagglewaggle.domain.usecase.member.*
 import com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     application: Application,
+    private val sharedPreferenceHelper: SharedPreferenceHelper,
     private val networkUtil: NetworkUtil,
     private val getMemberUseCase: GetMemberUseCase,
     private val getFollowerUseCase: GetFollowerUseCase,
@@ -55,6 +57,11 @@ class ProfileViewModel @Inject constructor(
     val friendship: StateFlow<Friendship> = _friendship
     private val _interests = MutableStateFlow<List<String?>>(listOf())
     val interests: StateFlow<List<String?>> = _interests
+    private var currentMember: Member? = null
+
+    init {
+        getCurrentMember()
+    }
 
     fun onClickBackButton() {
         event(Event.NavigateToPrevPage)
@@ -71,6 +78,20 @@ class ProfileViewModel @Inject constructor(
             Friendship.BLOCK -> {
 
             }
+        }
+    }
+
+    fun onClickEnterButton() {
+        currentMember?.run {
+            setDataForUnity(
+                roomId = member.worldRoomInfo?.id,
+                userId = id,
+                avatar = string2Avatar(avatar),
+                language = language,
+                country = country,
+                world = member.worldRoomInfo?.map
+            )
+            event(Event.NavigateToUnityWorld)
         }
     }
 
@@ -190,6 +211,14 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    private fun getCurrentMember() {
+        networkUtil.restApiCall(getMemberUseCase::getMember, sharedPreferenceHelper.getInt(PreferenceConstant.MEMBER_ID), viewModelScope) {
+            onSuccessCallback = {
+                currentMember = it
+            }
+        }
+    }
+
     private fun event(event: Event) {
         viewModelScope.launch {
             _eventFlow.emit(event)
@@ -198,6 +227,7 @@ class ProfileViewModel @Inject constructor(
 
     sealed class Event {
         object NavigateToPrevPage : Event()
+        object NavigateToUnityWorld: Event()
         object OnMenuClicked : Event()
     }
 }
