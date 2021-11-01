@@ -42,6 +42,10 @@ class FollowerFollowingViewModel @Inject constructor(
     val showFollower: StateFlow<Boolean> = _showFollower
     private var currentMember: Member? = null
 
+    init {
+        getCurrentMember()
+    }
+
     fun onClickCreateRoomButton() {
         event(Event.NavigateToCreateWorld)
     }
@@ -120,7 +124,7 @@ class FollowerFollowingViewModel @Inject constructor(
         }
     }
 
-    private fun getMember() {
+    private fun getCurrentMember() {
         networkUtil.restApiCall(
             getMemberUseCase::getMember,
             sharedPreferenceHelper.getInt(PreferenceConstant.MEMBER_ID),
