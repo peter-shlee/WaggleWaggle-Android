@@ -232,7 +232,7 @@ class MainViewModel @Inject constructor(
             country = currentMember?.country,
             world = worldRoom.map
         )
-        event(Event.NavigateToUnityWorld(worldRoom))
+        event(Event.NavigateToUnityWorld)
     }
 
     fun event(event:Event) {
@@ -245,8 +245,8 @@ class MainViewModel @Inject constructor(
         object NavigateToSetting : Event()
         object NavigateToFollowerFollowing : Event()
         object NavigateToCreateWorld : Event()
+        object NavigateToUnityWorld : Event()
         class NavigateToProfile(val member: Member) : Event()
-        class NavigateToUnityWorld(val worldRoom: WorldRoom) : Event()
         class MemberLoaded(val member: Member) : Event()
         object ScrollToPrevAvatar : Event()
         object ScrollToNextAvatar : Event()

@@ -47,9 +47,16 @@ class CreateWorldActivity : BaseActivity() {
         repeatOnStart { viewModel.maps.collect { onMapListLoaded(it) } }
     }
 
-    private fun handleEvent(event: CreateWorldViewModel.Event) = when(event) {
+    private fun handleEvent(event: CreateWorldViewModel.Event) = when (event) {
         CreateWorldViewModel.Event.NavigateToPrevPage -> navigateToPrevPage()
         CreateWorldViewModel.Event.ShowSelectInterestsDialog -> showSelectInterestsDialog()
+        CreateWorldViewModel.Event.NavigateToUnityWorld -> navigateToUnityWorld()
+    }
+
+    private fun navigateToUnityWorld() {
+//        val navigateIntent = Intent(this, com.unity3d.player.UnityPlayerActivity::class.java)
+//        startActivity(navigateIntent)
+        finish()
     }
 
     private fun navigateToPrevPage() {

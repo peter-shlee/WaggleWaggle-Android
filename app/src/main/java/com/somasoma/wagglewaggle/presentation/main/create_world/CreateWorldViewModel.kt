@@ -2,12 +2,13 @@ package com.somasoma.wagglewaggle.presentation.main.create_world
 
 import android.app.Application
 import androidx.lifecycle.viewModelScope
-import com.somasoma.wagglewaggle.core.InputState
-import com.somasoma.wagglewaggle.core.NetworkUtil
-import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
+import com.somasoma.wagglewaggle.core.*
 import com.somasoma.wagglewaggle.data.WorldMap
+import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
+import com.somasoma.wagglewaggle.data.setDataForUnity
 import com.somasoma.wagglewaggle.domain.usecase.member.GetInterestListUseCase
+import com.somasoma.wagglewaggle.domain.usecase.member.GetMemberUseCase
 import com.somasoma.wagglewaggle.domain.usecase.world.PostNewWorldUseCase
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectInterestsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +26,8 @@ class CreateWorldViewModel @Inject constructor(
     private val sharedPreferenceHelper: SharedPreferenceHelper,
     private val networkUtil: NetworkUtil,
     getInterestListUseCase: GetInterestListUseCase,
-    private val postNewWorldUseCase: PostNewWorldUseCase
+    private val postNewWorldUseCase: PostNewWorldUseCase,
+    private val getMemberUseCase: GetMemberUseCase
 ) : SelectInterestsViewModel(application, networkUtil, getInterestListUseCase) {
     companion object {
         private const val WORLD_NAME_REGEX = "[A-Za-z|가-힣|ㄱ-ㅎ|ㅏ-ㅣ\\d\\s]{1,20}\$"
@@ -39,9 +41,12 @@ class CreateWorldViewModel @Inject constructor(
     private val _worldNameInputState = MutableStateFlow(InputState.ENABLED)
     val worldNameInputState: StateFlow<InputState> = _worldNameInputState
     private var worldName: String = ""
+    private var currentMember: Member? = null
 
     init {
-        _maps.value = WorldMap.values().toList()
+        getMember()
+        _maps.value = listOf(WorldMap.JONGMYO)
+//        _maps.value = WorldMap.values().toList()
     }
 
     fun onWorldNameChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -72,6 +77,8 @@ class CreateWorldViewModel @Inject constructor(
     }
 
     fun onClickCreateButton() {
+        if (currentMember == null) return
+
         networkUtil.restApiCall(
             postNewWorldUseCase::postNewWorld, WorldRoom(
                 null,
@@ -85,7 +92,29 @@ class CreateWorldViewModel @Inject constructor(
             ), viewModelScope
         ) {
             onSuccessCallback = {
-                event(Event.NavigateToPrevPage)
+                it?.run {
+                    setDataForUnity(
+                        roomId = id,
+                        userId = currentMember?.id,
+                        avatar = string2Avatar(currentMember?.avatar),
+                        language = currentMember?.language,
+                        country = currentMember?.country,
+                        world = worldMap2String(WorldMap.JONGMYO)
+                    )
+                    event(Event.NavigateToUnityWorld)
+                }
+            }
+        }
+    }
+
+    private fun getMember(){
+        networkUtil.restApiCall(
+            getMemberUseCase::getMember,
+            sharedPreferenceHelper.getInt(PreferenceConstant.MEMBER_ID),
+            viewModelScope,
+        ) {
+            onSuccessCallback = {
+                currentMember = it
             }
         }
     }
@@ -98,6 +127,7 @@ class CreateWorldViewModel @Inject constructor(
 
     sealed class Event{
         object NavigateToPrevPage: Event()
+        object NavigateToUnityWorld: Event()
         object ShowSelectInterestsDialog: Event()
     }
 }
