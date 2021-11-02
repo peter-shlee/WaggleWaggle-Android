@@ -44,6 +44,7 @@
             android:layout_height="55dp"
             app:avatar="@{avatar}"
             app:backgroundColor="@{profileImageBackgroundColor}"
+            app:showCrown="@{member.conversationTime > 60}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
