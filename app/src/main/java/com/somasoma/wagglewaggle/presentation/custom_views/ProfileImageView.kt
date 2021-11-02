@@ -32,6 +32,12 @@ class ProfileImageView @JvmOverloads constructor(
         fun setBackgroundTint(view: ProfileImageView, color: ProfileImageBackgroundColor) {
             view.backgroundTint = color
         }
+
+        @JvmStatic
+        @BindingAdapter("app:showCrown")
+        fun setShowCrown(view: ProfileImageView, showCrown: Boolean) {
+            view.showCrown = showCrown
+        }
     }
 
     private val binding: ProfileImageViewBinding = DataBindingUtil.inflate(
@@ -42,7 +48,7 @@ class ProfileImageView @JvmOverloads constructor(
     )
 
     init {
-        binding.root.clipToOutline = true
+        binding.background.clipToOutline = true
     }
 
     var avatar: Avatar = Avatar.FEMALE1
@@ -58,5 +64,11 @@ class ProfileImageView @JvmOverloads constructor(
         set(color) {
             field = color
             binding.backgroundTintColor = ContextCompat.getColor(binding.root.context, color.value)
+        }
+
+    var showCrown: Boolean = false
+        set(value) {
+            field = value
+            binding.showCrown = value
         }
 }

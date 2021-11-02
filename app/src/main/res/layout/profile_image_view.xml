@@ -2,23 +2,59 @@
 <layout>
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="backgroundTintColor"
             type="int" />
+
+        <variable
+            name="showCrown"
+            type="boolean" />
+
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/background"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="match_parent"
-        android:background="@drawable/circle_in_background"
-        android:backgroundTint="@{backgroundTintColor}"
-        android:orientation="vertical">
+        android:layout_width="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/circle_in_background"
+            android:backgroundTint="@{backgroundTintColor}"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_character"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
-            android:id="@+id/img_character"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:id="@+id/iv_crown_background"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:background="@null"
+            android:src="@drawable/crown_background"
+            android:visibility="@{showCrown ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
-    </LinearLayout>
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_crown"
+            android:visibility="@{showCrown ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_crown_background"
+            app:layout_constraintLeft_toLeftOf="@id/iv_crown_background"
+            app:layout_constraintRight_toRightOf="@id/iv_crown_background"
+            app:layout_constraintTop_toTopOf="@id/iv_crown_background"
+            app:tint="@color/point_yellow" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
