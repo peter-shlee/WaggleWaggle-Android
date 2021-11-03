@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.somasoma.wagglewaggle.R
-import com.somasoma.wagglewaggle.core.string2WorldMap
+import com.somasoma.wagglewaggle.presentation.string2WorldMap
 import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
 import com.somasoma.wagglewaggle.databinding.WorldListItemBinding
 

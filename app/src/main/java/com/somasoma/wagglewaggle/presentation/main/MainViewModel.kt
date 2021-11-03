@@ -3,7 +3,6 @@ package com.somasoma.wagglewaggle.presentation.main
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.somasoma.wagglewaggle.core.*
 import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.data.model.dto.member.OnlineResponse
@@ -13,6 +12,7 @@ import com.somasoma.wagglewaggle.domain.usecase.member.GetMemberUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetOnlineUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.PutEditMemberUseCase
 import com.somasoma.wagglewaggle.domain.usecase.world.GetWorldListUseCase
+import com.somasoma.wagglewaggle.presentation.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.somasoma.wagglewaggle.core.getAvatarResourceId
+import com.somasoma.wagglewaggle.presentation.getAvatarResourceId
 import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.databinding.AvatarSelectPagerItemBinding
 

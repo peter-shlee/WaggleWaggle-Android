@@ -3,7 +3,7 @@ package com.somasoma.wagglewaggle.presentation.custom_views
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.somasoma.wagglewaggle.core.NetworkUtil
+import com.somasoma.wagglewaggle.presentation.NetworkUtil
 import com.somasoma.wagglewaggle.domain.usecase.member.GetInterestListUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

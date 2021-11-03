@@ -3,9 +3,9 @@ package com.somasoma.wagglewaggle.presentation.setting
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.somasoma.wagglewaggle.core.NetworkUtil
-import com.somasoma.wagglewaggle.core.PreferenceConstant
-import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
+import com.somasoma.wagglewaggle.presentation.NetworkUtil
+import com.somasoma.wagglewaggle.presentation.PreferenceConstant
+import com.somasoma.wagglewaggle.presentation.SharedPreferenceHelper
 import com.somasoma.wagglewaggle.domain.usecase.DeleteAccountUseCase
 import com.somasoma.wagglewaggle.domain.usecase.SignOutUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.DeleteLogoutUseCase

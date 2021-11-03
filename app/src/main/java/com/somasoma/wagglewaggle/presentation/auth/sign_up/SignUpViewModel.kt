@@ -3,10 +3,10 @@ package com.somasoma.wagglewaggle.presentation.auth.sign_up
 import android.app.Application
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
-import com.somasoma.wagglewaggle.core.InputState
-import com.somasoma.wagglewaggle.core.NetworkUtil
-import com.somasoma.wagglewaggle.core.PreferenceConstant
-import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
+import com.somasoma.wagglewaggle.presentation.InputState
+import com.somasoma.wagglewaggle.presentation.NetworkUtil
+import com.somasoma.wagglewaggle.presentation.PreferenceConstant
+import com.somasoma.wagglewaggle.presentation.SharedPreferenceHelper
 import com.somasoma.wagglewaggle.data.model.dto.auth.SignUpRequest
 import com.somasoma.wagglewaggle.domain.usecase.auth.PostSignUpUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetCountryListUseCase

@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.somasoma.wagglewaggle.R
-import com.somasoma.wagglewaggle.core.string2Friendship
+import com.somasoma.wagglewaggle.presentation.string2Friendship
 import com.somasoma.wagglewaggle.data.Friendship
 import com.somasoma.wagglewaggle.databinding.ActivityProfileBinding
 import com.somasoma.wagglewaggle.presentation.base.BaseActivity

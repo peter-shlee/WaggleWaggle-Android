@@ -5,7 +5,7 @@
 
         <import type="android.view.View" />
 
-        <import type="com.somasoma.wagglewaggle.core.InputState" />
+        <import type="com.somasoma.wagglewaggle.presentation.InputState" />
 
         <variable
             name="viewModel"

@@ -1,4 +1,4 @@
-package com.somasoma.wagglewaggle.core.di.hilt.module
+package com.somasoma.wagglewaggle.presentation.di.hilt.module
 
 import com.somasoma.wagglewaggle.data.repository_impl.AuthRepositoryImpl
 import com.somasoma.wagglewaggle.data.repository_impl.MemberRepositoryImpl

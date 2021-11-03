@@ -1,6 +1,6 @@
 package com.somasoma.wagglewaggle.data.repository_impl
 
-import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForWorldAPI
+import com.somasoma.wagglewaggle.presentation.di.hilt.qualifier.ForWorldAPI
 import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
 import com.somasoma.wagglewaggle.data.service.WorldService
 import com.somasoma.wagglewaggle.domain.repository.WorldRepository

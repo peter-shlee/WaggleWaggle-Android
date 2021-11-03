@@ -1,4 +1,4 @@
-package com.somasoma.wagglewaggle.core.di.hilt.qualifier
+package com.somasoma.wagglewaggle.presentation.di.hilt.qualifier
 
 import javax.inject.Qualifier
 
