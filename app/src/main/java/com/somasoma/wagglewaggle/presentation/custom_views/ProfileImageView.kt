@@ -10,7 +10,7 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.somasoma.wagglewaggle.R
-import com.somasoma.wagglewaggle.core.getProfileAvatarResourceId
+import com.somasoma.wagglewaggle.presentation.getProfileAvatarResourceId
 import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.databinding.ProfileImageViewBinding
 

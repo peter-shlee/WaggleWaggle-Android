@@ -2,7 +2,7 @@ package com.somasoma.wagglewaggle.data.repository_impl
 
 import android.app.Application
 import com.firebase.ui.auth.AuthUI
-import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForAuthAPI
+import com.somasoma.wagglewaggle.presentation.di.hilt.qualifier.ForAuthAPI
 import com.somasoma.wagglewaggle.data.model.dto.auth.FirebaseRequest
 import com.somasoma.wagglewaggle.data.model.dto.auth.RefreshRequest
 import com.somasoma.wagglewaggle.data.model.dto.auth.SignUpRequest

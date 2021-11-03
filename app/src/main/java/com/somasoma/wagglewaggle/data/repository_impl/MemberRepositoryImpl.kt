@@ -1,6 +1,6 @@
 package com.somasoma.wagglewaggle.data.repository_impl
 
-import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForMemberAPI
+import com.somasoma.wagglewaggle.presentation.di.hilt.qualifier.ForMemberAPI
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.data.service.MemberService
 import com.somasoma.wagglewaggle.domain.repository.MemberRepository

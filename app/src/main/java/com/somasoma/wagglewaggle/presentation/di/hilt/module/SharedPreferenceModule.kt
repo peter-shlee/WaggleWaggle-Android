@@ -1,4 +1,4 @@
-package com.somasoma.wagglewaggle.core.di.hilt.module
+package com.somasoma.wagglewaggle.presentation.di.hilt.module
 
 import android.content.Context
 import android.content.SharedPreferences

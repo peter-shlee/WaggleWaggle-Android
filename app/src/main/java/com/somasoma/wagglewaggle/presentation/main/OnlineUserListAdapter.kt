@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.somasoma.wagglewaggle.core.getProfileBackgroundColor
-import com.somasoma.wagglewaggle.core.string2Avatar
+import com.somasoma.wagglewaggle.presentation.getProfileBackgroundColor
+import com.somasoma.wagglewaggle.presentation.string2Avatar
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.databinding.OnlineUserListItemBinding
 

@@ -4,12 +4,12 @@ import android.app.Application
 import android.view.MenuItem
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.somasoma.wagglewaggle.core.*
 import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.data.Friendship
 import com.somasoma.wagglewaggle.data.model.dto.member.*
 import com.somasoma.wagglewaggle.data.setDataForUnity
 import com.somasoma.wagglewaggle.domain.usecase.member.*
+import com.somasoma.wagglewaggle.presentation.*
 import com.somasoma.wagglewaggle.presentation.custom_views.ProfileImageBackgroundColor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -212,7 +212,8 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun getCurrentMember() {
-        networkUtil.restApiCall(getMemberUseCase::getMember, sharedPreferenceHelper.getInt(PreferenceConstant.MEMBER_ID), viewModelScope) {
+        networkUtil.restApiCall(getMemberUseCase::getMember, sharedPreferenceHelper.getInt(
+            PreferenceConstant.MEMBER_ID), viewModelScope) {
             onSuccessCallback = {
                 currentMember = it
             }

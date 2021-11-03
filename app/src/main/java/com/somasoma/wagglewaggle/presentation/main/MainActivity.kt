@@ -7,8 +7,8 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
 import com.somasoma.wagglewaggle.R
-import com.somasoma.wagglewaggle.core.dp2Px
-import com.somasoma.wagglewaggle.core.string2Avatar
+import com.somasoma.wagglewaggle.presentation.dp2Px
+import com.somasoma.wagglewaggle.presentation.string2Avatar
 import com.somasoma.wagglewaggle.data.Avatar
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom

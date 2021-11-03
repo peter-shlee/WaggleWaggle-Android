@@ -2,10 +2,10 @@ package com.somasoma.wagglewaggle.presentation.setting
 
 import android.app.Application
 import androidx.lifecycle.viewModelScope
-import com.somasoma.wagglewaggle.core.InputState
-import com.somasoma.wagglewaggle.core.NetworkUtil
-import com.somasoma.wagglewaggle.core.PreferenceConstant
-import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
+import com.somasoma.wagglewaggle.presentation.InputState
+import com.somasoma.wagglewaggle.presentation.NetworkUtil
+import com.somasoma.wagglewaggle.presentation.PreferenceConstant
+import com.somasoma.wagglewaggle.presentation.SharedPreferenceHelper
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.domain.usecase.member.*
 import com.somasoma.wagglewaggle.presentation.custom_views.SelectInterestsViewModel

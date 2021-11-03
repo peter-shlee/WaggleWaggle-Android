@@ -1,4 +1,4 @@
-package com.somasoma.wagglewaggle.core
+package com.somasoma.wagglewaggle.presentation
 
 class ApiCallback<T> {
     var onSuccessCallback: ((T?) -> Unit)? = null

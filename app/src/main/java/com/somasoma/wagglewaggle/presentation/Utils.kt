@@ -1,4 +1,4 @@
-package com.somasoma.wagglewaggle.core
+package com.somasoma.wagglewaggle.presentation
 
 import android.content.Context
 import android.util.TypedValue

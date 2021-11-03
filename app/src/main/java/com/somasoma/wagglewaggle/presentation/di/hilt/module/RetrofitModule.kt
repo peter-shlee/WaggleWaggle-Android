@@ -1,6 +1,6 @@
-package com.somasoma.wagglewaggle.core.di.hilt.module
+package com.somasoma.wagglewaggle.presentation.di.hilt.module
 
-import com.somasoma.wagglewaggle.core.di.hilt.qualifier.*
+import com.somasoma.wagglewaggle.presentation.di.hilt.qualifier.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

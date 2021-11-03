@@ -1,10 +1,10 @@
-package com.somasoma.wagglewaggle.core.di.hilt.module
+package com.somasoma.wagglewaggle.presentation.di.hilt.module
 
 import com.somasoma.wagglewaggle.BuildConfig
-import com.somasoma.wagglewaggle.core.PreferenceConstant
-import com.somasoma.wagglewaggle.core.SharedPreferenceHelper
-import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForAccessHttp
-import com.somasoma.wagglewaggle.core.di.hilt.qualifier.ForPublicHttp
+import com.somasoma.wagglewaggle.presentation.PreferenceConstant
+import com.somasoma.wagglewaggle.presentation.SharedPreferenceHelper
+import com.somasoma.wagglewaggle.presentation.di.hilt.qualifier.ForAccessHttp
+import com.somasoma.wagglewaggle.presentation.di.hilt.qualifier.ForPublicHttp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

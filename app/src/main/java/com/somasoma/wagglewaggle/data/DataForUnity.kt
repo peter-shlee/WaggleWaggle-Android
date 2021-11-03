@@ -1,7 +1,7 @@
 package com.somasoma.wagglewaggle.data
 
-import com.somasoma.wagglewaggle.core.DEFAULT_AVATAR
-import com.somasoma.wagglewaggle.core.avatar2String
+import com.somasoma.wagglewaggle.presentation.DEFAULT_AVATAR
+import com.somasoma.wagglewaggle.presentation.avatar2String
 
 enum class DataForUnity {
     INSTANCE;
