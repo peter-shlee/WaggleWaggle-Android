@@ -87,6 +87,7 @@ class ProfileViewModel @Inject constructor(
                 roomId = member.worldRoomInfo?.id,
                 userId = id,
                 avatar = avatar,
+                nickname = currentMember?.nickName,
                 language = language,
                 country = country,
                 world = member.worldRoomInfo?.map

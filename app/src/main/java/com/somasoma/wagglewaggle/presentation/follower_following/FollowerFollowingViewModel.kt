@@ -77,6 +77,7 @@ class FollowerFollowingViewModel @Inject constructor(
                 roomId = worldRoom.id,
                 userId = id,
                 avatar = avatar,
+                nickname = currentMember?.nickName,
                 language = language,
                 country = country,
                 world = worldRoom.map

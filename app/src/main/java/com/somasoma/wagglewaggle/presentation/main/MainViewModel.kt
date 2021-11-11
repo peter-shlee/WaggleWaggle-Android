@@ -228,6 +228,7 @@ class MainViewModel @Inject constructor(
             roomId = worldRoom.id,
             userId = currentMember?.id,
             avatar = avatar2String(selectedAvatar),
+            nickname = currentMember?.nickName,
             language = currentMember?.language,
             country = currentMember?.country,
             world = worldRoom.map
