@@ -3,16 +3,15 @@ package com.somasoma.wagglewaggle.presentation.follower_following
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.somasoma.wagglewaggle.presentation.NetworkUtil
-import com.somasoma.wagglewaggle.presentation.PreferenceConstant
-import com.somasoma.wagglewaggle.presentation.SharedPreferenceHelper
-import com.somasoma.wagglewaggle.presentation.string2Avatar
 import com.somasoma.wagglewaggle.data.model.dto.member.Member
 import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
 import com.somasoma.wagglewaggle.data.setDataForUnity
 import com.somasoma.wagglewaggle.domain.usecase.member.GetFollowerUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetFollowingUseCase
 import com.somasoma.wagglewaggle.domain.usecase.member.GetMemberUseCase
+import com.somasoma.wagglewaggle.presentation.NetworkUtil
+import com.somasoma.wagglewaggle.presentation.PreferenceConstant
+import com.somasoma.wagglewaggle.presentation.SharedPreferenceHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -77,7 +76,7 @@ class FollowerFollowingViewModel @Inject constructor(
             setDataForUnity(
                 roomId = worldRoom.id,
                 userId = id,
-                avatar = string2Avatar(avatar),
+                avatar = avatar,
                 language = language,
                 country = country,
                 world = worldRoom.map

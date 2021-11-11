@@ -96,7 +96,7 @@ class CreateWorldViewModel @Inject constructor(
                     setDataForUnity(
                         roomId = id,
                         userId = currentMember?.id,
-                        avatar = string2Avatar(currentMember?.avatar),
+                        avatar = currentMember?.avatar,
                         language = currentMember?.language,
                         country = currentMember?.country,
                         world = worldMap2String(WorldMap.JONGMYO)

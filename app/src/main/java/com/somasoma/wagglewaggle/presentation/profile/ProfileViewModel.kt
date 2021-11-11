@@ -86,7 +86,7 @@ class ProfileViewModel @Inject constructor(
             setDataForUnity(
                 roomId = member.worldRoomInfo?.id,
                 userId = id,
-                avatar = string2Avatar(avatar),
+                avatar = avatar,
                 language = language,
                 country = country,
                 world = member.worldRoomInfo?.map

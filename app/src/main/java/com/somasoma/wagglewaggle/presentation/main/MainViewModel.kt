@@ -227,7 +227,7 @@ class MainViewModel @Inject constructor(
         setDataForUnity(
             roomId = worldRoom.id,
             userId = currentMember?.id,
-            avatar = selectedAvatar,
+            avatar = avatar2String(selectedAvatar),
             language = currentMember?.language,
             country = currentMember?.country,
             world = worldRoom.map
