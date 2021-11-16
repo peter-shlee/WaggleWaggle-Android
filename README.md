@@ -19,3 +19,8 @@
 * 유저 팔로우/팔로잉  
 
 등 의 기능을 제공합니다.
+
+https://user-images.githubusercontent.com/47245682/142013334-0c7f93fb-7f9f-4828-a65e-600b83b5a4c9.mp4
+
+
+
