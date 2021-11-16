@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.somasoma.wagglewaggle.R
-import com.somasoma.wagglewaggle.presentation.string2WorldMap
+import com.somasoma.wagglewaggle.data.WorldMap
 import com.somasoma.wagglewaggle.data.model.dto.world.WorldRoom
 import com.somasoma.wagglewaggle.databinding.WorldListItemBinding
+import com.somasoma.wagglewaggle.presentation.string2WorldMap
 
 class WorldListAdapter(private val worldListItemEnterButtonClickListener: WorldListItemEnterButtonClickListener) :
     ListAdapter<WorldRoom, WorldListAdapter.ViewHolder>(WorldRoomDiffCallback()) {
@@ -45,10 +46,20 @@ class WorldListAdapter(private val worldListItemEnterButtonClickListener: WorldL
             binding.worldMap = string2WorldMap(worldRoom.map).text
             binding.maxUserCount = MAX_USER_COUNT
             adapter.submitList(worldRoom.keywords)
-            Glide.with(binding.root)
-                .load(R.drawable.map_jongmyo)
-                .centerCrop()
-                .into(binding.imgMap)
+            when (string2WorldMap(worldRoom.map)) {
+                WorldMap.JONGMYO -> {
+                    Glide.with(binding.root)
+                        .load(R.drawable.map_jongmyo)
+                        .centerCrop()
+                        .into(binding.imgMap)
+                }
+                WorldMap.GWANGHWAMUN -> {
+                    Glide.with(binding.root)
+                        .load(R.drawable.map_gwanghwamoon)
+                        .centerCrop()
+                        .into(binding.imgMap)
+                }
+            }
             binding.root.clipToOutline = true
         }
     }
